@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32210.238
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BubbleTroubleGame", "BubbleTroubleGame\BubbleTroubleGame.csproj", "{1ABB7999-E998-4F4E-A037-440E7A21536C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1ABB7999-E998-4F4E-A037-440E7A21536C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1ABB7999-E998-4F4E-A037-440E7A21536C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1ABB7999-E998-4F4E-A037-440E7A21536C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1ABB7999-E998-4F4E-A037-440E7A21536C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EB7684C7-297F-4535-8C27-7019F0110911}
+	EndGlobalSection
+EndGlobal
