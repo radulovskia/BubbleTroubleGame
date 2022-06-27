@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BubbleTroubleGame
 {
-    internal class Ball
+    public class Ball
     {
         public int radius { get; set; }
         public Point Center { get; set; }

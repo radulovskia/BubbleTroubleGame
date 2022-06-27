@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BubbleTroubleGame
 {
-    internal class Harpoon
+   public class Harpoon
     {
         public List<Point> linePoints { get; set; }
         public Point startingPoint { get; set; }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BubbleTroubleGame
 {
-    internal class Player
+    public class Player
     {
         //images depending on side of facing?
         //should the ammo be infinite? -Yes.
@@ -78,8 +78,8 @@ namespace BubbleTroubleGame
                 float ballX = b.radius + b.Center.X;
                 float ballY = b.radius + b.Center.Y;
                 float posX = position + playerImg.Width / 2;
-                //float posY = some Y value + playerImg.Height / 2; ????
-                float euclid = Math.Sqrt(Math.Pow(posX - ballX, 2) + Math.Pow(posY - ballY, 2));
+                //float posY = some Y value + playerImg.Height / 2; ?
+                float euclid = (float)Math.Sqrt(Math.Pow(posX - ballX, 2) + Math.Pow(10 - ballY, 2));
                 //20 is hitbox
                 if (euclid <= Math.Pow(b.radius + 20, 2))
                     return true;
