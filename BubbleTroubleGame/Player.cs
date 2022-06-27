@@ -9,11 +9,10 @@ namespace BubbleTroubleGame
 {
     public class Player
     {
-        //images depending on side of facing?
-        //should the ammo be infinite? -Yes.
+        //X value
         public int position { get; set; }
 
-        //idea: coefficient for moving, -1(left) or 1(right)
+        //idea: coefficient for moving, -1(left) or 1(right) - changed on keypress
         public int directionCoef { get; set; } = 1;
 
         public Harpoon harpoon { get; set; }
