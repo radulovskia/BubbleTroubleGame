@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BubbleTroubleGame.Properties;
 
 namespace BubbleTroubleGame
 {
@@ -14,8 +15,6 @@ namespace BubbleTroubleGame
 
         //idea: coefficient for moving, -1(left) or 1(right) - changed on keypress
         public int directionCoef { get; set; } = 1;
-
-        public Harpoon harpoon { get; set; }
 
         public int lives { get; set; } = 10;
 
@@ -30,9 +29,9 @@ namespace BubbleTroubleGame
         {
             this.position = position;
             this.playerId = playerId;
-            //this.harpoon = new Harpoon();
             this.isDead = false;
-            //different images for different players
+            if (playerId == 1)
+                this.playerImg = Resources.p1back;
         }
 
         public void Move(int sceneWidth)

@@ -13,7 +13,7 @@ namespace BubbleTroubleGame
         public Scene()
         {
             balls = new List<Ball>();
-            playerOne = new Player(12,1);
+            playerOne = new Player(240,1);
         }
         public void draw(Graphics graphics)
         {
