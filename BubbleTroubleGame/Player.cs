@@ -39,18 +39,11 @@ namespace BubbleTroubleGame
         public void Move(int sceneWidth)
         {
             //stop at end of screen or continue from other side?
-            if (directionCoef == 1)
-            {
-                position += 5; //might be too slow, might be too fast
-                if (position > sceneWidth)
-                    position = sceneWidth;
-            }
-            else
-            {
-                position -= 5;
-                if (position < 0)
-                    position = 0;
-            }
+            position += 5 * directionCoef; //might be too slow, might be too fast
+            if (position > sceneWidth)
+                position = sceneWidth;
+            if (position < 0)
+                position = 0;
         }
 
         public void ChangeDirection()
@@ -75,11 +68,11 @@ namespace BubbleTroubleGame
         {
             foreach (Ball b in balls)
             {
-                float ballX = b.radius + b.Center.X;
-                float ballY = b.radius + b.Center.Y;
-                float posX = position + playerImg.Width / 2;
+                double ballX = b.radius + b.Center.X;
+                double ballY = b.radius + b.Center.Y;
+                double posX = position + playerImg.Width / 2;
                 //float posY = some Y value + playerImg.Height / 2; ?
-                float euclid = (float)Math.Sqrt(Math.Pow(posX - ballX, 2) + Math.Pow(10 - ballY, 2));
+                double euclid = Math.Sqrt(Math.Pow(posX - ballX, 2) + Math.Pow(10 - ballY, 2));
                 //20 is hitbox
                 if (euclid <= Math.Pow(b.radius + 20, 2))
                     return true;
