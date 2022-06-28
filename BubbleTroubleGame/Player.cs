@@ -75,13 +75,13 @@ namespace BubbleTroubleGame
         {
             foreach (Ball b in balls)
             {
-                double ballX = b.radius + b.Center.X;
-                double ballY = b.radius + b.Center.Y;
+                double ballX = b.Radius + b.Center.X;
+                double ballY = b.Radius + b.Center.Y;
                 double posX = position + 25;
                 double posY = 150 + 25;
                 double euclid = Math.Sqrt(Math.Pow(posX - ballX, 2) + Math.Pow(posY - ballY, 2));
                 //20 is hitbox
-                if (euclid <= Math.Pow(b.radius + 20, 2))
+                if (euclid <= Math.Pow(b.Radius + 20, 2))
                     return true;
             }
             return false;
