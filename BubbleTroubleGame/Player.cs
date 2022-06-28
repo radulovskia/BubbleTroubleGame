@@ -13,9 +13,6 @@ namespace BubbleTroubleGame
         //X value
         public int position { get; set; }
 
-        //idea: coefficient for moving, -1(left) or 1(right) - changed on keypress
-        public int directionCoef { get; set; } = 1;
-
         public int lives { get; set; } = 10;
 
         public Image playerImg { get; set; }
@@ -24,6 +21,8 @@ namespace BubbleTroubleGame
         public int playerId { get; set; }
 
         public bool isDead { get; set; }
+        //change on keydown to true, on keyup to false
+        public bool isMoving { get; set; }
 
         public Player(int position, int playerId)
         {
@@ -32,34 +31,44 @@ namespace BubbleTroubleGame
             this.isDead = false;
             if (playerId == 1)
                 this.playerImg = Resources.p1back;
+            else if(playerId == 2)
+                this.playerImg= Resources.p2back;
         }
 
-        public void Move(int sceneWidth)
+        public void Move(int sceneWidth, string direction)
         {
             //stop at end of screen or continue from other side?
-            position += 5 * directionCoef; //might be too slow, might be too fast
+            if (direction == "right")
+            {
+                if (playerId == 1)
+                    this.playerImg = Resources.p1right;
+                if (playerId == 2)
+                    this.playerImg = Resources.p2right;
+                position += 5; //might be too slow, might be too fast
+            }
+            else
+            {
+                if (playerId == 1)
+                    this.playerImg = Resources.p1left;
+                if (playerId == 2)
+                    this.playerImg = Resources.p2left;
+                position -= 5; //might be too slow, might be too fast
+            }
             if (position > sceneWidth)
                 position = sceneWidth;
             if (position < 0)
                 position = 0;
         }
 
-        public void ChangeDirection()
-        {
-            directionCoef *= -1;
-            if (directionCoef == 1)
-            {
-                //right images
-            }
-            else
-            {
-                //left images
-            }
-        }
-
         public void Draw(Graphics g)
         {
-            //different states of player? e.g. dead, walking, still
+            if (!isMoving) {  //y coordinate???
+                if(playerId == 1)
+                    playerImg = Resources.p1back;
+                else
+                    playerImg = Resources.p2back;
+            }
+                g.DrawImage(playerImg, position, 150, 50, 50); //idk if this works yet, image too big atm (450x450)
         }
 
         public bool isHit(List<Ball> balls)
@@ -68,9 +77,9 @@ namespace BubbleTroubleGame
             {
                 double ballX = b.radius + b.Center.X;
                 double ballY = b.radius + b.Center.Y;
-                double posX = position + playerImg.Width / 2;
-                //float posY = some Y value + playerImg.Height / 2; ?
-                double euclid = Math.Sqrt(Math.Pow(posX - ballX, 2) + Math.Pow(10 - ballY, 2));
+                double posX = position + 25;
+                double posY = 150 + 25;
+                double euclid = Math.Sqrt(Math.Pow(posX - ballX, 2) + Math.Pow(posY - ballY, 2));
                 //20 is hitbox
                 if (euclid <= Math.Pow(b.radius + 20, 2))
                     return true;
