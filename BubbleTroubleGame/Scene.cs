@@ -22,6 +22,8 @@ namespace BubbleTroubleGame
                 ball.Draw(graphics);
             }
             playerOne.Draw(graphics);
+            Brush brush = new SolidBrush(Color.Black);
+            graphics.FillRectangle(brush, new Rectangle(0,350,width,height));
         }
     }
 }

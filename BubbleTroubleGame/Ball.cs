@@ -11,6 +11,7 @@ namespace BubbleTroubleGame
     {
         public int Radius { get; set; }
         public Point Center { get; set; }
+        public Color color { get; set; }
 
         public double Velocity { get; set; } = -1;
         //public double Angle { get; set; } should an angle be used?
@@ -24,8 +25,10 @@ namespace BubbleTroubleGame
             this.Radius=Radius;
             this.Center=Center;
             isAlive=true;
+            this.color = GetRandomColor();
+            
         }
-        static Color[] colors = { Color.Red, Color.Maroon,Color.MintCream };
+        static Color[] colors = { Color.Blue}; // add more colors
         static Color GetRandomColor()
         {
             var random = new Random();
@@ -34,20 +37,24 @@ namespace BubbleTroubleGame
 
         public void Draw(Graphics g)
         {
-            Brush brush = new SolidBrush(GetRandomColor());
+            Brush brush = new SolidBrush(color);
             g.FillEllipse(brush, Center.X - Radius, Center.Y - Radius, Radius * 2, Radius * 2);
             brush.Dispose();
         }
         public void Move(int height)
         {
-            if (Center.Y >= (height-(Radius*2)))
+            if (Center.Y >= (height-Radius))
             {
                 Velocity = -(Velocity);
             }
             if (Velocity > 0)
             {
                 Center = new Point(Center.X, (int)(Center.Y - Velocity));
-                if (Center.Y <= (height - (Radius * Radius)))
+                if(Center.Y <=(0+Radius))
+                {
+                    Velocity = -(Velocity);
+                }
+                if (Center.Y <= (height - (Radius * 20)))
                 {
                     Velocity = -(Velocity);
                 }

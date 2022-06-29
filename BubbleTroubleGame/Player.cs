@@ -68,7 +68,7 @@ namespace BubbleTroubleGame
                 else
                     playerImg = Resources.p2back;
             }
-                g.DrawImage(playerImg, position, 150, 50, 50); //idk if this works yet, image too big atm (450x450)
+                g.DrawImage(playerImg, position, 300, 50, 50); //idk if this works yet, image too big atm (450x450)
         }
 
         public bool isHit(List<Ball> balls)
@@ -78,7 +78,7 @@ namespace BubbleTroubleGame
                 double ballX = b.Radius + b.Center.X;
                 double ballY = b.Radius + b.Center.Y;
                 double posX = position + 25;
-                double posY = 150 + 25;
+                double posY = 360 + 25;
                 double euclid = Math.Sqrt(Math.Pow(posX - ballX, 2) + Math.Pow(posY - ballY, 2));
                 //20 is hitbox
                 if (euclid <= Math.Pow(b.Radius + 20, 2))

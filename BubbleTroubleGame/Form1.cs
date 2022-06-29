@@ -35,7 +35,7 @@ namespace BubbleTroubleGame
         {
             foreach(Ball b in scene.balls)
             {
-                b.Move(this.Height);
+                b.Move(360); // where the ground is
             }
             Invalidate();
         }
