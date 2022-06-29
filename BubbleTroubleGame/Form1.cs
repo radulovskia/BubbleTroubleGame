@@ -54,6 +54,12 @@ namespace BubbleTroubleGame
                 scene.playerOne.isShooting = true;
                 scene.harpoon.startingX=scene.playerOne.position+24;
             }
+            if (e.KeyCode == Keys.Escape)
+            {
+                panelPauseMenu.Visible = !panelPauseMenu.Visible;
+                panelPauseMenu.Enabled = !panelPauseMenu.Enabled;
+                timer1.Enabled = !timer1.Enabled;
+            }
             Invalidate();
         }
 
@@ -61,6 +67,14 @@ namespace BubbleTroubleGame
         {
             scene.playerOne.isMoving = false;
             Invalidate();
+        }
+
+        private void btnLvlEditor_Click(object sender, EventArgs e)
+        {
+            Form form = new FormLE();
+            this.Hide();
+            form.ShowDialog();
+            this.Close();
         }
     }
 }

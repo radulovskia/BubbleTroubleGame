@@ -17,29 +17,33 @@ namespace BubbleTroubleGame
         {
             InitializeComponent();
             scene = new Scene();
-            UpdateView();
+            Invalidate();
         }
 
         private void panel2_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
-                scene.addBall(new Ball(new Point(e.X, e.Y), 10, 1, 0, 0));
+                //scene.addBall(new Ball(10, new Point(e.X, e.Y)));
             } else if(e.Button == MouseButtons.Right)
             {
-                scene.Select(new Point(e.X, e.Y));
+                //scene.Select(new Point(e.X, e.Y));
             }
-            UpdateView();
+            Invalidate();
         }
-        public void UpdateView()
+
+        private void FormLE_Paint(object sender, PaintEventArgs e)
         {
-            Bitmap bmp = new Bitmap(panelGame.Width, panelGame.Height);
-            scene.draw(Graphics.FromImage(bmp));
-            panelGame.CreateGraphics().Clear(Color.White);
-            panelGame.CreateGraphics().DrawImageUnscaled(bmp, 0, 0);
+            
+        }
+
+        private void panelGame_Paint(object sender, PaintEventArgs e)
+        {
+            scene.draw(e.Graphics);
         }
         // ListBox gi ima site elementi sto mozat da bidat dodadeni, se otvara na tab
         // Move ke bide so middle mouse
         // Ke ima izbor za vrednosti vo zavisnost od sto e selektirano
+
     }
 }
