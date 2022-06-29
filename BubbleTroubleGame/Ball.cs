@@ -11,21 +11,18 @@ namespace BubbleTroubleGame
     {
         public int Radius { get; set; }
         public Point Center { get; set; }
-        public int Value { get; set; }
 
-        //Velocity and angle could be used later in the definition of the levels
-        public double Velocity { get; set; }
-        public double Angle { get; set; }
+        public double Velocity { get; set; } = -1;
+        //public double Angle { get; set; } should an angle be used?
 
         public bool isAlive { get; set; }
 
         //Color for the ball could be randomly assigned with each breaking of it or have order of the colors accoring to the value
         //To be discussed
-        public Ball(int Radius, Point Center, int Value)
+        public Ball(int Radius, Point Center)
         {
             this.Radius=Radius;
             this.Center=Center;
-            this.Value=Value;
             isAlive=true;
         }
         static Color[] colors = { Color.Red, Color.Maroon,Color.MintCream };
@@ -41,22 +38,33 @@ namespace BubbleTroubleGame
             g.FillEllipse(brush, Center.X - Radius, Center.Y - Radius, Radius * 2, Radius * 2);
             brush.Dispose();
         }
-        public void Move()
+        public void Move(int height)
         {
-           //to be defined
+            if (Center.Y >= (height-(Radius*2)))
+            {
+                Velocity = -(Velocity);
+            }
+            if (Velocity > 0)
+            {
+                Center = new Point(Center.X, (int)(Center.Y - Velocity));
+                if (Center.Y <= (height - (Radius * Radius)))
+                {
+                    Velocity = -(Velocity);
+                }
+            }
+            else
+            {
+                Center = new Point(Center.X, (int)(Center.Y - Velocity));
+            }
         }
         public int isHit()
         {
             //when hit returns its value halved in order to create the new balls
             if(!isAlive)
             {
-                return Value/2;
+                return Radius/2;
             }
             return 0;
-        }
-        public void bounce()
-        {
-            
         }
     }
 }
