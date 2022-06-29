@@ -28,5 +28,38 @@ namespace BubbleTroubleGame
             Brush brush = new SolidBrush(Color.FromArgb(77, 0, 77));
             graphics.FillRectangle(brush, new Rectangle(0,350,width,height));
         }
+        public void tick()
+        {
+            for(int i=0;i<balls.Count;i++)
+            {
+                balls[i].Move(360); // where the ground is
+                if(balls[i].isHit(harpoon))
+                {
+                    int rad = balls[i].Radius / 2;
+                    if (rad >= 7)
+                    {
+                        Point cent = balls[i].Center;
+                        balls.RemoveAt(i);
+                        balls.Add(new Ball(rad, new Point(cent.X + rad, cent.Y)));
+                        balls.Add(new Ball(rad, new Point(cent.X - rad, cent.Y)));
+                        harpoon = new Harpoon(playerOne.position);
+                        playerOne.isShooting = false;
+                    }
+                    else
+                    {
+                        balls.RemoveAt(i);
+                    }
+                }
+            }
+            if (playerOne.isShooting)
+            {
+                harpoon.Grow();
+            }
+            if (harpoon.currentY == 0)
+            {
+                harpoon = new Harpoon(playerOne.position);
+                playerOne.isShooting = false;
+            }
+        }
     }
 }

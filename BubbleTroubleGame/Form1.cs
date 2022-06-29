@@ -33,36 +33,7 @@ namespace BubbleTroubleGame
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            for(int i=0;i<scene.balls.Count;i++)
-            {
-                scene.balls[i].Move(360); // where the ground is
-                if(scene.balls[i].isHit(scene.harpoon))
-                {
-                    int rad = scene.balls[i].Radius / 2;
-                    if (rad >= 7)
-                    {
-                        Point cent = scene.balls[i].Center;
-                        scene.balls.RemoveAt(i);
-                        scene.balls.Add(new Ball(rad, new Point(cent.X + rad, cent.Y)));
-                        scene.balls.Add(new Ball(rad, new Point(cent.X - rad, cent.Y)));
-                        scene.harpoon = new Harpoon(scene.playerOne.position);
-                        scene.playerOne.isShooting = false;
-                    }
-                    else
-                    {
-                        scene.balls.RemoveAt(i);
-                    }
-                }
-            }
-            if (scene.playerOne.isShooting)
-            {
-                scene.harpoon.Grow();
-            }
-            if (scene.harpoon.currentY == 0)
-            {
-                scene.harpoon = new Harpoon(scene.playerOne.position);
-                scene.playerOne.isShooting = false;
-            }
+            scene.tick();
             Invalidate();
         }
 

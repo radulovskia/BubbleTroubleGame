@@ -72,7 +72,7 @@ namespace BubbleTroubleGame
             }
                 g.DrawImage(playerImg, position, 300, 50, 50); //idk if this works yet, image too big atm (450x450)
         }
-
+        //finish this
         public bool isHit(List<Ball> balls)
         {
             foreach (Ball b in balls)

@@ -38,6 +38,7 @@ namespace BubbleTroubleGame
             g.FillEllipse(brush, Center.X - Radius, Center.Y - Radius, Radius * 2, Radius * 2);
             brush.Dispose();
         }
+        //add horizontal movement
         public void Move(int height)
         {
             if (Center.Y >= (height-Radius))
