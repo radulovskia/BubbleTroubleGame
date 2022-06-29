@@ -24,6 +24,8 @@ namespace BubbleTroubleGame
         //change on keydown to true, on keyup to false
         public bool isMoving { get; set; }
 
+        public bool isShooting { get; set; } = false;
+
         public Player(int position, int playerId)
         {
             this.position = position;

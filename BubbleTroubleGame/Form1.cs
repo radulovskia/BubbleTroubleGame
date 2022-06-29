@@ -37,6 +37,41 @@ namespace BubbleTroubleGame
             {
                 b.Move(360); // where the ground is
             }
+            if (scene.playerOne.isShooting)
+            {
+                scene.harpoon.Grow();
+            }
+            if (scene.harpoon.currentY == 0)
+            {
+                scene.harpoon = new Harpoon(scene.playerOne.position);
+                scene.playerOne.isShooting = false;
+            }
+            Invalidate();
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.A)
+            {
+                scene.playerOne.isMoving = true;
+                scene.playerOne.Move(Scene.width, "left");
+            }
+            if (e.KeyCode == Keys.D)
+            {
+                scene.playerOne.isMoving = true;
+                scene.playerOne.Move(Scene.width, "right");
+            }
+            if (e.KeyCode == Keys.W)
+            {
+                scene.playerOne.isShooting = true;
+                scene.harpoon.startingX=scene.playerOne.position+24;
+            }
+            Invalidate();
+        }
+
+        private void Form1_KeyUp(object sender, KeyEventArgs e)
+        {
+            scene.playerOne.isMoving = false;
             Invalidate();
         }
     }
