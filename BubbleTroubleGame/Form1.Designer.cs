@@ -38,13 +38,12 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::BubbleTroubleGame.Properties.Resources.background;
-            this.ClientSize = new System.Drawing.Size(582, 433);
+            this.BackgroundImage = global::BubbleTroubleGame.Properties.Resources.bg2;
+            this.ClientSize = new System.Drawing.Size(584, 441);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Form1";

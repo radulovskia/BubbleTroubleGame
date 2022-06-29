@@ -16,15 +16,12 @@ namespace BubbleTroubleGame
         public double Velocity { get; set; } = -1;
         //public double Angle { get; set; } should an angle be used?
 
-        public bool isAlive { get; set; }
-
         //Color for the ball could be randomly assigned with each breaking of it or have order of the colors accoring to the value
         //To be discussed
         public Ball(int Radius, Point Center)
         {
             this.Radius=Radius;
             this.Center=Center;
-            isAlive=true;
             this.color = GetRandomColor();
             
         }
@@ -64,14 +61,16 @@ namespace BubbleTroubleGame
                 Center = new Point(Center.X, (int)(Center.Y - Velocity));
             }
         }
-        public int isHit()
+        public bool isHit(Harpoon harpoon)
         {
-            //when hit returns its value halved in order to create the new balls
-            if(!isAlive)
+            for(int i=310;i>harpoon.currentY;i--)
             {
-                return Radius/2;
+                if(Math.Sqrt(Math.Pow(harpoon.startingX - (Center.X + Radius), 2) + Math.Pow(i - (Center.Y + Radius), 2))<=Radius*2)
+                {
+                    return true;
+                }
             }
-            return 0;
+            return false;
         }
     }
 }
