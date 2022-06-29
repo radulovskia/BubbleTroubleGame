@@ -9,17 +9,23 @@ namespace BubbleTroubleGame
 {
     public class Ball
     {
-        public int radius { get; set; }
+        public int Radius { get; set; }
         public Point Center { get; set; }
-        public int Value { get; set; }
+        public Color color { get; set; }
 
-        //Velocity and angle could be used later in the definition of the levels
-        public double Velocity { get; set; }
-        public double Angle { get; set; }
+        public double Velocity { get; set; } = -1;
+        //public double Angle { get; set; } should an angle be used?
 
         //Color for the ball could be randomly assigned with each breaking of it or have order of the colors accoring to the value
         //To be discussed
-        static Color[] colors = { Color.Red, Color.Maroon,Color.MintCream };
+        public Ball(int Radius, Point Center)
+        {
+            this.Radius=Radius;
+            this.Center=Center;
+            this.color = GetRandomColor();
+            
+        }
+        static Color[] colors = { Color.Blue}; // add more colors
         static Color GetRandomColor()
         {
             var random = new Random();
@@ -28,19 +34,44 @@ namespace BubbleTroubleGame
 
         public void Draw(Graphics g)
         {
-            Brush brush = new SolidBrush(GetRandomColor());
-            g.FillEllipse(brush, Center.X - radius, Center.Y - radius, radius * 2, radius * 2);
+            Brush brush = new SolidBrush(color);
+            g.FillEllipse(brush, Center.X - Radius, Center.Y - Radius, Radius * 2, Radius * 2);
             brush.Dispose();
         }
-        public void Move(int left, int top, int width, int height)
+        //add horizontal movement
+        public void Move(int height)
         {
-           //to be defined
+            if (Center.Y >= (height-Radius))
+            {
+                Velocity = -(Velocity);
+            }
+            if (Velocity > 0)
+            {
+                Center = new Point(Center.X, (int)(Center.Y - Velocity));
+                if(Center.Y <=(0+Radius))
+                {
+                    Velocity = -(Velocity);
+                }
+                if (Center.Y <= (height - (Radius * 20)))
+                {
+                    Velocity = -(Velocity);
+                }
+            }
+            else
+            {
+                Center = new Point(Center.X, (int)(Center.Y - Velocity));
+            }
         }
-        public void isHit()
+        public bool isHit(Harpoon harpoon)
         {
-            //is hit by a harpoon element
-            //disappearance of the ball
-            //could return its value cut by half in order to aid the creation of the new ones? Maybe a new function?
+            for(int i=310;i>harpoon.currentY;i--)
+            {
+                if(Math.Sqrt(Math.Pow(harpoon.startingX - (Center.X + Radius), 2) + Math.Pow(i - (Center.Y + Radius), 2))<=Radius*2)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
