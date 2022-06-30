@@ -22,6 +22,7 @@ namespace BubbleTroubleGame
             foreach (Ball ball in scene.balls)
                 listBox1.Items.Add(ball);
             listBox1.Items.Add(scene.playerOne);
+            timer1.Start();
         }
 
         private void panel2_MouseClick(object sender, MouseEventArgs e)
@@ -33,7 +34,7 @@ namespace BubbleTroubleGame
             {
                 //scene.Select(new Point(e.X, e.Y));
             }
-            Invalidate(true);
+            changed = true;
         }
 
         private void FormLE_Paint(object sender, PaintEventArgs e)
@@ -43,13 +44,27 @@ namespace BubbleTroubleGame
 
         private void panelGame_Paint(object sender, PaintEventArgs e)
         {
-            scene.draw(e.Graphics);
+            //e.Graphics.Clear(Color.White);
+            Bitmap bmp = new Bitmap(panelGame.Width, panelGame.Height);
+            scene.draw(Graphics.FromImage(bmp));
+            e.Graphics.DrawImageUnscaled(bmp, 0, 0);
+
+            //scene.draw(e.Graphics);
+        }
+
+        protected override CreateParams CreateParams { 
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000;
+                return cp;
+            }
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             setHighlight();
-            Invalidate(true);
+            changed = true;
         }
         private void setHighlight()
         {
@@ -79,6 +94,7 @@ namespace BubbleTroubleGame
             {
                 dragStart = e.Location;
                 dragging = true;
+                timer1.Start();
                 this.Cursor = Cursors.Hand;
             }
         }
@@ -101,7 +117,7 @@ namespace BubbleTroubleGame
                 scene.Highlight = rect;
             }
             setHighlight();
-            Invalidate(true);
+            changed = true;
         }
 
         private void panelGame_MouseUp(object sender, MouseEventArgs e)
@@ -111,6 +127,15 @@ namespace BubbleTroubleGame
                 dragStart = Point.Empty;
                 dragging = false;
                 this.Cursor = Cursors.Default;
+            }
+        }
+        private bool changed = false;
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (changed)
+            {
+                changed = false;
+                Invalidate(true);
             }
         }
         // ListBox gi ima site elementi sto mozat da bidat dodadeni, se otvara na tab
