@@ -22,16 +22,33 @@ namespace BubbleTroubleGame
         {
             this.Radius=Radius;
             this.Center=Center;
-            this.color = GetRandomColor();
+            this.color = GetColor();
             this.VelocityX= VelocityX;
         }
-        static Color[] colors = { Color.Blue}; // add more colors
-        static Color GetRandomColor()
+        static Color[] colors = { Color.LightSeaGreen, Color.DarkOrange, Color.Magenta, Color.BlueViolet, Color.PaleGoldenrod }; // add more colors
+        public Color GetColor()
         {
-            var random = new Random();
-            return colors[random.Next(colors.Length)];
+            if (Radius <= 7)
+            {
+                return colors[0];
+            }
+            else if (Radius <= 14)
+            {
+                return colors[1];
+            }
+            else if (Radius <= 21)
+            {
+                return colors[2];
+            }
+            else if (Radius <= 32)
+            {
+                return colors[3];
+            }
+            else
+            {
+                return colors[4];
+            }
         }
-
         public void Draw(Graphics g)
         {
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
