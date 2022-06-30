@@ -18,12 +18,12 @@ namespace BubbleTroubleGame
 
         //Color for the ball could be randomly assigned with each breaking of it or have order of the colors accoring to the value
         //To be discussed
-        public Ball(int Radius, Point Center)
+        public Ball(int Radius, Point Center,double VelocityX)
         {
             this.Radius=Radius;
             this.Center=Center;
             this.color = GetRandomColor();
-            
+            this.VelocityX= VelocityX;
         }
         static Color[] colors = { Color.Blue}; // add more colors
         static Color GetRandomColor()

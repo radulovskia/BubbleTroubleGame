@@ -13,7 +13,7 @@ namespace BubbleTroubleGame
         public Harpoon harpoon { get; set; }
         public Scene()
         {
-            balls = new List<Ball> { new Ball(7,new Point(150,100)), new Ball(12, new Point(350, 20)) , new Ball(20, new Point(200, 50)) };
+            balls = new List<Ball> { new Ball(7,new Point(150,100),1), new Ball(12, new Point(350, 20),-1) , new Ball(20, new Point(200, 50),1) };
             playerOne = new Player(240,1);
             harpoon = new Harpoon(240);
         }
@@ -40,8 +40,8 @@ namespace BubbleTroubleGame
                     {
                         Point cent = balls[i].Center;
                         balls.RemoveAt(i);
-                        balls.Add(new Ball(rad, new Point(cent.X + rad, cent.Y)));
-                        balls.Add(new Ball(rad, new Point(cent.X - rad, cent.Y)));
+                        balls.Add(new Ball(rad, new Point(cent.X + rad, cent.Y), 1));
+                        balls.Add(new Ball(rad, new Point(cent.X - rad, cent.Y) ,-1));
                         harpoon = new Harpoon(playerOne.position);
                         playerOne.isShooting = false;
                     }
