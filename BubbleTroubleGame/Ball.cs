@@ -12,8 +12,8 @@ namespace BubbleTroubleGame
         public int Radius { get; set; }
         public Point Center { get; set; }
         public Color color { get; set; }
-
-        public double Velocity { get; set; } = -1;
+        public double VelocityX { get; set; } = -1;
+        public double VelocityY { get; set; } = -1;
         //public double Angle { get; set; } should an angle be used?
 
         //Color for the ball could be randomly assigned with each breaking of it or have order of the colors accoring to the value
@@ -34,33 +34,23 @@ namespace BubbleTroubleGame
 
         public void Draw(Graphics g)
         {
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             Brush brush = new SolidBrush(color);
             g.FillEllipse(brush, Center.X - Radius, Center.Y - Radius, Radius * 2, Radius * 2);
             brush.Dispose();
         }
         //add horizontal movement
-        public void Move(int height)
+        public void Move(int height, int width)
         {
-            if (Center.Y >= (height-Radius))
+            if(Center.X+Radius >= width || Center.X-Radius <= 0)
             {
-                Velocity = -(Velocity);
+                VelocityX *= -1;
             }
-            if (Velocity > 0)
+            if (Center.Y + Radius >= height || Center.Y - Radius <= 0)
             {
-                Center = new Point(Center.X, (int)(Center.Y - Velocity));
-                if(Center.Y <=(0+Radius))
-                {
-                    Velocity = -(Velocity);
-                }
-                if (Center.Y <= (height - (Radius * 20)))
-                {
-                    Velocity = -(Velocity);
-                }
+                VelocityY *= -1;
             }
-            else
-            {
-                Center = new Point(Center.X, (int)(Center.Y - Velocity));
-            }
+            Center = new Point((int)(Center.X + VelocityX),(int)(Center.Y + VelocityY));
         }
         public bool isHit(Harpoon harpoon)
         {

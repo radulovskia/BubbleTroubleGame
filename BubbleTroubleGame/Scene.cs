@@ -32,7 +32,7 @@ namespace BubbleTroubleGame
         {
             for(int i=0;i<balls.Count;i++)
             {
-                balls[i].Move(360); // where the ground is
+                balls[i].Move(height-130,width); // where the ground is
                 if(balls[i].isHit(harpoon))
                 {
                     int rad = balls[i].Radius / 2;
