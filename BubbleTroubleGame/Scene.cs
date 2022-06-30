@@ -42,13 +42,14 @@ namespace BubbleTroubleGame
                         balls.RemoveAt(i);
                         balls.Add(new Ball(rad, new Point(cent.X + rad, cent.Y), 1));
                         balls.Add(new Ball(rad, new Point(cent.X - rad, cent.Y) ,-1));
-                        harpoon = new Harpoon(playerOne.position);
                         playerOne.isShooting = false;
                     }
                     else
                     {
                         balls.RemoveAt(i);
                     }
+                    playerOne.isShooting = false;
+                    harpoon = new Harpoon(playerOne.position);
                 }
             }
             if (playerOne.isShooting)
