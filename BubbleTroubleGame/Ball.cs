@@ -12,8 +12,8 @@ namespace BubbleTroubleGame
         public int Radius { get; set; }
         public Point Center { get; set; }
         public Color color { get; set; }
-        public double VelocityX { get; set; } = -1;
-        public double VelocityY { get; set; } = -1;
+        public double VelocityX { get; set; } = 1;
+        public double VelocityY { get; set; } = 1;
         //public double Angle { get; set; } should an angle be used?
 
         //Color for the ball could be randomly assigned with each breaking of it or have order of the colors accoring to the value
@@ -42,13 +42,27 @@ namespace BubbleTroubleGame
         //add horizontal movement
         public void Move(int height, int width)
         {
-            if(Center.X+Radius >= width || Center.X-Radius <= 0)
+            if(VelocityY<0 && ((Center.Y)<=Radius*20))
             {
-                VelocityX *= -1;
+                if (Center.X + Radius >= width || Center.X - Radius <= 0)
+                {
+                    VelocityX *= -1;
+                }
+                if (Center.Y + Radius >= height || Center.Y - Radius <= height - Radius * 15 || Center.Y - Radius <= 0)
+                {
+                    VelocityY *= -1;
+                }
             }
-            if (Center.Y + Radius >= height || Center.Y - Radius <= 0)
+            else
             {
-                VelocityY *= -1;
+                if (Center.X + Radius >= width || Center.X - Radius <= 0)
+                {
+                    VelocityX *= -1;
+                }
+                if (Center.Y + Radius >= height || Center.Y - Radius <= 0)
+                {
+                    VelocityY *= -1;
+                }
             }
             Center = new Point((int)(Center.X + VelocityX),(int)(Center.Y + VelocityY));
         }
