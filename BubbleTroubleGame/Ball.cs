@@ -82,7 +82,7 @@ namespace BubbleTroubleGame
         }
         public bool isHit(Harpoon harpoon)
         {
-            for(int i=350;i>harpoon.currentY;i--)
+            for(int i=310;i>harpoon.currentY;i--)
             {
                 if(Math.Sqrt(Math.Pow(harpoon.startingX - (Center.X), 2) + Math.Pow(i - (Center.Y), 2)) <= Radius)
                 {
