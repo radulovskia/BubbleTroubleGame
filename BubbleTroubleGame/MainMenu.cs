@@ -24,5 +24,13 @@ namespace BubbleTroubleGame
             form2.Closed += (s, args) => this.Close();
             form2.Show();
         }
+
+        private void LE_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Form form2 = new FormLE();
+            form2.Closed += (s, args) => this.Close();
+            form2.Show();
+        }
     }
 }
