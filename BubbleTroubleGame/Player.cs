@@ -13,7 +13,7 @@ namespace BubbleTroubleGame
         //X value
         public int position { get; set; }
 
-        public int lives { get; set; } = 10;
+        public int lives { get; set; } = 5;
 
         public Image playerImg { get; set; }
 
@@ -33,8 +33,8 @@ namespace BubbleTroubleGame
             this.isDead = false;
             if (playerId == 1)
                 this.playerImg = Resources.p1back;
-            else if(playerId == 2)
-                this.playerImg= Resources.p2back;
+            else if (playerId == 2)
+                this.playerImg = Resources.p2back;
         }
 
         public void Move(int sceneWidth, string direction)
@@ -46,7 +46,7 @@ namespace BubbleTroubleGame
                     this.playerImg = Resources.p1right;
                 if (playerId == 2)
                     this.playerImg = Resources.p2right;
-                position += 5; //might be too slow, might be too fast
+                position += 2; //might be too slow, might be too fast
             }
             else
             {
@@ -54,7 +54,7 @@ namespace BubbleTroubleGame
                     this.playerImg = Resources.p1left;
                 if (playerId == 2)
                     this.playerImg = Resources.p2left;
-                position -= 5; //might be too slow, might be too fast
+                position -= 2; //might be too slow, might be too fast
             }
             if (position > sceneWidth)
                 position = sceneWidth;
@@ -64,13 +64,14 @@ namespace BubbleTroubleGame
 
         public void Draw(Graphics g)
         {
-            if (!isMoving) {  //y coordinate???
-                if(playerId == 1)
+            if (!isMoving)
+            {  //y coordinate???
+                if (playerId == 1)
                     playerImg = Resources.p1back;
                 else
                     playerImg = Resources.p2back;
             }
-                g.DrawImage(playerImg, position, 300, 50, 50); //idk if this works yet, image too big atm (450x450)
+            g.DrawImage(playerImg, position, 300, 50, 50); //idk if this works yet, image too big atm (450x450)
         }
         //finish this
         public bool isHit(List<Ball> balls)

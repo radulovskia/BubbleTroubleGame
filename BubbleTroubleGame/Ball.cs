@@ -42,18 +42,7 @@ namespace BubbleTroubleGame
         //add horizontal movement
         public void Move(int height, int width)
         {
-            if(VelocityY<0 && ((Center.Y)<=Radius*20))
-            {
-                if (Center.X + Radius >= width || Center.X - Radius <= 0)
-                {
-                    VelocityX *= -1;
-                }
-                if (Center.Y + Radius >= height || Center.Y - Radius <= height - Radius * 15 || Center.Y - Radius <= 0)
-                {
-                    VelocityY *= -1;
-                }
-            }
-            else
+            if (Radius * 15 >= height)
             {
                 if (Center.X + Radius >= width || Center.X - Radius <= 0)
                 {
@@ -62,6 +51,31 @@ namespace BubbleTroubleGame
                 if (Center.Y + Radius >= height || Center.Y - Radius <= 0)
                 {
                     VelocityY *= -1;
+                }
+            }
+            else
+            {
+                if (VelocityY < 0 && ((Center.Y) <= Radius * 20))
+                {
+                    if (Center.X + Radius >= width || Center.X - Radius <= 0)
+                    {
+                        VelocityX *= -1;
+                    }
+                    if (Center.Y + Radius >= height || Center.Y - Radius <= height - Radius * 15 || Center.Y - Radius <= 0)
+                    {
+                        VelocityY *= -1;
+                    }
+                }
+                else
+                {
+                    if (Center.X + Radius >= width || Center.X - Radius <= 0)
+                    {
+                        VelocityX *= -1;
+                    }
+                    if (Center.Y + Radius >= height || Center.Y - Radius <= 0)
+                    {
+                        VelocityY *= -1;
+                    }
                 }
             }
             Center = new Point((int)(Center.X + VelocityX),(int)(Center.Y + VelocityY));

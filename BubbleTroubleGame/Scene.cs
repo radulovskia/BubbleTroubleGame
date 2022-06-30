@@ -13,7 +13,8 @@ namespace BubbleTroubleGame
         public Harpoon harpoon { get; set; }
         public Scene()
         {
-            balls = new List<Ball> { new Ball(7,new Point(150,100),1), new Ball(12, new Point(350, 20),-1) , new Ball(20, new Point(200, 50),1) };
+            //ball.Y cannot be less that radius
+            balls = new List<Ball> { new Ball(7,new Point(150,100),1), new Ball(25, new Point(350, 50),-1) , new Ball(20, new Point(200, 50),1) };
             playerOne = new Player(240,1);
             harpoon = new Harpoon(240);
         }
