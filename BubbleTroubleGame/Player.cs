@@ -64,7 +64,7 @@ namespace BubbleTroubleGame
 
         public void Draw(Graphics g)
         {
-            if (!isMoving)
+            if (isShooting)
             {  //y coordinate???
                 if (playerId == 1)
                     playerImg = Resources.p1back;
