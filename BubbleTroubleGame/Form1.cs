@@ -51,8 +51,10 @@ namespace BubbleTroubleGame
             }
             if (e.KeyCode == Keys.W)
             {
+                if (!scene.playerOne.isShooting) { 
+                    scene.harpoon.startingX = scene.playerOne.position + 24;
+                }
                 scene.playerOne.isShooting = true;
-                scene.harpoon.startingX=scene.playerOne.position+24;
             }
             if (e.KeyCode == Keys.Escape)
             {

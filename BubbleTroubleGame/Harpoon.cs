@@ -27,7 +27,7 @@ namespace BubbleTroubleGame
         }
         public void Draw(Graphics g)
         {
-            Pen pen = new Pen(Color.Black, 3);
+            Pen pen = new Pen(Color.Black, 2);
             g.DrawLine(pen, startingX, 310, startingX, currentY);
             pen.Dispose();
         }

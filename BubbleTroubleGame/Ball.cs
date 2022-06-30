@@ -66,7 +66,7 @@ namespace BubbleTroubleGame
         {
             for(int i=310;i>harpoon.currentY;i--)
             {
-                if(Math.Sqrt(Math.Pow(harpoon.startingX - (Center.X + Radius), 2) + Math.Pow(i - (Center.Y + Radius), 2))<=Radius*2)
+                if(Math.Sqrt(Math.Pow(harpoon.startingX - (Center.X), 2) + Math.Pow(i - (Center.Y), 2)) <= Radius)
                 {
                     return true;
                 }
