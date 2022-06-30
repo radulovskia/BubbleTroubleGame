@@ -33,24 +33,30 @@ namespace BubbleTroubleGame
         private void timer1_Tick(object sender, EventArgs e)
         {
             scene.tick();
+            if (moveLeft)
+                scene.playerOne.Move(Scene.width, "left");
+            if (moveRight)
+                scene.playerOne.Move(Scene.width, "right");
             Invalidate();
         }
-
+        private bool moveRight;
+        private bool moveLeft;
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.A)
             {
                 scene.playerOne.isMoving = true;
-                scene.playerOne.Move(Scene.width, "left");
+                moveLeft = true;
             }
             if (e.KeyCode == Keys.D)
             {
                 scene.playerOne.isMoving = true;
-                scene.playerOne.Move(Scene.width, "right");
+                moveRight = true;
             }
             if (e.KeyCode == Keys.W)
             {
-                if (!scene.playerOne.isShooting) { 
+                if (!scene.playerOne.isShooting)
+                {
                     scene.harpoon.startingX = scene.playerOne.position + 24;
                 }
                 scene.playerOne.isShooting = true;
@@ -67,6 +73,10 @@ namespace BubbleTroubleGame
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
             scene.playerOne.isMoving = false;
+            if (e.KeyCode == Keys.A)
+                moveLeft = false;
+            if (e.KeyCode == Keys.D)
+                moveRight = false;
             Invalidate();
         }
 
