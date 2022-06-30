@@ -30,7 +30,6 @@ namespace BubbleTroubleGame
         {
             scene.draw(e.Graphics);
         }
-
         private void timer1_Tick(object sender, EventArgs e)
         {
             scene.tick();
@@ -51,8 +50,10 @@ namespace BubbleTroubleGame
             }
             if (e.KeyCode == Keys.W)
             {
+                if (!scene.playerOne.isShooting) { 
+                    scene.harpoon.startingX = scene.playerOne.position + 24;
+                }
                 scene.playerOne.isShooting = true;
-                scene.harpoon.startingX=scene.playerOne.position+24;
             }
             if (e.KeyCode == Keys.Escape)
             {
@@ -75,6 +76,31 @@ namespace BubbleTroubleGame
             this.Hide();
             form.ShowDialog();
             this.Close();
+        }
+
+        private void btnResume_Click(object sender, EventArgs e)
+        {
+            panelPauseMenu.Visible = !panelPauseMenu.Visible;
+            panelPauseMenu.Enabled = !panelPauseMenu.Enabled;
+            timer1.Enabled = !timer1.Enabled;
+        }
+
+        private void btnExitToMenu_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            var form2 = new MainMenu();
+            form2.Closed += (s, args) => this.Close();
+            form2.Show();
+        }
+
+        private void btnExitToDesktop_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

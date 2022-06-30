@@ -12,18 +12,18 @@ namespace BubbleTroubleGame
         public int Radius { get; set; }
         public Point Center { get; set; }
         public Color color { get; set; }
-
-        public double Velocity { get; set; } = -1;
+        public double VelocityX { get; set; } = 1;
+        public double VelocityY { get; set; } = 1;
         //public double Angle { get; set; } should an angle be used?
 
         //Color for the ball could be randomly assigned with each breaking of it or have order of the colors accoring to the value
         //To be discussed
-        public Ball(int Radius, Point Center)
+        public Ball(int Radius, Point Center,double VelocityX)
         {
             this.Radius=Radius;
             this.Center=Center;
             this.color = GetRandomColor();
-            
+            this.VelocityX= VelocityX;
         }
         static Color[] colors = { Color.Blue}; // add more colors
         static Color GetRandomColor()
@@ -34,39 +34,43 @@ namespace BubbleTroubleGame
 
         public void Draw(Graphics g)
         {
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             Brush brush = new SolidBrush(color);
             g.FillEllipse(brush, Center.X - Radius, Center.Y - Radius, Radius * 2, Radius * 2);
             brush.Dispose();
         }
         //add horizontal movement
-        public void Move(int height)
+        public void Move(int height, int width)
         {
-            if (Center.Y >= (height-Radius))
+            if(VelocityY<0 && ((Center.Y)<=Radius*20))
             {
-                Velocity = -(Velocity);
-            }
-            if (Velocity > 0)
-            {
-                Center = new Point(Center.X, (int)(Center.Y - Velocity));
-                if(Center.Y <=(0+Radius))
+                if (Center.X + Radius >= width || Center.X - Radius <= 0)
                 {
-                    Velocity = -(Velocity);
+                    VelocityX *= -1;
                 }
-                if (Center.Y <= (height - (Radius * 20)))
+                if (Center.Y + Radius >= height || Center.Y - Radius <= height - Radius * 15 || Center.Y - Radius <= 0)
                 {
-                    Velocity = -(Velocity);
+                    VelocityY *= -1;
                 }
             }
             else
             {
-                Center = new Point(Center.X, (int)(Center.Y - Velocity));
+                if (Center.X + Radius >= width || Center.X - Radius <= 0)
+                {
+                    VelocityX *= -1;
+                }
+                if (Center.Y + Radius >= height || Center.Y - Radius <= 0)
+                {
+                    VelocityY *= -1;
+                }
             }
+            Center = new Point((int)(Center.X + VelocityX),(int)(Center.Y + VelocityY));
         }
         public bool isHit(Harpoon harpoon)
         {
             for(int i=310;i>harpoon.currentY;i--)
             {
-                if(Math.Sqrt(Math.Pow(harpoon.startingX - (Center.X + Radius), 2) + Math.Pow(i - (Center.Y + Radius), 2))<=Radius*2)
+                if(Math.Sqrt(Math.Pow(harpoon.startingX - (Center.X), 2) + Math.Pow(i - (Center.Y), 2)) <= Radius)
                 {
                     return true;
                 }
