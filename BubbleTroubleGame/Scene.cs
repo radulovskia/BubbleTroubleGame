@@ -27,6 +27,12 @@ namespace BubbleTroubleGame
             harpoon.Draw(graphics);
             Brush brush = new SolidBrush(Color.FromArgb(77, 0, 77));
             graphics.FillRectangle(brush, new Rectangle(0,350,width,height));
+            if (Highlight != Rectangle.Empty)
+            {
+                Pen pen = new Pen(Color.Green, 2);
+                graphics.DrawEllipse(pen, Highlight);
+                pen.Dispose();
+            }
         }
         public void tick()
         {
@@ -61,5 +67,7 @@ namespace BubbleTroubleGame
                 playerOne.isShooting = false;
             }
         }
+
+        public Rectangle Highlight { get; set; } = Rectangle.Empty;
     }
 }

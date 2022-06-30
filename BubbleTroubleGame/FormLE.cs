@@ -18,6 +18,8 @@ namespace BubbleTroubleGame
             InitializeComponent();
             scene = new Scene();
             Invalidate();
+            foreach (Ball ball in scene.balls)
+                listBox1.Items.Add(ball);
         }
 
         private void panel2_MouseClick(object sender, MouseEventArgs e)
@@ -40,6 +42,19 @@ namespace BubbleTroubleGame
         private void panelGame_Paint(object sender, PaintEventArgs e)
         {
             scene.draw(e.Graphics);
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Ball ball = ((Ball)listBox1.SelectedItem);
+            ball.Radius += 10;
+            Rectangle rect = new Rectangle(ball.Center.X - ball.Radius, ball.Center.Y - ball.Radius, ball.Radius * 2, ball.Radius * 2);
+            rect.Inflate(3, 3);
+            scene.Highlight = rect;
+            //listBox1.Items.Clear();
+            //foreach (Ball ball1 in scene.balls)
+            //    listBox1.Items.Add(ball1);
+            Invalidate(true);
         }
         // ListBox gi ima site elementi sto mozat da bidat dodadeni, se otvara na tab
         // Move ke bide so middle mouse

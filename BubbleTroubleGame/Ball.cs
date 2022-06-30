@@ -73,5 +73,10 @@ namespace BubbleTroubleGame
             }
             return false;
         }
+
+        public override string ToString()
+        {
+            return "Ball " + Radius;
+        }
     }
 }
