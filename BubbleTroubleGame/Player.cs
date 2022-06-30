@@ -13,7 +13,7 @@ namespace BubbleTroubleGame
         //X value
         public int position { get; set; }
 
-        public int lives { get; set; } = 10;
+        public int lives { get; set; } = 5;
 
         public Image playerImg { get; set; }
 
