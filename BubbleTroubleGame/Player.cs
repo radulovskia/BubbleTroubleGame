@@ -84,7 +84,7 @@ namespace BubbleTroubleGame
                 double posY = 360 + 25;
                 double euclid = Math.Sqrt(Math.Pow(posX - ballX, 2) + Math.Pow(posY - ballY, 2));
                 //20 is hitbox
-                if (euclid <= Math.Pow(b.Radius + 20, 2))
+                if (euclid <= Math.Sqrt(Math.Pow(b.Radius + 20, 2)))
                     lives--;
             }
         }
