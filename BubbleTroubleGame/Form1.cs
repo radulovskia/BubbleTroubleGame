@@ -13,10 +13,12 @@ namespace BubbleTroubleGame
     public partial class Form1 : Form
     {
         public Scene scene;
-        public Form1()
+        private bool second;
+        public Form1(bool second)
         {
             InitializeComponent();
-            scene = new Scene();
+            this.second = second;
+            scene = new Scene(second);
             timer1.Interval = 1;
             this.Height = 480;
             this.Width = 600;
@@ -33,33 +35,62 @@ namespace BubbleTroubleGame
         private void timer1_Tick(object sender, EventArgs e)
         {
             scene.tick();
-            if (moveLeft)
+            if (scene.balls.Count == 0)
+                timer1.Stop();
+            if (moveLeft1)
                 scene.playerOne.Move(Scene.width, "left");
-            if (moveRight)
+            if (moveRight1)
                 scene.playerOne.Move(Scene.width, "right");
+            if (moveLeft2)
+                scene.playerTwo.Move(Scene.width, "left");
+            if (moveRight2)
+                scene.playerTwo.Move(Scene.width, "right");
             Invalidate();
         }
-        private bool moveRight;
-        private bool moveLeft;
+        private bool moveRight1;
+        private bool moveRight2;
+        private bool moveLeft1;
+        private bool moveLeft2;
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.A)
             {
                 scene.playerOne.isMoving = true;
-                moveLeft = true;
+                moveLeft1 = true;
             }
             if (e.KeyCode == Keys.D)
             {
                 scene.playerOne.isMoving = true;
-                moveRight = true;
+                moveRight1 = true;
             }
             if (e.KeyCode == Keys.W)
             {
                 if (!scene.playerOne.isShooting)
                 {
-                    scene.harpoon.startingX = scene.playerOne.position + 24;
+                    scene.harpoon1.startingX = scene.playerOne.position + 24;
                 }
                 scene.playerOne.isShooting = true;
+            }
+            if (second)
+            {
+                if (e.KeyCode == Keys.Left)
+                {
+                    scene.playerTwo.isMoving = true;
+                    moveLeft2 = true;
+                }
+                if (e.KeyCode == Keys.Right)
+                {
+                    scene.playerTwo.isMoving = true;
+                    moveRight2 = true;
+                }
+                if (e.KeyCode == Keys.Up)
+                {
+                    if (!scene.playerTwo.isShooting)
+                    {
+                        scene.harpoon2.startingX = scene.playerTwo.position + 24;
+                    }
+                    scene.playerTwo.isShooting = true;
+                }
             }
             if (e.KeyCode == Keys.Escape)
             {
@@ -72,11 +103,29 @@ namespace BubbleTroubleGame
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
-            scene.playerOne.isMoving = false;
             if (e.KeyCode == Keys.A)
-                moveLeft = false;
+            {
+                moveLeft1 = false;
+                scene.playerOne.isMoving = false;
+            }
             if (e.KeyCode == Keys.D)
-                moveRight = false;
+            {
+                moveRight1 = false;
+                scene.playerOne.isMoving = false;
+            }
+            if (second)
+            {
+                if (e.KeyCode == Keys.Left)
+                {
+                    moveLeft2 = false;
+                    scene.playerTwo.isMoving = false;
+                }
+                if (e.KeyCode == Keys.Right)
+                {
+                    moveRight2 = false;
+                    scene.playerTwo.isMoving = false;
+                }
+            }
             Invalidate();
         }
 
@@ -105,12 +154,7 @@ namespace BubbleTroubleGame
 
         private void btnExitToDesktop_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
+            this.Close();
         }
     }
 }

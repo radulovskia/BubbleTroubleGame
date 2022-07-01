@@ -16,7 +16,7 @@ namespace BubbleTroubleGame
         public FormLE()
         {
             InitializeComponent();
-            scene = new Scene();
+            scene = new Scene(true);
             this.DoubleBuffered = true;
             Invalidate();
             foreach (Ball ball in scene.balls)
