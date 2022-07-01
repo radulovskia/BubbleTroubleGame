@@ -7,10 +7,22 @@ using System.Threading.Tasks;
 
 namespace BubbleTroubleGame
 {
+    [Serializable]
     public class Ball
     {
+        public static int WIDTH = 600;
+        public static int HEIGHT = 480;
         public int Radius { get; set; }
-        public Point Center { get; set; }
+        //public Point Center { get; set; }
+        private Point center;
+        public Point Center {
+            get { return center; }
+            set
+            {
+                if (value.X - Radius >= 0 && value.Y - Radius >= 0 && value.X + Radius <= 600 && value.Y + Radius <= 400)
+                    center = value;
+            } 
+        }
         public Color color { get; set; }
         public double VelocityX { get; set; } = 1;
         public double VelocityY { get; set; } = 1;

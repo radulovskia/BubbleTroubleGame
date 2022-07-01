@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -19,20 +22,25 @@ namespace BubbleTroubleGame
             scene = new Scene(true);
             this.DoubleBuffered = true;
             Invalidate();
+            initScene();
+            timer1.Start();
+        }
+        private void initScene()
+        {
+            listBox1.Items.Clear();
             foreach (Ball ball in scene.balls)
                 listBox1.Items.Add(ball);
             listBox1.Items.Add(scene.playerOne);
-            timer1.Start();
         }
-
         private void panel2_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
                 scene.balls.Add(new Ball(10, new Point(e.X, e.Y), 0));
+                initScene();
             } else if(e.Button == MouseButtons.Right)
             {
-                //scene.Select(new Point(e.X, e.Y));
+                listBox1.SelectedItem = scene.Select(e.Location);
             }
             changed = true;
         }
@@ -60,11 +68,45 @@ namespace BubbleTroubleGame
                 return cp;
             }
         }
-
+        private String Type = "";
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             setHighlight();
+            setContext();
             changed = true;
+        }
+        private void setContext()
+        {
+            if (Type == "Ball")
+            {
+                lblContext1.Text = "Radius: ";
+                lblContext1.Enabled = true;
+                lblContext1.Visible = true; 
+                numContext1.Enabled = true;
+                numContext1.Visible = true;
+                numContext1.Value = ((Ball)listBox1.SelectedItem).Radius;
+                numContext1.Increment = 5;
+            }else if (Type == "Player")
+            {
+                lblContext1.Text = "Lives: ";
+                lblContext1.Enabled = true;
+                lblContext1.Visible = true;
+                numContext1.Enabled = true;
+                numContext1.Visible = true;
+                numContext1.Value = ((Player)listBox1.SelectedItem).lives;
+                numContext1.Increment = 1;
+            }
+            else
+            {
+                lblContext1.Enabled = false;
+                lblContext1.Visible = false;
+                numContext1.Enabled = false;
+                numContext1.Visible = false;
+                lblContext2.Enabled = false;
+                lblContext2.Visible = false;
+                numContext2.Enabled = false;
+                numContext2.Visible = false;
+            }
         }
         private void setHighlight()
         {
@@ -77,6 +119,7 @@ namespace BubbleTroubleGame
                 //listBox1.Items.Clear();
                 //foreach (Ball ball1 in scene.balls)
                 //    listBox1.Items.Add(ball1);
+                Type = "Ball";
             }
             else if (listBox1.SelectedItem is Player)
             {
@@ -84,6 +127,11 @@ namespace BubbleTroubleGame
                 Rectangle rect = new Rectangle(player.position, 300, 50, 50);
                 rect.Inflate(3, 3);
                 scene.Highlight = rect;
+                Type = "Player";
+            }else if (listBox1.SelectedItem is null)
+            {
+                scene.Highlight = Rectangle.Empty;
+                Type = "";
             }
         }
         private Point dragStart = Point.Empty;
@@ -112,9 +160,8 @@ namespace BubbleTroubleGame
             else if (listBox1.SelectedItem is Player)
             {
                 Player player = (Player)listBox1.SelectedItem;
-                Rectangle rect = new Rectangle(player.position, 300, 50, 50);
-                rect.Inflate(3, 3);
-                scene.Highlight = rect;
+                player.position = player.position - (dragStart.X - e.Location.X);
+                dragStart = e.Location;
             }
             setHighlight();
             changed = true;
@@ -137,6 +184,51 @@ namespace BubbleTroubleGame
                 changed = false;
                 Invalidate(true);
             }
+        }
+
+        private void numContext1_ValueChanged(object sender, EventArgs e)
+        {
+            if(Type == "Ball")
+            {
+                ((Ball)listBox1.SelectedItem).Radius = (int)numContext1.Value;
+            }
+            setHighlight();
+            changed = true;
+        }
+        private String FileName = "";
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (FileName == "")
+            {
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "BubbleTroubleLevel File (*.btl)|*.btl";
+                saveFileDialog.Title = "Save a BubbleTroubleLevel File";
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    FileName = saveFileDialog.FileName;
+                }
+            }
+            FileStream fstream = new FileStream(FileName, FileMode.Create, FileAccess.Write, FileShare.None);
+            IFormatter formatter = new BinaryFormatter(); 
+            formatter.Serialize(fstream, scene);
+            fstream.Close();
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "BubbleTroubleLevel File (*.btl)|*.btl";
+            openFileDialog.Title = "Open a BubbleTroubleLevel File";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                FileName = openFileDialog.FileName;
+            }
+            FileStream fstream = new FileStream(FileName, FileMode.Open, FileAccess.Read, FileShare.None);
+            IFormatter formatter = new BinaryFormatter();
+            this.scene = (Scene) formatter.Deserialize(fstream);
+            fstream.Close();
+            initScene();
+            changed = true;
         }
         // ListBox gi ima site elementi sto mozat da bidat dodadeni, se otvara na tab
         // Move ke bide so middle mouse
