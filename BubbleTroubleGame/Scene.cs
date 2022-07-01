@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 
 namespace BubbleTroubleGame
-{
+{   
+    [Serializable]
     public class Scene
     {
         public List<Ball> balls { get; set; }
@@ -69,7 +70,6 @@ namespace BubbleTroubleGame
                 playerOne.isShooting = false;
             }
         }
-
         public Rectangle Highlight { get; set; } = Rectangle.Empty;
 
         //Dodatok za select

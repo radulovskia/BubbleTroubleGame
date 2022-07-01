@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -19,17 +22,22 @@ namespace BubbleTroubleGame
             scene = new Scene();
             this.DoubleBuffered = true;
             Invalidate();
+            initScene();
+            timer1.Start();
+        }
+        private void initScene()
+        {
+            listBox1.Items.Clear();
             foreach (Ball ball in scene.balls)
                 listBox1.Items.Add(ball);
             listBox1.Items.Add(scene.playerOne);
-            timer1.Start();
         }
-
         private void panel2_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
                 scene.balls.Add(new Ball(10, new Point(e.X, e.Y), 0));
+                initScene();
             } else if(e.Button == MouseButtons.Right)
             {
                 listBox1.SelectedItem = scene.Select(e.Location);
@@ -185,6 +193,41 @@ namespace BubbleTroubleGame
                 ((Ball)listBox1.SelectedItem).Radius = (int)numContext1.Value;
             }
             setHighlight();
+            changed = true;
+        }
+        private String FileName = "";
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (FileName == "")
+            {
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "BubbleTroubleLevel File (*.btl)|*.btl";
+                saveFileDialog.Title = "Save a BubbleTroubleLevel File";
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    FileName = saveFileDialog.FileName;
+                }
+            }
+            FileStream fstream = new FileStream(FileName, FileMode.Create, FileAccess.Write, FileShare.None);
+            IFormatter formatter = new BinaryFormatter(); 
+            formatter.Serialize(fstream, scene);
+            fstream.Close();
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "BubbleTroubleLevel File (*.btl)|*.btl";
+            openFileDialog.Title = "Open a BubbleTroubleLevel File";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                FileName = openFileDialog.FileName;
+            }
+            FileStream fstream = new FileStream(FileName, FileMode.Open, FileAccess.Read, FileShare.None);
+            IFormatter formatter = new BinaryFormatter();
+            this.scene = (Scene) formatter.Deserialize(fstream);
+            fstream.Close();
+            initScene();
             changed = true;
         }
         // ListBox gi ima site elementi sto mozat da bidat dodadeni, se otvara na tab

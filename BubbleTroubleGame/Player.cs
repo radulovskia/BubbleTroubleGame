@@ -8,6 +8,7 @@ using BubbleTroubleGame.Properties;
 
 namespace BubbleTroubleGame
 {
+    [Serializable]
     public class Player
     {
         //X value

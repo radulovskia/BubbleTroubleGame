@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace BubbleTroubleGame
 {
+    [Serializable]
     public class Ball
     {
         public static int WIDTH = 600;
