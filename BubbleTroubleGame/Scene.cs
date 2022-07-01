@@ -71,5 +71,24 @@ namespace BubbleTroubleGame
         }
 
         public Rectangle Highlight { get; set; } = Rectangle.Empty;
+
+        //Dodatok za select
+        public Object Select(Point p)
+        {
+            foreach (Ball ball in balls)
+            {
+                if (Distance(p, ball.Center) <= ball.Radius)
+                {
+                    return ball;
+                }
+            }
+            if (new Rectangle(playerOne.position, 300, 50, 50).Contains(p))
+                return playerOne;
+            return null;
+        }
+        public double Distance(Point a, Point b)
+        {
+            return Math.Sqrt(Math.Pow(a.X - b.X, 2) + Math.Pow(a.Y - b.Y, 2));
+        }
     }
 }

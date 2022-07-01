@@ -32,7 +32,7 @@ namespace BubbleTroubleGame
                 scene.balls.Add(new Ball(10, new Point(e.X, e.Y), 0));
             } else if(e.Button == MouseButtons.Right)
             {
-                //scene.Select(new Point(e.X, e.Y));
+                listBox1.SelectedItem = scene.Select(e.Location);
             }
             changed = true;
         }
@@ -60,11 +60,45 @@ namespace BubbleTroubleGame
                 return cp;
             }
         }
-
+        private String Type = "";
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             setHighlight();
+            setContext();
             changed = true;
+        }
+        private void setContext()
+        {
+            if (Type == "Ball")
+            {
+                lblContext1.Text = "Radius: ";
+                lblContext1.Enabled = true;
+                lblContext1.Visible = true; 
+                numContext1.Enabled = true;
+                numContext1.Visible = true;
+                numContext1.Value = ((Ball)listBox1.SelectedItem).Radius;
+                numContext1.Increment = 5;
+            }else if (Type == "Player")
+            {
+                lblContext1.Text = "Lives: ";
+                lblContext1.Enabled = true;
+                lblContext1.Visible = true;
+                numContext1.Enabled = true;
+                numContext1.Visible = true;
+                numContext1.Value = ((Player)listBox1.SelectedItem).lives;
+                numContext1.Increment = 1;
+            }
+            else
+            {
+                lblContext1.Enabled = false;
+                lblContext1.Visible = false;
+                numContext1.Enabled = false;
+                numContext1.Visible = false;
+                lblContext2.Enabled = false;
+                lblContext2.Visible = false;
+                numContext2.Enabled = false;
+                numContext2.Visible = false;
+            }
         }
         private void setHighlight()
         {
@@ -77,6 +111,7 @@ namespace BubbleTroubleGame
                 //listBox1.Items.Clear();
                 //foreach (Ball ball1 in scene.balls)
                 //    listBox1.Items.Add(ball1);
+                Type = "Ball";
             }
             else if (listBox1.SelectedItem is Player)
             {
@@ -84,6 +119,11 @@ namespace BubbleTroubleGame
                 Rectangle rect = new Rectangle(player.position, 300, 50, 50);
                 rect.Inflate(3, 3);
                 scene.Highlight = rect;
+                Type = "Player";
+            }else if (listBox1.SelectedItem is null)
+            {
+                scene.Highlight = Rectangle.Empty;
+                Type = "";
             }
         }
         private Point dragStart = Point.Empty;
@@ -112,9 +152,8 @@ namespace BubbleTroubleGame
             else if (listBox1.SelectedItem is Player)
             {
                 Player player = (Player)listBox1.SelectedItem;
-                Rectangle rect = new Rectangle(player.position, 300, 50, 50);
-                rect.Inflate(3, 3);
-                scene.Highlight = rect;
+                player.position = player.position - (dragStart.X - e.Location.X);
+                dragStart = e.Location;
             }
             setHighlight();
             changed = true;
@@ -137,6 +176,16 @@ namespace BubbleTroubleGame
                 changed = false;
                 Invalidate(true);
             }
+        }
+
+        private void numContext1_ValueChanged(object sender, EventArgs e)
+        {
+            if(Type == "Ball")
+            {
+                ((Ball)listBox1.SelectedItem).Radius = (int)numContext1.Value;
+            }
+            setHighlight();
+            changed = true;
         }
         // ListBox gi ima site elementi sto mozat da bidat dodadeni, se otvara na tab
         // Move ke bide so middle mouse
