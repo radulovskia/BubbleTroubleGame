@@ -15,6 +15,7 @@ namespace BubbleTroubleGame
         public int position { get; set; }
 
         public int lives { get; set; } = 5;
+        public Image heart { get; set; } = Resources.heart_final_copy;
 
         public Image playerImg { get; set; }
 
@@ -79,6 +80,27 @@ namespace BubbleTroubleGame
                     playerImg = Resources.p2back;
             }
             g.DrawImage(playerImg, position, 300, 50, 50);
+        }
+        public void DrawLives(Graphics g, string direction)
+        {
+            int spaceLeft = 0;
+            int spaceRight = 560;
+            if (direction == "left")
+            {
+                for (int i = 0; i < lives; i++)
+                {
+                    g.DrawImage(heart,spaceLeft, 20,15,15);
+                    spaceLeft += 30;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < lives; i++)
+                {
+                    g.DrawImage(heart, spaceRight, 20,15,15);
+                    spaceRight -= 30;
+                }
+            }
         }
         
         public bool isHit(List<Ball> balls)

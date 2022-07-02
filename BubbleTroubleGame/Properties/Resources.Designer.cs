@@ -83,6 +83,16 @@ namespace BubbleTroubleGame.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap heart_final_copy {
+            get {
+                object obj = ResourceManager.GetObject("heart_final_copy", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap p1back {
             get {
                 object obj = ResourceManager.GetObject("p1back", resourceCulture);

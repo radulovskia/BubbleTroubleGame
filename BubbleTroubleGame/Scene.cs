@@ -46,10 +46,12 @@ namespace BubbleTroubleGame
                 ball.Draw(graphics);
             }
             playerOne.Draw(graphics);
+            playerOne.DrawLives(graphics,"left");
             harpoon1.Draw(graphics);
             if (second)
             {
                 playerTwo.Draw(graphics);
+                playerTwo.DrawLives(graphics,"right");
                 harpoon2.Draw(graphics);
             }
             Brush brush = new SolidBrush(Color.FromArgb(77, 0, 77));
@@ -101,7 +103,7 @@ namespace BubbleTroubleGame
                         playerOne.isShooting = false;
                         harpoon1 = new Harpoon(playerOne.position);
                     }
-                    if (second)
+                    if (second && balls.Count!=0)//bug when last ball destoryed in coop, the extra checker prevents that
                     {
                         bool tsc2 = tickShootingCheck(harpoon2, balls[i]);
                         if (tsc2 || harpoon2.currentY == 0)
