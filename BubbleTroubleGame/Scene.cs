@@ -34,7 +34,7 @@ namespace BubbleTroubleGame
                 harpoon1 = new Harpoon(300);
                 harpoon2 = new Harpoon(180);
             }
-            //obstacles.Add(new Obstacle(new Point(300, 300), 100, 50));
+            obstacles.Add(new Obstacle(new Point(300, 300), 100, 50));
         }
         public void draw(Graphics graphics)
         {

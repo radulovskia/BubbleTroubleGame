@@ -25,25 +25,48 @@ public class Obstacle
         int back = ball.Center.X - ball.Radius;
         int bottom = ball.Center.Y + ball.Radius;
         int top = ball.Center.Y - ball.Radius;
+        int tmpX = ball.Center.X;
+        int tmpY = ball.Center.Y;
+        double tmpVX = ball.VelocityX;
+        double tmpVY = ball.VelocityY;
         if (Bounds.Contains(front, ball.Center.Y))
         {
-            ball.VelocityX *= -1;
+            tmpVX *= -1;
             if (Bounds.Left - ball.Center.X - ball.Radius < 0)
             {
                 ball.Center = new Point(Bounds.Left - ball.Radius, ball.Center.Y);
+                //tmpX = Bounds.Left - ball.Radius;
             } 
         }
-        if (Bounds.Contains(back, ball.Center.Y))
+        else if (Bounds.Contains(back, ball.Center.Y))
         {
-            ball.VelocityX *= -1;
+            tmpVX *= -1;
             if (-Bounds.Right + ball.Center.X + ball.Radius < 0)
             {
-                ball.Center = new Point(Bounds.Right - ball.Radius, ball.Center.Y);
+                ball.Center = new Point(Bounds.Right + ball.Radius, ball.Center.Y);
+                //tmpX = Bounds.Right + ball.Radius;
             }
         }
-        if (Bounds.Contains(ball.Center.X, top) || Bounds.Contains(ball.Center.X, bottom))
+        if (Bounds.Contains(ball.Center.X, bottom))
         {
-            ball.VelocityY *= -1;
+            tmpVY *= -1;
+            if (Bounds.Top - ball.Center.Y - ball.Radius < 0)
+            {
+                ball.Center = new Point(ball.Center.X, Bounds.Top - ball.Radius);
+                //tmpY = Bounds.Top - ball.Radius;
+            } 
         }
+        else if (Bounds.Contains(ball.Center.X, top))
+        {
+            tmpVY *= -1;
+            if (-Bounds.Bottom + ball.Center.Y + ball.Radius < 0)
+            {
+                ball.Center = new Point(ball.Center.X, Bounds.Bottom + ball.Radius);
+                //tmpY = Bounds.Bottom + ball.Radius;
+            } 
+        }
+        ball.Center = new Point(tmpX, tmpY);
+        ball.VelocityX = tmpVX;
+        ball.VelocityY = tmpVY;
     }
 }

@@ -47,7 +47,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ball.cs" />
-    <Compile Include="Ball2.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
