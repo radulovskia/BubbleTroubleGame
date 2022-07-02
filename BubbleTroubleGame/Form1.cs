@@ -35,7 +35,7 @@ namespace BubbleTroubleGame
         private void timer1_Tick(object sender, EventArgs e)
         {
             scene.tick();
-            if (scene.balls.Count == 0)
+            if (scene.balls.Count == 0 || (!second && scene.playerOne.isDead) || (second && scene.playerOne.isDead && scene.playerTwo.isDead))
                 timer1.Stop();
             if (moveLeft1)
                 scene.playerOne.Move(Scene.width, "left");

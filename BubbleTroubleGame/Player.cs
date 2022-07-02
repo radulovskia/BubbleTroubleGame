@@ -72,21 +72,28 @@ namespace BubbleTroubleGame
                     playerImg = Resources.p2back;
             }
             g.DrawImage(playerImg, position, 300, 50, 50);
+            Pen p = new Pen(Color.White, 3);
+            g.DrawEllipse(p, position + 25, 300, 5, 5);
+            p.Dispose();
         }
         
-        public void isHit(List<Ball> balls)
+        public bool isHit(List<Ball> balls)
         {
             foreach (Ball b in balls)
             {
                 double ballX = b.Radius + b.Center.X;
                 double ballY = b.Radius + b.Center.Y;
                 double posX = position + 25;
-                double posY = 360 + 25;
-                double euclid = Math.Sqrt(Math.Pow(posX - ballX, 2) + Math.Pow(posY - ballY, 2));
-                //20 is hitbox
-                if (euclid <= Math.Sqrt(Math.Pow(b.Radius + 20, 2)))
-                    lives--;
+                double posY = 325;
+                double euclid = Math.Pow(posX - b.Center.X, 2) + Math.Pow(posY - b.Center.Y, 2);                
+                if (euclid <= Math.Pow(b.Radius + 25, 2))
+                {
+                    if(lives == 0)
+                        isDead=true;
+                    return true;
+                }
             }
+            return false;
         }
 
     }

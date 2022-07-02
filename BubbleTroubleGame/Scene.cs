@@ -15,6 +15,9 @@ namespace BubbleTroubleGame
         public Harpoon harpoon1 { get; set; }
         public Harpoon harpoon2 { get; set; }
         private bool second { get; set; }
+        private bool flag1 { get; set; } = false;
+        private bool flag2 { get; set; } = false;
+
         public Scene(bool second)
         {
             //ball.Y cannot be less that radius
@@ -112,8 +115,30 @@ namespace BubbleTroubleGame
                 }
             }
             tickHarpoonGrow(playerOne, harpoon1);
+            if (playerOne.isHit(balls))
+            {
+                if(!flag1)
+                    playerOne.lives--;
+                flag1 = true;
+            }
+            else
+            {
+                flag1 = false;
+            }
             if (second)
-                tickHarpoonGrow(playerTwo, harpoon2);   
+            {
+                tickHarpoonGrow(playerTwo, harpoon2);
+                if (playerTwo.isHit(balls))
+                {
+                    if (!flag2)
+                        playerTwo.lives--;
+                    flag2 = true;
+                }
+                else
+                {
+                    flag2 = false;
+                }
+            }
         }
         public Rectangle Highlight { get; set; } = Rectangle.Empty;
 
