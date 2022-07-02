@@ -27,10 +27,12 @@ namespace BubbleTroubleGame
         }
         private void initScene()
         {
+            var selected = listBox1.SelectedItem;
             listBox1.Items.Clear();
             foreach (Ball ball in scene.balls)
                 listBox1.Items.Add(ball);
             listBox1.Items.Add(scene.playerOne);
+            listBox1.SelectedItem = selected;
         }
         private void panel2_MouseClick(object sender, MouseEventArgs e)
         {
@@ -116,9 +118,6 @@ namespace BubbleTroubleGame
                 Rectangle rect = new Rectangle(ball.Center.X - ball.Radius, ball.Center.Y - ball.Radius, ball.Radius * 2, ball.Radius * 2);
                 rect.Inflate(3, 3);
                 scene.Highlight = rect;
-                //listBox1.Items.Clear();
-                //foreach (Ball ball1 in scene.balls)
-                //    listBox1.Items.Add(ball1);
                 Type = "Ball";
             }
             else if (listBox1.SelectedItem is Player)
@@ -193,6 +192,7 @@ namespace BubbleTroubleGame
                 ((Ball)listBox1.SelectedItem).Radius = (int)numContext1.Value;
             }
             setHighlight();
+            initScene();
             changed = true;
         }
         private String FileName = "";

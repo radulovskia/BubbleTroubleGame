@@ -18,6 +18,8 @@ namespace BubbleTroubleGame
             balls = new List<Ball> { new Ball(7,new Point(150,100),1), new Ball(25, new Point(350, 50),-1) , new Ball(20, new Point(200, 50),1) };
             playerOne = new Player(240,1);
             harpoon = new Harpoon(240);
+
+            Obstacles.Add(new Obstacle(new Point(400, 300), 100, 50));
         }
         public void draw(Graphics graphics)
         {
@@ -35,6 +37,8 @@ namespace BubbleTroubleGame
                 graphics.DrawEllipse(pen, Highlight);
                 pen.Dispose();
             }
+            foreach(Obstacle obstacle in Obstacles)
+                obstacle.draw(graphics);
         }
         public void tick()
         {
@@ -48,8 +52,8 @@ namespace BubbleTroubleGame
                     {
                         Point cent = balls[i].Center;
                         balls.RemoveAt(i);
-                        balls.Add(new Ball(rad, new Point(cent.X + rad, cent.Y), 1));
-                        balls.Add(new Ball(rad, new Point(cent.X - rad, cent.Y) ,-1));
+                        balls.Add(new Ball(rad, new Point(cent.X + rad, cent.Y), 1, true));
+                        balls.Add(new Ball(rad, new Point(cent.X - rad, cent.Y) ,-1, true));
                         playerOne.isShooting = false;
                     }
                     else
@@ -59,6 +63,7 @@ namespace BubbleTroubleGame
                     playerOne.isShooting = false;
                     harpoon = new Harpoon(playerOne.position);
                 }
+                Collide();
             }
             if (playerOne.isShooting)
             {
@@ -89,6 +94,16 @@ namespace BubbleTroubleGame
         public double Distance(Point a, Point b)
         {
             return Math.Sqrt(Math.Pow(a.X - b.X, 2) + Math.Pow(a.Y - b.Y, 2));
+        }
+        // Collision with Obstacles
+        public List<Obstacle> Obstacles = new List<Obstacle>();
+        public void Collide()
+        {
+            foreach (Obstacle obstacle in Obstacles)
+            {
+                foreach( Ball ball in balls)
+                    obstacle.Collide(ball);
+            }
         }
     }
 }

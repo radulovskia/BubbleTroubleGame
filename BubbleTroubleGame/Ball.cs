@@ -28,14 +28,25 @@ namespace BubbleTroubleGame
         public double VelocityY { get; set; } = 1;
         //public double Angle { get; set; } should an angle be used?
 
-        //Color for the ball could be randomly assigned with each breaking of it or have order of the colors accoring to the value
-        //To be discussed
-        public Ball(int Radius, Point Center,double VelocityX)
+        public Ball(int Radius, Point Center, int direction, bool isPopped = false)
         {
             this.Radius=Radius;
             this.Center=Center;
             this.color = GetColor();
-            this.VelocityX= VelocityX;
+            //this.VelocityX = direction;
+
+            //Velocity and gravity are determined by multiple formulas
+            //V=at h=5*r=at^(2)/2
+            //Then the values are tweaked in order to suit the gamespeed
+            this.VelocityX = Radius / 20 < 1 ? 1 : Radius / 10;
+            this.VelocityX *= direction; 
+            double t = Radius / 2 * 5;
+            double h = Radius * 5;
+            this.Gravity = h * 2 / Math.Pow(t, 2);
+            this.VelocityYMax = Gravity * t;
+
+            //if the Ball is popped then it's children shoot upwards
+            this.VelocityY = isPopped ? -VelocityYMax : 0;
         }
         static Color[] colors = { Color.LightSeaGreen, Color.DarkOrange, Color.Magenta, Color.BlueViolet, Color.PaleGoldenrod }; // add more colors
         public Color GetColor()
@@ -69,6 +80,7 @@ namespace BubbleTroubleGame
             brush.Dispose();
         }
         //add horizontal movement
+        /*
         public void Move(int height, int width)
         {
             if (Radius * 15 >= height)
@@ -109,6 +121,43 @@ namespace BubbleTroubleGame
             }
             Center = new Point((int)(Center.X + VelocityX),(int)(Center.Y + VelocityY));
         }
+        */
+        public double VelocityYMax { get; set; }
+        public double Gravity { get; set; } = 0.1;
+        public void Move(int height, int width)
+        {
+            VelocityY = Math.Abs(VelocityY + Gravity) < VelocityYMax ? VelocityY + Gravity : VelocityYMax;
+            Point next = new Point((int)(Center.X + VelocityX), (int)(Center.Y + VelocityY));
+            next = Bounce(next);
+            Center = next;
+        }
+        private Point Bounce(Point p)
+        {
+            int x = p.X;
+            int y = p.Y;
+            if (p.X - Radius <= 0)
+            {
+                VelocityX *= -1;
+                x = -p.X + Radius;
+            }
+            else if (p.X + Radius >= WIDTH)
+            {
+                VelocityX *= -1;
+                x = -p.X - Radius;
+            }
+            if (p.Y - Radius <= 0)
+            {
+                VelocityY *= -1;
+                y = -p.Y + Radius;
+            }
+            else if (p.Y + Radius >= 350)
+            {
+                VelocityY *= -1;
+                y = -p.Y - Radius;
+            }
+            return new Point(x, y);
+        }
+        /*
         public bool isHit(Harpoon harpoon)
         {
             for(int i=310;i>harpoon.currentY;i--)
@@ -117,6 +166,23 @@ namespace BubbleTroubleGame
                 {
                     return true;
                 }
+            }
+            return false;
+        }
+        */
+        public bool isHit(Harpoon harpoon)
+        {
+            int x = harpoon.startingX;
+            int y = harpoon.currentY;
+            //Distance to the line of the harpoon
+            if (Math.Abs(x - Center.X) <= Radius && Center.Y >= y)
+            {
+                    return true;
+            }
+            //Distance to the harpoons edge
+            if (Math.Sqrt(Math.Pow(x - Center.X, 2) + Math.Pow(y - Center.Y, 2)) <= Radius)
+            {
+                return true;
             }
             return false;
         }
