@@ -20,7 +20,7 @@ namespace BubbleTroubleGame
             //ball.Y cannot be less that radius
             this.second = second;
             //made it a multiple of 7
-            balls = new List<Ball> { new Ball(7,new Point(150,100),1), new Ball(28, new Point(350, 50),-1) , new Ball(14, new Point(200, 50),1) };
+            balls = new List<Ball> { new Ball(10,new Point(150,100),1), new Ball(20, new Point(350, 50),-1) , new Ball(25, new Point(200, 50),1) };
 
             if (!second)
             {
@@ -34,7 +34,7 @@ namespace BubbleTroubleGame
                 harpoon1 = new Harpoon(300);
                 harpoon2 = new Harpoon(180);
             }
-            obstacles.Add(new Obstacle(new Point(300, 300), 100, 50));
+            //obstacles.Add(new Obstacle(new Point(300, 300), 100, 50));
         }
         public void draw(Graphics graphics)
         {
@@ -65,7 +65,7 @@ namespace BubbleTroubleGame
             if (ball.isHit(harpoon))
             {
                 int rad = ball.Radius / 2;
-                if (rad >= 7)
+                if (rad >= 10)
                 {
                     Point cent = ball.Center;   
                     balls.Add(new Ball(rad, new Point(cent.X + rad, cent.Y), 1, true));

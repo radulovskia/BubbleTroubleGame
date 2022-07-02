@@ -43,7 +43,7 @@ namespace BubbleTroubleGame
             //Velocity and gravity are determined by multiple formulas
             //V=at h=5*r=at^(2)/2
             //Then the values are tweaked in order to suit the gamespeed
-            this.VelocityX = Radius / 20 < 1 ? 1 : Radius / 10;
+            this.VelocityX = Radius / 15 < 1 ? 1 : Radius / 10;
             this.VelocityX *= direction; 
             double t = Radius / 2 * 7;
             double h = Radius * 7;
