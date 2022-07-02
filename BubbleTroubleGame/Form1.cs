@@ -63,7 +63,7 @@ namespace BubbleTroubleGame
                 scene.playerOne.isMoving = true;
                 moveRight1 = true;
             }
-            if (e.KeyCode == Keys.W)
+            if (e.KeyCode == Keys.W && !scene.playerOne.isDead)
             {
                 if (!scene.playerOne.isShooting)
                 {
@@ -83,7 +83,7 @@ namespace BubbleTroubleGame
                     scene.playerTwo.isMoving = true;
                     moveRight2 = true;
                 }
-                if (e.KeyCode == Keys.Up)
+                if (e.KeyCode == Keys.Up && !scene.playerTwo.isDead)
                 {
                     if (!scene.playerTwo.isShooting)
                     {

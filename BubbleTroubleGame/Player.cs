@@ -64,6 +64,10 @@ namespace BubbleTroubleGame
 
         public void Draw(Graphics g)
         {
+            if (isDead)
+            {
+                playerImg = Resources.rip;
+            }
             if (isShooting)
             {
                 if (playerId == 1)
@@ -72,9 +76,6 @@ namespace BubbleTroubleGame
                     playerImg = Resources.p2back;
             }
             g.DrawImage(playerImg, position, 300, 50, 50);
-            Pen p = new Pen(Color.White, 3);
-            g.DrawEllipse(p, position + 25, 300, 5, 5);
-            p.Dispose();
         }
         
         public bool isHit(List<Ball> balls)
