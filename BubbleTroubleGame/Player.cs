@@ -82,8 +82,6 @@ namespace BubbleTroubleGame
         {
             foreach (Ball b in balls)
             {
-                double ballX = b.Radius + b.Center.X;
-                double ballY = b.Radius + b.Center.Y;
                 double posX = position + 25;
                 double posY = 325;
                 double euclid = Math.Pow(posX - b.Center.X, 2) + Math.Pow(posY - b.Center.Y, 2);                
