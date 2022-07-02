@@ -40,14 +40,13 @@ namespace BubbleTroubleGame
 
         public void Move(int sceneWidth, string direction)
         {
-            //stop at end of screen or continue from other side?
             if (direction == "right")
             {
                 if (playerId == 1)
                     this.playerImg = Resources.p1right;
                 if (playerId == 2)
                     this.playerImg = Resources.p2right;
-                position += 2; //might be too slow, might be too fast
+                position += 2;
             }
             else
             {
@@ -55,7 +54,7 @@ namespace BubbleTroubleGame
                     this.playerImg = Resources.p1left;
                 if (playerId == 2)
                     this.playerImg = Resources.p2left;
-                position -= 2; //might be too slow, might be too fast
+                position -= 2;
             }
             if (position > sceneWidth)
                 position = sceneWidth;
@@ -66,16 +65,16 @@ namespace BubbleTroubleGame
         public void Draw(Graphics g)
         {
             if (isShooting)
-            {  //y coordinate???
+            {
                 if (playerId == 1)
                     playerImg = Resources.p1back;
                 else
                     playerImg = Resources.p2back;
             }
-            g.DrawImage(playerImg, position, 300, 50, 50); //idk if this works yet, image too big atm (450x450)
+            g.DrawImage(playerImg, position, 300, 50, 50);
         }
-        //finish this
-        public bool isHit(List<Ball> balls)
+        
+        public void isHit(List<Ball> balls)
         {
             foreach (Ball b in balls)
             {
@@ -85,10 +84,9 @@ namespace BubbleTroubleGame
                 double posY = 360 + 25;
                 double euclid = Math.Sqrt(Math.Pow(posX - ballX, 2) + Math.Pow(posY - ballY, 2));
                 //20 is hitbox
-                if (euclid <= Math.Pow(b.Radius + 20, 2))
-                    return true;
+                if (euclid <= Math.Sqrt(Math.Pow(b.Radius + 20, 2)))
+                    lives--;
             }
-            return false;
         }
 
     }

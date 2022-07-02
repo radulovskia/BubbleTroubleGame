@@ -20,7 +20,7 @@ namespace BubbleTroubleGame
         private void Start_Click(object sender, EventArgs e)
         {
             this.Hide();
-            var form2 = new Form1();
+            var form2 = new Form1(false);
             form2.Closed += (s, args) => this.Close();
             form2.Show();
         }
@@ -29,6 +29,14 @@ namespace BubbleTroubleGame
         {
             this.Hide();
             Form form2 = new FormLE();
+            form2.Closed += (s, args) => this.Close();
+            form2.Show();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Form form2 = new Form1(true);
             form2.Closed += (s, args) => this.Close();
             form2.Show();
         }
