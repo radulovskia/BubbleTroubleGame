@@ -12,7 +12,12 @@ namespace BubbleTroubleGame
     {
         public static int WIDTH = 600;
         public static int HEIGHT = 480;
-        public int Radius { get; set; }
+        private int radius;
+        public int Radius {
+            get { return radius; }
+            set {
+                radius = value > 10 ? value : 10;
+            } }
         //public Point Center { get; set; }
         private Point center;
         public Point Center {
@@ -40,8 +45,8 @@ namespace BubbleTroubleGame
             //Then the values are tweaked in order to suit the gamespeed
             this.VelocityX = Radius / 20 < 1 ? 1 : Radius / 10;
             this.VelocityX *= direction; 
-            double t = Radius / 2 * 5;
-            double h = Radius * 5;
+            double t = Radius / 2 * 7;
+            double h = Radius * 7;
             this.Gravity = h * 2 / Math.Pow(t, 2);
             this.VelocityYMax = Gravity * t;
 
