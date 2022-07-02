@@ -21,48 +21,48 @@ public class Obstacle
 
     public void Collide(Ball ball)
     {
-        int front = ball.Center.X + ball.Radius;
-        int back = ball.Center.X - ball.Radius;
-        int bottom = ball.Center.Y + ball.Radius;
-        int top = ball.Center.Y - ball.Radius;
-        int tmpX = ball.Center.X;
-        int tmpY = ball.Center.Y;
         double tmpVX = ball.VelocityX;
         double tmpVY = ball.VelocityY;
+        int front = ball.Center.X + ball.Radius + (int)tmpVX;
+        int back = ball.Center.X - ball.Radius + (int)tmpVX;
+        int bottom = ball.Center.Y + ball.Radius + (int)tmpVY;
+        int top = ball.Center.Y - ball.Radius + (int)tmpVX;
+        int tmpX = ball.Center.X;
+        int tmpY = ball.Center.Y;
         if (Bounds.Contains(front, ball.Center.Y))
         {
             tmpVX *= -1;
-            if (Bounds.Left - ball.Center.X - ball.Radius < 0)
+            if (Bounds.Left - front <= 0)
             {
-                ball.Center = new Point(Bounds.Left - ball.Radius, ball.Center.Y);
-                //tmpX = Bounds.Left - ball.Radius;
+                //ball.Center = new Point(Bounds.Left - ball.Radius, ball.Center.Y);
+                tmpX = Bounds.Left - ball.Radius;
             } 
-        }
-        else if (Bounds.Contains(back, ball.Center.Y))
+        }else if (Bounds.Contains(back, ball.Center.Y))
         {
             tmpVX *= -1;
-            if (-Bounds.Right + ball.Center.X + ball.Radius < 0)
+            if (-Bounds.Right + back <= 0)
             {
-                ball.Center = new Point(Bounds.Right + ball.Radius, ball.Center.Y);
-                //tmpX = Bounds.Right + ball.Radius;
+                //ball.Center = new Point(Bounds.Right + ball.Radius, ball.Center.Y);
+                tmpX = Bounds.Right + ball.Radius;
             }
         }
+
         if (Bounds.Contains(ball.Center.X, bottom))
         {
+            tmpVY = ball.VelocityYMax;
             tmpVY *= -1;
-            if (Bounds.Top - ball.Center.Y - ball.Radius < 0)
+            if (Bounds.Top - bottom <= 0)
             {
-                ball.Center = new Point(ball.Center.X, Bounds.Top - ball.Radius);
-                //tmpY = Bounds.Top - ball.Radius;
+                //ball.Center = new Point(ball.Center.X, Bounds.Top - ball.Radius);
+                tmpY = Bounds.Top - ball.Radius;
             } 
-        }
-        else if (Bounds.Contains(ball.Center.X, top))
+        }else if (Bounds.Contains(ball.Center.X, top))
         {
             tmpVY *= -1;
-            if (-Bounds.Bottom + ball.Center.Y + ball.Radius < 0)
+            if (-Bounds.Bottom + top < 0)
             {
-                ball.Center = new Point(ball.Center.X, Bounds.Bottom + ball.Radius);
-                //tmpY = Bounds.Bottom + ball.Radius;
+                //ball.Center = new Point(ball.Center.X, Bounds.Bottom + ball.Radius + 1);
+                tmpY = Bounds.Bottom + ball.Radius;
             } 
         }
         ball.Center = new Point(tmpX, tmpY);

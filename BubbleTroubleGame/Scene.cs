@@ -34,7 +34,7 @@ namespace BubbleTroubleGame
                 harpoon1 = new Harpoon(300);
                 harpoon2 = new Harpoon(180);
             }
-            //obstacles.Add(new Obstacle(new Point(300, 300), 100, 50));
+            //obstacles.Add(new Obstacle(new Point(300, 200), 100, 50));
         }
         public void draw(Graphics graphics)
         {
@@ -88,8 +88,8 @@ namespace BubbleTroubleGame
             {
                 for (int i = 0; i < balls.Count; i++)
                 {
-                    balls[i].Move(height - 130, width); // where the ground is
                     Collide();
+                    balls[i].Move(height - 130, width); // where the ground is
                     bool tsc1 = tickShootingCheck(harpoon1, balls[i]);//avoid 2 function calls
                     if (tsc1 || harpoon1.currentY == 0)
                     {
