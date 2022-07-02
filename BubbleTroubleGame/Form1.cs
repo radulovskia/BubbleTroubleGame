@@ -36,7 +36,15 @@ namespace BubbleTroubleGame
         {
             scene.tick();
             if (scene.balls.Count == 0 || (!second && scene.playerOne.isDead) || (second && scene.playerOne.isDead && scene.playerTwo.isDead))
+            {
                 timer1.Stop();
+                panelEnd.Visible = Visible;
+                panelEnd.Enabled = Enabled;
+                if (scene.balls.Count == 0)
+                    label1.Visible = Visible;
+                else
+                    label2.Visible = Visible;
+            }
             if (moveLeft1)
                 scene.playerOne.Move(Scene.width, "left");
             if (moveRight1)
@@ -155,6 +163,14 @@ namespace BubbleTroubleGame
         private void btnExitToDesktop_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void btnBackToMenu_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            var form2 = new MainMenu();
+            form2.Closed += (s, args) => this.Close();
+            form2.Show();
         }
     }
 }
