@@ -16,7 +16,7 @@ namespace BubbleTroubleGame
         public int Radius {
             get { return radius; }
             set {
-                radius = value > 10 ? value : 10;
+                radius = value > 5 ? value : 5;
             } }
         //public Point Center { get; set; }
         private Point center;
@@ -31,8 +31,8 @@ namespace BubbleTroubleGame
         public Color color { get; set; }
         public double VelocityX { get; set; } = 1;
         public double VelocityY { get; set; } = 1;
-        //public double Angle { get; set; } should an angle be used?
-
+        private double baseR = 7;
+        private double baseT = 5;
         public Ball(int Radius, Point Center, int direction, bool isPopped = false)
         {
             this.Radius=Radius;
@@ -43,10 +43,17 @@ namespace BubbleTroubleGame
             //Velocity and gravity are determined by multiple formulas
             //V=at h=5*r=at^(2)/2
             //Then the values are tweaked in order to suit the gamespeed
+            //Maybe add a modifier here too?
             this.VelocityX = Radius / 15 < 1 ? 1 : Radius / 10;
-            this.VelocityX *= direction; 
-            double t = Radius / 2 * 7;
-            double h = Radius * 7;
+            this.VelocityX *= direction;
+
+            //Calculation for size modifier
+            //Modifier modifies height
+            double modifier = Math.Log10(Radius / baseR) / Math.Log10(2);
+            modifier = Math.Pow(1.3, modifier);
+            double t = modifier * baseR * baseT;
+            double h = modifier * baseR * baseT * 2;
+
             this.Gravity = h * 2 / Math.Pow(t, 2);
             this.VelocityYMax = Gravity * t;
 
