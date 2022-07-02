@@ -40,26 +40,29 @@ namespace BubbleTroubleGame
 
         public void Move(int sceneWidth, string direction)
         {
-            if (direction == "right")
+            if (!isDead)
             {
-                if (playerId == 1)
-                    this.playerImg = Resources.p1right;
-                if (playerId == 2)
-                    this.playerImg = Resources.p2right;
-                position += 2;
+                if (direction == "right")
+                {
+                    if (playerId == 1)
+                        this.playerImg = Resources.p1right;
+                    if (playerId == 2)
+                        this.playerImg = Resources.p2right;
+                    position += 2;
+                }
+                else
+                {
+                    if (playerId == 1)
+                        this.playerImg = Resources.p1left;
+                    if (playerId == 2)
+                        this.playerImg = Resources.p2left;
+                    position -= 2;
+                }
+                if (position > sceneWidth)
+                    position = sceneWidth;
+                if (position < 0)
+                    position = 0;
             }
-            else
-            {
-                if (playerId == 1)
-                    this.playerImg = Resources.p1left;
-                if (playerId == 2)
-                    this.playerImg = Resources.p2left;
-                position -= 2;
-            }
-            if (position > sceneWidth)
-                position = sceneWidth;
-            if (position < 0)
-                position = 0;
         }
 
         public void Draw(Graphics g)
