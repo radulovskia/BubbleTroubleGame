@@ -93,8 +93,8 @@ namespace BubbleTroubleGame
             {
                 for (int i = 0; i < balls.Count; i++)
                 {
-                    Collide();
                     balls[i].Move(height - 130, width); // where the ground is
+                    Collide();
                     bool tsc1 = tickShootingCheck(harpoon1, balls[i]);//avoid 2 function calls
                     if (tsc1 || harpoon1.currentY == 0)
                     {

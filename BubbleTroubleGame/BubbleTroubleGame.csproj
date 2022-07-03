@@ -60,6 +60,12 @@
       <DependentUpon>FormLE.cs</DependentUpon>
     </Compile>
     <Compile Include="Harpoon.cs" />
+    <Compile Include="LevelMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LevelMenu.Designer.cs">
+      <DependentUpon>LevelMenu.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainMenu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -76,6 +82,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormLE.resx">
       <DependentUpon>FormLE.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LevelMenu.resx">
+      <DependentUpon>LevelMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainMenu.resx">
       <DependentUpon>MainMenu.cs</DependentUpon>
