@@ -35,6 +35,7 @@ namespace BubbleTroubleGame
             foreach (Obstacle obstacle in scene.Obstacles)
                 listBox1.Items.Add(obstacle);
             listBox1.Items.Add(scene.PlayerOne);
+            listBox1.Items.Add(scene.PlayerTwo);
             listBox1.SelectedItem = selected;
         }
 
@@ -180,6 +181,7 @@ namespace BubbleTroubleGame
                 Rectangle rect = new Rectangle(player.Position, 300, 50, 50);
                 rect.Inflate(3, 3);
                 scene.Highlight = rect;
+                scene.HighlightType = "Circle";
                 Type = "Player";
             }
             else if (listBox1.SelectedItem is Obstacle)
