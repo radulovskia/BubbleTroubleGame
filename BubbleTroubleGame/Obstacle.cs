@@ -23,12 +23,13 @@ public class Obstacle
     {
         double tmpVX = ball.VelocityX;
         double tmpVY = ball.VelocityY;
-        int front = ball.Center.X + ball.Radius + (int)tmpVX;
-        int back = ball.Center.X - ball.Radius + (int)tmpVX;
-        int bottom = ball.Center.Y + ball.Radius + (int)tmpVY;
-        int top = ball.Center.Y - ball.Radius + (int)tmpVX;
+        int front = ball.Center.X + ball.Radius;
+        int back = ball.Center.X - ball.Radius;
+        int bottom = ball.Center.Y + ball.Radius;
+        int top = ball.Center.Y - ball.Radius;
         int tmpX = ball.Center.X;
         int tmpY = ball.Center.Y;
+        bool changed = false;
         if (Bounds.Contains(front, ball.Center.Y))
         {
             tmpVX *= -1;
@@ -51,7 +52,7 @@ public class Obstacle
         {
             tmpVY = ball.VelocityYMax;
             tmpVY *= -1;
-            if (Bounds.Top - bottom <= 0)
+            if (Bounds.Top - bottom <= 0 && ! changed)
             {
                 //ball.Center = new Point(ball.Center.X, Bounds.Top - ball.Radius);
                 tmpY = Bounds.Top - ball.Radius;
@@ -59,7 +60,7 @@ public class Obstacle
         }else if (Bounds.Contains(ball.Center.X, top))
         {
             tmpVY *= -1;
-            if (-Bounds.Bottom + top < 0)
+            if (-Bounds.Bottom + top < 0 && !changed)
             {
                 //ball.Center = new Point(ball.Center.X, Bounds.Bottom + ball.Radius + 1);
                 tmpY = Bounds.Bottom + ball.Radius;
