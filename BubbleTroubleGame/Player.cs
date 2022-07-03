@@ -82,7 +82,7 @@ namespace BubbleTroubleGame
                 else
                     PlayerImg = Resources.p2back;
             }
-            g.DrawImage(PlayerImg, Position, 308, 50, 50);
+            g.DrawImage(PlayerImg, Position, 310, 50, 50);
         }
         public void DrawLives(Graphics g, string direction)
         {

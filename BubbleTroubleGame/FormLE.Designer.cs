@@ -400,10 +400,6 @@
             this.panelGame.Size = new System.Drawing.Size(590, 480);
             this.panelGame.TabIndex = 1;
             this.panelGame.Paint += new System.Windows.Forms.PaintEventHandler(this.panelGame_Paint);
-            this.panelGame.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseClick);
-            this.panelGame.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelGame_MouseDown);
-            this.panelGame.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelGame_MouseMove);
-            this.panelGame.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panelGame_MouseUp);
             // 
             // newToolStripMenuItem
             // 
@@ -495,6 +491,10 @@
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.FormLE_Paint);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FormLE_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.FormLE_KeyUp);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FormLE_MouseClick);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormLE_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FormLE_MouseMove);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.FormLE_MouseUp);
             this.panelUI.ResumeLayout(false);
             this.panelUI.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numContext2)).EndInit();

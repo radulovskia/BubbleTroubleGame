@@ -122,7 +122,7 @@
             this.panelEnd.Controls.Add(this.btnBackToMenu);
             this.panelEnd.Enabled = false;
             this.panelEnd.Location = new System.Drawing.Point(89, 55);
-            this.panelEnd.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panelEnd.Margin = new System.Windows.Forms.Padding(2);
             this.panelEnd.Name = "panelEnd";
             this.panelEnd.Size = new System.Drawing.Size(422, 90);
             this.panelEnd.TabIndex = 1;
@@ -155,7 +155,7 @@
             // btnBackToMenu
             // 
             this.btnBackToMenu.Location = new System.Drawing.Point(127, 61);
-            this.btnBackToMenu.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnBackToMenu.Margin = new System.Windows.Forms.Padding(2);
             this.btnBackToMenu.Name = "btnBackToMenu";
             this.btnBackToMenu.Size = new System.Drawing.Size(164, 19);
             this.btnBackToMenu.TabIndex = 0;
@@ -170,7 +170,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(584, 81);
             this.panel1.TabIndex = 2;
-            this.panel1.Visible = false;
             // 
             // FormGame
             // 

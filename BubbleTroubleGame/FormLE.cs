@@ -184,7 +184,7 @@ namespace BubbleTroubleGame
             else if (listBox1.SelectedItem is Player)
             {
                 Player player = (Player)listBox1.SelectedItem;
-                Rectangle rect = new Rectangle(player.Position, 300, 50, 50);
+                Rectangle rect = new Rectangle(player.Position, 308, 50, 50);
                 rect.Inflate(3, 3);
                 scene.Highlight = rect;
                 scene.HighlightType = "Circle";
@@ -206,73 +206,53 @@ namespace BubbleTroubleGame
         }
         //Mouse Controls
         //Add object and select
-        private void panel2_MouseClick(object sender, MouseEventArgs e)
+        private bool inBounds(Point p)
         {
+            Rectangle bounds = new Rectangle(0, 27, panelGame.Width, panelGame.Height);
+            return bounds.Contains(p);
+        }
+        private void FormLE_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (!inBounds(e.Location))
+                return;
+            Point p = new Point(e.Location.X, e.Location.Y - 27);
             if (e.Button == MouseButtons.Left)
             {
                 String type = cbObjectType.SelectedItem.ToString();
                 if (type == "Ball")
                 {
-                    scene.Balls.Add(new Ball(7, new Point(e.X, e.Y), 0));
+                    scene.Balls.Add(new Ball(7, p, 1));
                 }
                 else if (type == "Obstacle")
                 {
-                    scene.Obstacles.Add(new Obstacle(e.Location, 100, 100));
+                    scene.Obstacles.Add(new Obstacle(p, 100, 100));
                 }
                 initScene();
             }
             else if (e.Button == MouseButtons.Right)
             {
-                listBox1.SelectedItem = scene.Select(e.Location);
+                listBox1.SelectedItem = scene.Select(p);
             }
             changed = true;
         }
         //Draging
         private Point dragStart = Point.Empty;
         private bool dragging = false;
-
-        private void panelGame_MouseDown(object sender, MouseEventArgs e)
+        private void FormLE_MouseDown(object sender, MouseEventArgs e)
         {
-            if(e.Button == MouseButtons.Middle)
+            if (!inBounds(e.Location))
+                return;
+            Point p = new Point(e.Location.X, e.Location.Y - 27);
+            if (e.Button == MouseButtons.Middle)
             {
-                dragStart = e.Location;
+                dragStart = p;
                 dragging = true;
                 timer1.Start();
                 this.Cursor = Cursors.Hand;
             }
         }
 
-        private void panelGame_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (!dragging)
-                return;
-            if (listBox1.SelectedItem is Ball)
-            {
-                Ball ball = ((Ball)listBox1.SelectedItem);
-                ball.Center = new Point(ball.Center.X - (dragStart.X - e.Location.X), ball.Center.Y - (dragStart.Y - e.Location.Y));
-                dragStart = e.Location;
-            }
-            else if (listBox1.SelectedItem is Player)
-            {
-                Player player = (Player)listBox1.SelectedItem;
-                player.Position = player.Position - (dragStart.X - e.Location.X);
-                dragStart = e.Location;
-            }
-            else if (listBox1.SelectedItem is Obstacle)
-            {
-                Obstacle obstacle = (Obstacle)listBox1.SelectedItem;
-                obstacle.Bounds = new Rectangle(
-                    obstacle.Bounds.X - (dragStart.X - e.Location.X), 
-                    obstacle.Bounds.Y - (dragStart.Y - e.Location.Y), 
-                    obstacle.Bounds.Width, obstacle.Bounds.Height
-                    );
-                dragStart = e.Location;
-            }
-            setHighlight();
-            changed = true;
-        }
-
-        private void panelGame_MouseUp(object sender, MouseEventArgs e)
+        private void FormLE_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Middle)
             {
@@ -280,6 +260,41 @@ namespace BubbleTroubleGame
                 dragging = false;
                 this.Cursor = Cursors.Default;
             }
+        }
+
+        private void FormLE_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (!dragging)
+                return; 
+            
+            if (!inBounds(e.Location))
+                return;
+            Point p = new Point(e.Location.X, e.Location.Y - 27);
+
+            if (listBox1.SelectedItem is Ball)
+            {
+                Ball ball = ((Ball)listBox1.SelectedItem);
+                ball.Center = new Point(ball.Center.X - (dragStart.X - p.X), ball.Center.Y - (dragStart.Y - p.Y));
+                dragStart = p;
+            }
+            else if (listBox1.SelectedItem is Player)
+            {
+                Player player = (Player)listBox1.SelectedItem;
+                player.Position = player.Position - (dragStart.X - p.X);
+                dragStart = p;
+            }
+            else if (listBox1.SelectedItem is Obstacle)
+            {
+                Obstacle obstacle = (Obstacle)listBox1.SelectedItem;
+                obstacle.Bounds = new Rectangle(
+                    obstacle.Bounds.X - (dragStart.X - p.X),
+                    obstacle.Bounds.Y - (dragStart.Y - p.Y),
+                    obstacle.Bounds.Width, obstacle.Bounds.Height
+                    );
+                dragStart = p;
+            }
+            setHighlight();
+            changed = true;
         }
 
         //Drawing scene

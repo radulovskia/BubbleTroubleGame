@@ -13,10 +13,11 @@ namespace BubbleTroubleGame
         //public static int WIDTH = 600;
         public static int WIDTH = 590;
         //public static int HEIGHT = 480;
-        public static int HEIGHT = 480;
+        public static int HEIGHT = 360;
         private static double BASER = 7;
         private static double BASET = 5;
         private int radius;
+        private bool changed;
         public int Radius {
             get { return radius; }
             set {
@@ -28,7 +29,8 @@ namespace BubbleTroubleGame
             set
             {
                 if (value.X - Radius >= 0 && value.Y - Radius >= 0 && value.X + Radius <= WIDTH && value.Y + Radius <= HEIGHT)
-                    center = value;
+                   center = value;
+                
             } 
         }
         public Color Color { get; set; }
@@ -96,13 +98,13 @@ namespace BubbleTroubleGame
         public void Move()
         {
             VelocityY = Math.Abs(VelocityY + Gravity) < VelocityYMax ? VelocityY + Gravity : VelocityYMax;
-            Center = new Point((int)(Center.X + VelocityX), (int)(Center.Y + VelocityY));
-            Bounce();
+            Point next = new Point((int)(Center.X + VelocityX), (int)(Center.Y + VelocityY));
+            Bounce(next);
         }
-        private void Bounce()
+        private void Bounce(Point p)
         {
-            int x = Center.X;
-            int y = Center.Y;;
+            int x = p.X;
+            int y = p.Y;;
             if (x - Radius <= 0)
             {
                 VelocityX *= -1;
@@ -113,15 +115,16 @@ namespace BubbleTroubleGame
                 VelocityX *= -1;
                 x = WIDTH - Radius;
             }
-            if (y - Radius <= 0)
+            else if (y - Radius <= 0)
             {
                 VelocityY *= -1;
                 y = Radius;
             }
-            else if (y + Radius >= 358)
+            else if (y + Radius >= HEIGHT)
             {
+                VelocityY = VelocityYMax;
                 VelocityY *= -1;
-                y = 358 - Radius;
+                y = HEIGHT - Radius;
             }
             Center = new Point(x, y);
         }
