@@ -41,8 +41,6 @@ namespace BubbleTroubleGame
 
         public void Move(int sceneWidth, string direction)
         {
-            if (!isDead)
-            {
                 if (direction == "right")
                 {
                     if (playerId == 1)
@@ -63,7 +61,6 @@ namespace BubbleTroubleGame
                     position = sceneWidth;
                 if (position < 0)
                     position = 0;
-            }
         }
 
         public void Draw(Graphics g)
