@@ -12,11 +12,17 @@ namespace BubbleTroubleGame
     public class Player : Drawable
     {
         //X value
-        public int Position { get; set; }
+        private int position;
+        public int Position { 
+            get { return position; }
+            set {
+                position = value > 0 && value < 600 - 50 ? value: position;
+            } }
         public Harpoon Harpoon { get; set; }
 
         public int Lives { get; set; } = 5;
         public Image Heart { get; set; } = Resources.heart_final_copy;
+        public Image Heart2 { get; set; } = Resources.heart_final_copy2;
 
         public Image PlayerImg { get; set; }
 
@@ -43,26 +49,24 @@ namespace BubbleTroubleGame
 
         public void Move(int sceneWidth, string direction)
         {
-                if (direction == "right")
-                {
-                    if (PlayerId == 1)
-                        this.PlayerImg = Resources.p1right;
-                    if (PlayerId == 2)
-                        this.PlayerImg = Resources.p2right;
-                    Position += 2;
-                }
-                else
-                {
-                    if (PlayerId == 1)
-                        this.PlayerImg = Resources.p1left;
-                    if (PlayerId == 2)
-                        this.PlayerImg = Resources.p2left;
-                    Position -= 2;
-                }
-                if (Position > sceneWidth)
-                    Position = sceneWidth;
-                if (Position < 0)
-                    Position = 0;
+            if (IsDead)
+                return;
+            if (direction == "right")
+            {
+                if (PlayerId == 1)
+                    this.PlayerImg = Resources.p1right;
+                if (PlayerId == 2)
+                    this.PlayerImg = Resources.p2right;
+                Position += 2;
+            }
+            else
+            {
+                if (PlayerId == 1)
+                    this.PlayerImg = Resources.p1left;
+                if (PlayerId == 2)
+                    this.PlayerImg = Resources.p2left;
+                Position -= 2;
+            }
         }
 
         public void Draw(Graphics g)
@@ -78,7 +82,7 @@ namespace BubbleTroubleGame
                 else
                     PlayerImg = Resources.p2back;
             }
-            g.DrawImage(PlayerImg, Position, 300, 50, 50);
+            g.DrawImage(PlayerImg, Position, 308, 50, 50);
         }
         public void DrawLives(Graphics g, string direction)
         {
@@ -89,6 +93,7 @@ namespace BubbleTroubleGame
                 for (int i = 0; i < Lives; i++)
                 {
                     g.DrawImage(Heart,spaceLeft, 20,15,15);
+                    //g.DrawImage(Heart, spaceLeft, 358 + 10, 15, 15);
                     spaceLeft += 30;
                 }
             }
@@ -96,7 +101,8 @@ namespace BubbleTroubleGame
             {
                 for (int i = 0; i < Lives; i++)
                 {
-                    g.DrawImage(Heart, spaceRight, 20,15,15);
+                    g.DrawImage(Heart2, spaceRight, 20,15,15);
+                    //g.DrawImage(Heart, spaceRight, 358 + 10,15,15);
                     spaceRight -= 30;
                 }
             }

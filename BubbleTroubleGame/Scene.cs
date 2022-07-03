@@ -17,12 +17,12 @@ namespace BubbleTroubleGame
         private bool Flag1 { get; set; } = false;
         private bool Flag2 { get; set; } = false;
 
-        public Scene(bool second)
+        public Scene(bool second = false)
         {
             this.TwoPlayers = second;
             initTest();
 
-            if (!second)
+            if (!TwoPlayers)
             {
                 PlayerOne = new Player(240, 1);
             }
@@ -58,8 +58,8 @@ namespace BubbleTroubleGame
             }
 
             DrawHighlight(graphics);
-            Brush brush = new SolidBrush(Color.FromArgb(77, 0, 77));
-            graphics.FillRectangle(brush, new Rectangle(0, 350, Width, Height));
+            //Brush brush = new SolidBrush(Color.FromArgb(77, 0, 77));
+            //graphics.FillRectangle(brush, new Rectangle(0, 358, Width, Height));
         }
         
         public void Tick()
@@ -70,7 +70,7 @@ namespace BubbleTroubleGame
                 Balls[i].Move();
                 Collide(Balls[i]);
                 bool tsc1 = TickShootingCheck(PlayerOne.Harpoon, Balls[i]);//avoid 2 function calls
-                if (tsc1 || PlayerOne.Harpoon.currentY == 0)
+                if (tsc1 || PlayerOne.Harpoon.currentY <= 0)
                 {
                     PlayerOne.IsShooting = false;
                     PlayerOne.Harpoon = new Harpoon(PlayerOne.Position);
@@ -79,7 +79,7 @@ namespace BubbleTroubleGame
                 if (TwoPlayers && Balls.Count != 0)//bug when last ball destroyed in coop, the extra checker prevents that
                 {
                     bool tsc2 = TickShootingCheck(PlayerTwo.Harpoon, Balls[i]);
-                    if (tsc2 || PlayerTwo.Harpoon.currentY == 0)
+                    if (tsc2 || PlayerTwo.Harpoon.currentY <= 0)
                     {
                         PlayerTwo.IsShooting = false;
                         PlayerTwo.Harpoon = new Harpoon(PlayerTwo.Position);
@@ -180,8 +180,11 @@ namespace BubbleTroubleGame
             }
             if (new Rectangle(PlayerOne.Position, 300, 50, 50).Contains(p))
                 return PlayerOne;
-            if (new Rectangle(PlayerTwo.Position, 300, 50, 50).Contains(p))
-                return PlayerTwo;
+            if (TwoPlayers)
+            {
+                if (new Rectangle(PlayerTwo.Position, 300, 50, 50).Contains(p))
+                    return PlayerTwo;
+            }
             return null;
         }
         public double Distance(Point a, Point b)
@@ -190,17 +193,17 @@ namespace BubbleTroubleGame
         }
         public void RemoveDrawable(Drawable selectedItem)
         {
-            if(selectedItem is Ball)
+            if (selectedItem is Ball ball)
             {
-                Balls.Remove((Ball)selectedItem);
+                Balls.Remove(ball);
             }
-            else if(selectedItem is Player)
+            else if(selectedItem is Player player)
             { 
 
             }
-            if(selectedItem is Obstacle)
+            if(selectedItem is Obstacle obstacle)
             {
-                Obstacles.Remove((Obstacle)selectedItem);
+                Obstacles.Remove(obstacle);
             }
         }
     }

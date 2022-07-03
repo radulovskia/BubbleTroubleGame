@@ -118,10 +118,10 @@ namespace BubbleTroubleGame
                 VelocityY *= -1;
                 y = Radius;
             }
-            else if (y + Radius >= 350)
+            else if (y + Radius >= 358)
             {
                 VelocityY *= -1;
-                y = 350 - Radius;
+                y = 358 - Radius;
             }
             Center = new Point(x, y);
         }

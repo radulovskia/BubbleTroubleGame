@@ -16,10 +16,11 @@ namespace BubbleTroubleGame
     public partial class FormLE : Form
     {
         public Scene scene;
+        public bool twoPlayers = false;
         public FormLE()
         {
             InitializeComponent();
-            scene = new Scene(true);
+            scene = new Scene();
             this.DoubleBuffered = true;
             Invalidate();
             initScene();
@@ -35,20 +36,25 @@ namespace BubbleTroubleGame
             foreach (Obstacle obstacle in scene.Obstacles)
                 listBox1.Items.Add(obstacle);
             listBox1.Items.Add(scene.PlayerOne);
-            listBox1.Items.Add(scene.PlayerTwo);
+            if(twoPlayers)
+                listBox1.Items.Add(scene.PlayerTwo);
             listBox1.SelectedItem = selected;
         }
 
         private void FormLE_Paint(object sender, PaintEventArgs e)
         {
-            this.Text = FileName;
+            this.Text = FileName; Bitmap bmp = new Bitmap(panelGame.Width, panelGame.Height);
+            scene.Draw(Graphics.FromImage(bmp));
+            e.Graphics.DrawImage(Image.FromFile("../../Resources/bg2.jpg"), 0, 27, panelGame.Width, panelGame.Height);
+            e.Graphics.DrawImageUnscaled(bmp, 0, 27);
+            panelGame.Visible = false;
         }
 
         private void panelGame_Paint(object sender, PaintEventArgs e)
         {
-            Bitmap bmp = new Bitmap(panelGame.Width, panelGame.Height);
-            scene.Draw(Graphics.FromImage(bmp));
-            e.Graphics.DrawImageUnscaled(bmp, 0, 0);
+            //Bitmap bmp = new Bitmap(panelGame.Width, panelGame.Height);
+            //scene.Draw(Graphics.FromImage(bmp));
+            //e.Graphics.DrawImageUnscaled(bmp, 0, 0);
         }
 
         protected override CreateParams CreateParams { 
@@ -421,7 +427,13 @@ namespace BubbleTroubleGame
             }
             Invalidate();
         }
-        private void Form1_KeyUp(object sender, KeyEventArgs e)
+
+        private void FormLE_KeyUp(object sender, KeyEventArgs e)
+        {
+            if(testing)
+                playerMoveKeyUp(e);
+        }
+        private void playerMoveKeyUp(KeyEventArgs e)
         {
             if (e.KeyCode == Keys.A)
             {
@@ -452,16 +464,7 @@ namespace BubbleTroubleGame
         private void timer2_Tick(object sender, EventArgs e)
         {
             scene.Tick();
-            if (scene.Balls.Count == 0 || (!second && scene.PlayerOne.IsDead) || (second && scene.PlayerOne.IsDead && scene.PlayerTwo.IsDead))
-            {
-                timer1.Stop();
-                //panelEnd.Visible = Visible;
-                //panelEnd.Enabled = Enabled;
-                if (scene.Balls.Count == 0)
-                    label1.Visible = Visible;
-                else
-                    label2.Visible = Visible;
-            }
+
             if (moveLeft1)
                 scene.PlayerOne.Move(Scene.Width, "left");
             if (moveRight1)

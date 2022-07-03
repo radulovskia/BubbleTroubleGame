@@ -19,7 +19,7 @@ namespace BubbleTroubleGame
         public Harpoon(int startingX)
         {
             this.startingX = startingX;
-            this.currentY = 350;
+            this.currentY = 358;
         }
         //called on each timer tick
         public void Grow()
@@ -29,7 +29,7 @@ namespace BubbleTroubleGame
         public void Draw(Graphics g)
         {
             Pen pen = new Pen(Color.Black, 2);
-            g.DrawLine(pen, startingX, 350, startingX, currentY);
+            g.DrawLine(pen, startingX, 358, startingX, currentY);
             pen.Dispose();
         }
     }
