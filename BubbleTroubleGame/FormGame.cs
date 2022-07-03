@@ -10,11 +10,11 @@ using System.Windows.Forms;
 
 namespace BubbleTroubleGame
 {
-    public partial class Form1 : Form
+    public partial class FormGame : Form
     {
         public Scene scene;
         private bool twoPlayers;
-        public Form1(bool twoPlayers)
+        public FormGame(bool twoPlayers)
         {
             InitializeComponent();
             this.twoPlayers = twoPlayers;
@@ -157,7 +157,7 @@ namespace BubbleTroubleGame
         private void btnExitToMenu_Click(object sender, EventArgs e)
         {
             this.Hide();
-            var form2 = new MainMenu();
+            var form2 = new FormMainMenu();
             form2.Closed += (s, args) => this.Close();
             form2.Show();
         }
@@ -170,7 +170,7 @@ namespace BubbleTroubleGame
         private void btnBackToMenu_Click(object sender, EventArgs e)
         {
             this.Hide();
-            var form2 = new MainMenu();
+            var form2 = new FormMainMenu();
             form2.Closed += (s, args) => this.Close();
             form2.Show();
         }

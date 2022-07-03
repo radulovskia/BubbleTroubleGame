@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace BubbleTroubleGame
 {
-    public partial class MainMenu : Form
+    public partial class FormMainMenu : Form
     {
-        public MainMenu()
+        public FormMainMenu()
         {
             InitializeComponent();
         }
@@ -20,7 +20,7 @@ namespace BubbleTroubleGame
         private void Start_Click(object sender, EventArgs e)
         {
             this.Hide();
-            var form2 = new Form1(false);
+            var form2 = new FormGame(false);
             form2.Closed += (s, args) => this.Close();
             form2.Show();
         }
@@ -36,7 +36,7 @@ namespace BubbleTroubleGame
         private void button1_Click(object sender, EventArgs e)
         {
             this.Hide();
-            Form form2 = new Form1(true);
+            Form form2 = new FormGame(true);
             form2.Closed += (s, args) => this.Close();
             form2.Show();
         }
@@ -44,7 +44,7 @@ namespace BubbleTroubleGame
         private void button2_Click(object sender, EventArgs e)
         {
             this.Hide();
-            Form form2 = new LevelMenu();
+            Form form2 = new FormLevelMenu();
             form2.Closed += (s, args) => this.Close();
             form2.Show();
         }

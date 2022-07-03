@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace BubbleTroubleGame
 {
-    public partial class LevelMenu : Form
+    public partial class FormLevelMenu : Form
     {
-        public LevelMenu()
+        public FormLevelMenu()
         {
             InitializeComponent();
         }

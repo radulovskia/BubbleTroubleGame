@@ -1,6 +1,6 @@
 ﻿namespace BubbleTroubleGame
 {
-    partial class Form1
+    partial class FormGame
     {
         /// <summary>
         /// Required designer variable.

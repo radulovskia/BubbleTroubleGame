@@ -1,6 +1,6 @@
 ﻿namespace BubbleTroubleGame
 {
-    partial class LevelMenu
+    partial class FormLevelMenu
     {
         /// <summary>
         /// Required designer variable.
