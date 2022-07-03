@@ -12,71 +12,73 @@ namespace BubbleTroubleGame
     public class Player : Drawable
     {
         //X value
-        public int position { get; set; }
+        public int Position { get; set; }
+        public Harpoon Harpoon { get; set; }
 
-        public int lives { get; set; } = 5;
-        public Image heart { get; set; } = Resources.heart_final_copy;
+        public int Lives { get; set; } = 5;
+        public Image Heart { get; set; } = Resources.heart_final_copy;
 
-        public Image playerImg { get; set; }
+        public Image PlayerImg { get; set; }
 
         //first or second player
-        public int playerId { get; set; }
+        public int PlayerId { get; set; }
 
-        public bool isDead { get; set; }
+        public bool IsDead { get; set; }
         //change on keydown to true, on keyup to false
-        public bool isMoving { get; set; }
+        public bool IsMoving { get; set; }
 
-        public bool isShooting { get; set; } = false;
+        public bool IsShooting { get; set; } = false;
 
         public Player(int position, int playerId)
         {
-            this.position = position;
-            this.playerId = playerId;
-            this.isDead = false;
+            this.Position = position;
+            this.Harpoon = new Harpoon(position);
+            this.PlayerId = playerId;
+            this.IsDead = false;
             if (playerId == 1)
-                this.playerImg = Resources.p1back;
+                this.PlayerImg = Resources.p1back;
             else if (playerId == 2)
-                this.playerImg = Resources.p2back;
+                this.PlayerImg = Resources.p2back;
         }
 
         public void Move(int sceneWidth, string direction)
         {
                 if (direction == "right")
                 {
-                    if (playerId == 1)
-                        this.playerImg = Resources.p1right;
-                    if (playerId == 2)
-                        this.playerImg = Resources.p2right;
-                    position += 2;
+                    if (PlayerId == 1)
+                        this.PlayerImg = Resources.p1right;
+                    if (PlayerId == 2)
+                        this.PlayerImg = Resources.p2right;
+                    Position += 2;
                 }
                 else
                 {
-                    if (playerId == 1)
-                        this.playerImg = Resources.p1left;
-                    if (playerId == 2)
-                        this.playerImg = Resources.p2left;
-                    position -= 2;
+                    if (PlayerId == 1)
+                        this.PlayerImg = Resources.p1left;
+                    if (PlayerId == 2)
+                        this.PlayerImg = Resources.p2left;
+                    Position -= 2;
                 }
-                if (position > sceneWidth)
-                    position = sceneWidth;
-                if (position < 0)
-                    position = 0;
+                if (Position > sceneWidth)
+                    Position = sceneWidth;
+                if (Position < 0)
+                    Position = 0;
         }
 
         public void Draw(Graphics g)
         {
-            if (isDead)
+            if (IsDead)
             {
-                playerImg = Resources.rip;
+                PlayerImg = Resources.rip;
             }
-            if (isShooting)
+            if (IsShooting)
             {
-                if (playerId == 1)
-                    playerImg = Resources.p1back;
+                if (PlayerId == 1)
+                    PlayerImg = Resources.p1back;
                 else
-                    playerImg = Resources.p2back;
+                    PlayerImg = Resources.p2back;
             }
-            g.DrawImage(playerImg, position, 300, 50, 50);
+            g.DrawImage(PlayerImg, Position, 300, 50, 50);
         }
         public void DrawLives(Graphics g, string direction)
         {
@@ -84,33 +86,33 @@ namespace BubbleTroubleGame
             int spaceRight = 560;
             if (direction == "left")
             {
-                for (int i = 0; i < lives; i++)
+                for (int i = 0; i < Lives; i++)
                 {
-                    g.DrawImage(heart,spaceLeft, 20,15,15);
+                    g.DrawImage(Heart,spaceLeft, 20,15,15);
                     spaceLeft += 30;
                 }
             }
             else
             {
-                for (int i = 0; i < lives; i++)
+                for (int i = 0; i < Lives; i++)
                 {
-                    g.DrawImage(heart, spaceRight, 20,15,15);
+                    g.DrawImage(Heart, spaceRight, 20,15,15);
                     spaceRight -= 30;
                 }
             }
         }
         
-        public bool isHit(List<Ball> balls)
+        public bool IsHit(List<Ball> balls)
         {
             foreach (Ball b in balls)
             {
-                double posX = position + 25;
+                double posX = Position + 25;
                 double posY = 325;
                 double euclid = Math.Pow(posX - b.Center.X, 2) + Math.Pow(posY - b.Center.Y, 2);                
                 if (euclid <= Math.Pow(b.Radius + 25, 2))
                 {
-                    if(lives == 0)
-                        isDead=true;
+                    if(Lives == 0)
+                        IsDead=true;
                     return true;
                 }
             }

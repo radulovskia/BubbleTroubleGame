@@ -32,7 +32,7 @@ namespace BubbleTroubleGame
             listBox1.Items.Clear();
             foreach (Ball ball in scene.Balls)
                 listBox1.Items.Add(ball);
-            foreach (Obstacle obstacle in scene.obstacles)
+            foreach (Obstacle obstacle in scene.Obstacles)
                 listBox1.Items.Add(obstacle);
             listBox1.Items.Add(scene.PlayerOne);
             listBox1.SelectedItem = selected;
@@ -209,7 +209,7 @@ namespace BubbleTroubleGame
                 }
                 else if (type == "Obstacle")
                 {
-                    scene.obstacles.Add(new Obstacle(e.Location, 100, 100));
+                    scene.Obstacles.Add(new Obstacle(e.Location, 100, 100));
                 }
                 initScene();
             }
