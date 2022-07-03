@@ -3,172 +3,210 @@ using System.Collections.Generic;
 using System.Drawing;
 
 namespace BubbleTroubleGame
-{   
+{
     [Serializable]
     public class Scene
     {
-        public List<Ball> balls { get; set; }
-        public static int height { get; set; }
-        public static int width { get; set; }
-        public Player playerOne { get; set; }
-        public Player playerTwo { get; set; }
-        public Harpoon harpoon1 { get; set; }
-        public Harpoon harpoon2 { get; set; }
-        private bool second { get; set; }
-        private bool flag1 { get; set; } = false;
-        private bool flag2 { get; set; } = false;
-
-        public Scene(bool second)
+        public List<Ball> Balls { get; set; }
+        public List<Obstacle> obstacles = new List<Obstacle>();
+        public static int Height { get; set; }
+        public static int Width { get; set; }
+        public Player PlayerOne { get; set; }
+        public Player PlayerTwo { get; set; }
+        private bool Second { get; set; }
+        private bool Flag1 { get; set; } = false;
+        private bool Flag2 { get; set; } = false;
+        //TODO: REMOVE DEFAULT SCENE INIT
+        public Scene(bool second = false)
         {
-            //ball.Y cannot be less that radius
-            this.second = second;
-            //made it a multiple of 7
-            balls = new List<Ball> { new Ball(7,new Point(150,100),1), new Ball(14, new Point(350, 50),-1) , new Ball(28, new Point(200, 50),1) };
+            this.Second = second;
+            
+            initTest();
 
             if (!second)
             {
-                playerOne = new Player(240, 1);
-                harpoon1 = new Harpoon(240);
+                PlayerOne = new Player(240, 1);
             }
             else
             {
-                playerOne = new Player(300, 1);
-                playerTwo = new Player(180, 2);
-                harpoon1 = new Harpoon(300);
-                harpoon2 = new Harpoon(180);
+                PlayerOne = new Player(300, 1);
+                PlayerTwo = new Player(180, 2);
             }
-            //obstacles.Add(new Obstacle(new Point(300, 200), 100, 50));
         }
-        public void draw(Graphics graphics)
+        private void initTest()
         {
-            foreach(Ball ball in balls)
+            //made it 7^n
+            Balls = new List<Ball> { new Ball(7, new Point(150, 100), 1), new Ball(14, new Point(350, 50), -1), new Ball(28, new Point(200, 50), 1) };
+
+        }
+        public void Draw(Graphics graphics)
+        {
+            foreach(Ball ball in Balls)
             {
                 ball.Draw(graphics);
             }
-            playerOne.Draw(graphics);
-            playerOne.DrawLives(graphics,"left");
-            harpoon1.Draw(graphics);
-            if (second)
+            foreach (Obstacle obstacle in obstacles)
+                obstacle.Draw(graphics);
+            
+            PlayerOne.Draw(graphics);
+            PlayerOne.DrawLives(graphics,"left");
+            PlayerOne.Harpoon.Draw(graphics);
+            if (Second)
             {
-                playerTwo.Draw(graphics);
-                playerTwo.DrawLives(graphics,"right");
-                harpoon2.Draw(graphics);
+                PlayerTwo.Draw(graphics);
+                PlayerTwo.DrawLives(graphics,"right");
+                PlayerTwo.Harpoon.Draw(graphics);
             }
+
             Brush brush = new SolidBrush(Color.FromArgb(77, 0, 77));
-            graphics.FillRectangle(brush, new Rectangle(0,350,width,height));
-            if (Highlight != Rectangle.Empty)
+            graphics.FillRectangle(brush, new Rectangle(0,350,Width,Height));
+            brush.Dispose();
+
+            DrawHighlight(graphics);
+        }
+        //Highlight
+        public Rectangle Highlight { get; set; } = Rectangle.Empty;
+        public String HighlightType = "Circle";
+        private void DrawHighlight(Graphics graphics)
+        {
+            if (Highlight == Rectangle.Empty)
+            {
+                return;
+            }
+
+            if (HighlightType == "Circle")
             {
                 Pen pen = new Pen(Color.Green, 2);
                 graphics.DrawEllipse(pen, Highlight);
                 pen.Dispose();
+            }else if(HighlightType == "Rectangle")
+            {
+                Pen pen = new Pen(Color.Green, 2);
+                graphics.DrawRectangle(pen, Highlight);
+                pen.Dispose();
             }
-            foreach (Obstacle obstacle in obstacles)
-                obstacle.Draw(graphics);
         }
-        private bool tickShootingCheck(Harpoon harpoon, Ball ball)
+        public void Tick()
+        {
+            for (int i = 0; i < Balls.Count; i++)
+            {
+                Balls[i].Move(Height - 130, Width); // where the ground is
+                Collide(Balls[i]);
+                bool tsc1 = TickShootingCheck(PlayerOne.Harpoon, Balls[i]);//avoid 2 function calls
+                if (tsc1 || PlayerOne.Harpoon.currentY == 0)
+                {
+                    PlayerOne.IsShooting = false;
+                    PlayerOne.Harpoon = new Harpoon(PlayerOne.Position);
+                }
+                if (Second && Balls.Count != 0)//bug when last ball destoryed in coop, the extra checker prevents that
+                {
+                    bool tsc2 = TickShootingCheck(PlayerTwo.Harpoon, Balls[i]);
+                    if (tsc2 || PlayerTwo.Harpoon.currentY == 0)
+                    {
+                        PlayerTwo.IsShooting = false;
+                        PlayerTwo.Harpoon = new Harpoon(PlayerTwo.Position);
+                    }
+                }
+            }
+
+            TickHarpoonGrow(PlayerOne, PlayerOne.Harpoon);
+            if (PlayerOne.IsHit(Balls))
+            {
+                if (!Flag1)
+                    PlayerOne.Lives--;
+                Flag1 = true;
+            }
+            else
+            {
+                Flag1 = false;
+            }
+            if (Second)
+            {
+                TickHarpoonGrow(PlayerTwo, PlayerTwo.Harpoon);
+                if (PlayerTwo.IsHit(Balls))
+                {
+                    if (!Flag2)
+                        PlayerTwo.Lives--;
+                    Flag2 = true;
+                }
+                else
+                {
+                    Flag2 = false;
+                }
+            }
+        }
+        //Harpoon Logic
+        private bool TickShootingCheck(Harpoon harpoon, Ball ball)
         {
             if (ball.isHit(harpoon))
             {
+                Balls.Remove(ball);
                 int rad = ball.Radius / 2;
                 if (rad >= 7)
                 {
-                    Point cent = ball.Center;   
-                    balls.Add(new Ball(rad, new Point(cent.X + rad, cent.Y), 1, true));
-                    balls.Add(new Ball(rad, new Point(cent.X - rad, cent.Y), -1, true));
+                    Point cent = ball.Center;
+                    Balls.Add(new Ball(rad, new Point(cent.X + rad, cent.Y), 1, true));
+                    Balls.Add(new Ball(rad, new Point(cent.X - rad, cent.Y), -1, true));
                 }
                 return true;
             }
             return false;
         }
-        private void tickHarpoonGrow(Player player, Harpoon harpoon)
+        private void TickHarpoonGrow(Player player, Harpoon harpoon)
         {
-            if (player.isShooting)
+            if (player.IsShooting)
             {
                 harpoon.Grow();
             }
         }
-        public void tick()
-        {
-            if (balls.Count != 0)
-            {
-                for (int i = 0; i < balls.Count; i++)
-                {
-                    balls[i].Move(height - 130, width); // where the ground is
-                    Collide();
-                    bool tsc1 = tickShootingCheck(harpoon1, balls[i]);//avoid 2 function calls
-                    if (tsc1 || harpoon1.currentY == 0)
-                    {
-                        if (tsc1)
-                            balls.RemoveAt(i);
-                        playerOne.isShooting = false;
-                        harpoon1 = new Harpoon(playerOne.position);
-                    }
-                    if (second && balls.Count!=0)//bug when last ball destoryed in coop, the extra checker prevents that
-                    {
-                        bool tsc2 = tickShootingCheck(harpoon2, balls[i]);
-                        if (tsc2 || harpoon2.currentY == 0)
-                        {
-                            if (tsc2)
-                                balls.RemoveAt(i);
-                            playerTwo.isShooting = false;
-                            harpoon2 = new Harpoon(playerTwo.position);
-                        }
-                    }
-                }
-            }
-            tickHarpoonGrow(playerOne, harpoon1);
-            if (playerOne.isHit(balls))
-            {
-                if(!flag1)
-                    playerOne.lives--;
-                flag1 = true;
-            }
-            else
-            {
-                flag1 = false;
-            }
-            if (second)
-            {
-                tickHarpoonGrow(playerTwo, harpoon2);
-                if (playerTwo.isHit(balls))
-                {
-                    if (!flag2)
-                        playerTwo.lives--;
-                    flag2 = true;
-                }
-                else
-                {
-                    flag2 = false;
-                }
-            }
-        }
-        public Rectangle Highlight { get; set; } = Rectangle.Empty;
+
+        //Everything below here is for the level editor
 
         //Dodatok za select
         public Object Select(Point p)
         {
-            foreach (Ball ball in balls)
+            foreach (Obstacle obstacle in obstacles)
+            {
+                if (obstacle.Bounds.Contains(p))
+                {
+                    return obstacle;
+                }
+            }
+            foreach (Ball ball in Balls)
             {
                 if (Distance(p, ball.Center) <= ball.Radius)
                 {
                     return ball;
                 }
             }
-            if (new Rectangle(playerOne.position, 300, 50, 50).Contains(p))
-                return playerOne;
+            if (new Rectangle(PlayerOne.Position, 300, 50, 50).Contains(p))
+                return PlayerOne;
             return null;
         }
         public double Distance(Point a, Point b)
         {
             return Math.Sqrt(Math.Pow(a.X - b.X, 2) + Math.Pow(a.Y - b.Y, 2));
         }
-        //Obstacles
-        public List<Obstacle> obstacles = new List<Obstacle>();
-        private void Collide()
+
+        //Obstacle collisions
+        private void Collide(Ball ball)
         {
             foreach (Obstacle obstacle in obstacles)
-                foreach (Ball ball in balls)
-                    obstacle.Collide(ball);
+                obstacle.Collide(ball);
+        }
+
+        public void RemoveDrawable(Drawable selectedItem)
+        {
+            if (selectedItem is Ball)
+            {
+                Balls.Remove((Ball)selectedItem);
+            }else if (selectedItem is Player)
+            {
+                
+            }else if (selectedItem is Obstacle)
+            {
+                obstacles.Remove((Obstacle) selectedItem);
+            }
         }
     }
 }

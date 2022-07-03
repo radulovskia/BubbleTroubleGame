@@ -13,46 +13,46 @@ namespace BubbleTroubleGame
     public partial class Form1 : Form
     {
         public Scene scene;
-        private bool second;
-        public Form1(bool second)
+        private bool twoPlayers;
+        public Form1(bool twoPlayers)
         {
             InitializeComponent();
-            this.second = second;
-            scene = new Scene(second);
+            this.twoPlayers = twoPlayers;
+            scene = new Scene(twoPlayers);
             timer1.Interval = 1;
             this.Height = 480;
             this.Width = 600;
-            Scene.height = this.Height;
-            Scene.width = this.Width;
+            Scene.Height = this.Height;
+            Scene.Width = this.Width;
             timer1.Start();
             DoubleBuffered = true;
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            scene.draw(e.Graphics);
+            scene.Draw(e.Graphics);
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
-            scene.tick();
-            if (scene.balls.Count == 0 || (!second && scene.playerOne.isDead) || (second && scene.playerOne.isDead && scene.playerTwo.isDead))
+            scene.Tick();
+            if (scene.Balls.Count == 0 || (!twoPlayers && scene.PlayerOne.IsDead) || (twoPlayers && scene.PlayerOne.IsDead && scene.PlayerTwo.IsDead))
             {
                 timer1.Stop();
                 panelEnd.Visible = Visible;
                 panelEnd.Enabled = Enabled;
-                if (scene.balls.Count == 0)
+                if (scene.Balls.Count == 0)
                     label1.Visible = Visible;
                 else
                     label2.Visible = Visible;
             }
             if (moveLeft1)
-                scene.playerOne.Move(Scene.width, "left");
+                scene.PlayerOne.Move(Scene.Width, "left");
             if (moveRight1)
-                scene.playerOne.Move(Scene.width, "right");
+                scene.PlayerOne.Move(Scene.Width, "right");
             if (moveLeft2)
-                scene.playerTwo.Move(Scene.width, "left");
+                scene.PlayerTwo.Move(Scene.Width, "left");
             if (moveRight2)
-                scene.playerTwo.Move(Scene.width, "right");
+                scene.PlayerTwo.Move(Scene.Width, "right");
             Invalidate();
         }
         private bool moveRight1;
@@ -63,41 +63,43 @@ namespace BubbleTroubleGame
         {
             if (e.KeyCode == Keys.A)
             {
-                scene.playerOne.isMoving = true;
+                scene.PlayerOne.IsMoving = true;
                 moveLeft1 = true;
             }
             if (e.KeyCode == Keys.D)
             {
-                scene.playerOne.isMoving = true;
+                scene.PlayerOne.IsMoving = true;
                 moveRight1 = true;
             }
-            if (e.KeyCode == Keys.W && !scene.playerOne.isDead)
+            if (e.KeyCode == Keys.W && !scene.PlayerOne.IsDead)
             {
-                if (!scene.playerOne.isShooting)
+                if (!scene.PlayerOne.IsShooting)
                 {
-                    scene.harpoon1.startingX = scene.playerOne.position + 24;
+                    //scene.Harpoon1.startingX = scene.PlayerOne.Position + 24;
+                    scene.PlayerOne.Harpoon.startingX = scene.PlayerOne.Position + 24;
                 }
-                scene.playerOne.isShooting = true;
+                scene.PlayerOne.IsShooting = true;
             }
-            if (second)
+            if (twoPlayers)
             {
                 if (e.KeyCode == Keys.Left)
                 {
-                    scene.playerTwo.isMoving = true;
+                    scene.PlayerTwo.IsMoving = true;
                     moveLeft2 = true;
                 }
                 if (e.KeyCode == Keys.Right)
                 {
-                    scene.playerTwo.isMoving = true;
+                    scene.PlayerTwo.IsMoving = true;
                     moveRight2 = true;
                 }
-                if (e.KeyCode == Keys.Up && !scene.playerTwo.isDead)
+                if (e.KeyCode == Keys.Up && !scene.PlayerTwo.IsDead)
                 {
-                    if (!scene.playerTwo.isShooting)
+                    if (!scene.PlayerTwo.IsShooting)
                     {
-                        scene.harpoon2.startingX = scene.playerTwo.position + 24;
+                        //scene.Harpoon2.startingX = scene.PlayerTwo.Position + 24;
+                        scene.PlayerTwo.Harpoon.startingX = scene.PlayerTwo.Position + 24;
                     }
-                    scene.playerTwo.isShooting = true;
+                    scene.PlayerTwo.IsShooting = true;
                 }
             }
             if (e.KeyCode == Keys.Escape)
@@ -114,24 +116,24 @@ namespace BubbleTroubleGame
             if (e.KeyCode == Keys.A)
             {
                 moveLeft1 = false;
-                scene.playerOne.isMoving = false;
+                scene.PlayerOne.IsMoving = false;
             }
             if (e.KeyCode == Keys.D)
             {
                 moveRight1 = false;
-                scene.playerOne.isMoving = false;
+                scene.PlayerOne.IsMoving = false;
             }
-            if (second)
+            if (twoPlayers)
             {
                 if (e.KeyCode == Keys.Left)
                 {
                     moveLeft2 = false;
-                    scene.playerTwo.isMoving = false;
+                    scene.PlayerTwo.IsMoving = false;
                 }
                 if (e.KeyCode == Keys.Right)
                 {
                     moveRight2 = false;
-                    scene.playerTwo.isMoving = false;
+                    scene.PlayerTwo.IsMoving = false;
                 }
             }
             Invalidate();

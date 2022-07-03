@@ -38,7 +38,7 @@
             // 
             this.Start.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.Start.BackColor = System.Drawing.Color.Firebrick;
-            this.Start.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
+            this.Start.Font = new System.Drawing.Font("Stencil", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Start.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.Start.Location = new System.Drawing.Point(182, 62);
             this.Start.Name = "Start";
@@ -52,7 +52,7 @@
             // 
             this.button1.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.button1.BackColor = System.Drawing.Color.Firebrick;
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
+            this.button1.Font = new System.Drawing.Font("Showcard Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.button1.Location = new System.Drawing.Point(182, 130);
             this.button1.Name = "button1";

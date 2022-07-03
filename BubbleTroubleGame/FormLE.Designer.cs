@@ -39,8 +39,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnPlayTest = new System.Windows.Forms.Button();
             this.panelGame = new System.Windows.Forms.Panel();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -74,6 +73,8 @@
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.timer2 = new System.Windows.Forms.Timer(this.components);
+            this.cbObjectType = new System.Windows.Forms.ComboBox();
             this.panelUI.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numContext2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numContext1)).BeginInit();
@@ -82,6 +83,7 @@
             // 
             // panelUI
             // 
+            this.panelUI.Controls.Add(this.cbObjectType);
             this.panelUI.Controls.Add(this.numContext2);
             this.panelUI.Controls.Add(this.numContext1);
             this.panelUI.Controls.Add(this.lblContext2);
@@ -90,8 +92,7 @@
             this.panelUI.Controls.Add(this.label1);
             this.panelUI.Controls.Add(this.textBox2);
             this.panelUI.Controls.Add(this.textBox1);
-            this.panelUI.Controls.Add(this.button2);
-            this.panelUI.Controls.Add(this.button1);
+            this.panelUI.Controls.Add(this.btnPlayTest);
             this.panelUI.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelUI.Location = new System.Drawing.Point(0, 507);
             this.panelUI.Name = "panelUI";
@@ -106,11 +107,12 @@
             0,
             0,
             0});
-            this.numContext2.Location = new System.Drawing.Point(255, 45);
+            this.numContext2.Location = new System.Drawing.Point(655, 56);
             this.numContext2.Name = "numContext2";
             this.numContext2.Size = new System.Drawing.Size(54, 20);
             this.numContext2.TabIndex = 3;
             this.numContext2.Visible = false;
+            this.numContext2.ValueChanged += new System.EventHandler(this.numContext2_ValueChanged);
             // 
             // numContext1
             // 
@@ -120,7 +122,7 @@
             0,
             0,
             0});
-            this.numContext1.Location = new System.Drawing.Point(255, 19);
+            this.numContext1.Location = new System.Drawing.Point(655, 30);
             this.numContext1.Name = "numContext1";
             this.numContext1.Size = new System.Drawing.Size(54, 20);
             this.numContext1.TabIndex = 3;
@@ -131,7 +133,7 @@
             // 
             this.lblContext2.AutoSize = true;
             this.lblContext2.Enabled = false;
-            this.lblContext2.Location = new System.Drawing.Point(194, 48);
+            this.lblContext2.Location = new System.Drawing.Point(594, 59);
             this.lblContext2.Name = "lblContext2";
             this.lblContext2.Size = new System.Drawing.Size(55, 13);
             this.lblContext2.TabIndex = 2;
@@ -141,7 +143,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(417, 47);
+            this.label2.Location = new System.Drawing.Point(113, 46);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(62, 13);
             this.label2.TabIndex = 2;
@@ -151,7 +153,7 @@
             // 
             this.lblContext1.AutoSize = true;
             this.lblContext1.Enabled = false;
-            this.lblContext1.Location = new System.Drawing.Point(194, 22);
+            this.lblContext1.Location = new System.Drawing.Point(594, 33);
             this.lblContext1.Name = "lblContext1";
             this.lblContext1.Size = new System.Drawing.Size(55, 13);
             this.lblContext1.TabIndex = 2;
@@ -161,7 +163,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(417, 21);
+            this.label1.Location = new System.Drawing.Point(113, 20);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(57, 13);
             this.label1.TabIndex = 2;
@@ -169,35 +171,27 @@
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(480, 44);
+            this.textBox2.Location = new System.Drawing.Point(176, 43);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
+            this.textBox2.Size = new System.Drawing.Size(67, 20);
             this.textBox2.TabIndex = 1;
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(480, 18);
+            this.textBox1.Location = new System.Drawing.Point(176, 17);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
+            this.textBox1.Size = new System.Drawing.Size(67, 20);
             this.textBox1.TabIndex = 1;
             // 
-            // button2
+            // btnPlayTest
             // 
-            this.button2.Location = new System.Drawing.Point(12, 6);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(100, 63);
-            this.button2.TabIndex = 0;
-            this.button2.Text = "EXIT TO MENU";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(589, 8);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(100, 63);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "PLAYTEST";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnPlayTest.Location = new System.Drawing.Point(12, 18);
+            this.btnPlayTest.Name = "btnPlayTest";
+            this.btnPlayTest.Size = new System.Drawing.Size(95, 46);
+            this.btnPlayTest.TabIndex = 0;
+            this.btnPlayTest.Text = "PLAYTEST";
+            this.btnPlayTest.UseVisualStyleBackColor = true;
+            this.btnPlayTest.Click += new System.EventHandler(this.btnPlayTest_Click);
             // 
             // panelGame
             // 
@@ -323,6 +317,7 @@
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
@@ -464,6 +459,23 @@
             this.timer1.Interval = 50;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // timer2
+            // 
+            this.timer2.Interval = 20;
+            this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
+            // 
+            // cbObjectType
+            // 
+            this.cbObjectType.FormattingEnabled = true;
+            this.cbObjectType.Items.AddRange(new object[] {
+            "Ball",
+            "Player",
+            "Obstacle"});
+            this.cbObjectType.Location = new System.Drawing.Point(598, 3);
+            this.cbObjectType.Name = "cbObjectType";
+            this.cbObjectType.Size = new System.Drawing.Size(111, 21);
+            this.cbObjectType.TabIndex = 4;
+            // 
             // FormLE
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -473,10 +485,13 @@
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.panelGame);
             this.Controls.Add(this.menuStrip1);
+            this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
+            this.MaximizeBox = false;
             this.Name = "FormLE";
             this.Text = "Form2";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.FormLE_Paint);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FormLE_KeyDown);
             this.panelUI.ResumeLayout(false);
             this.panelUI.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numContext2)).EndInit();
@@ -496,8 +511,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnPlayTest;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.NumericUpDown numContext2;
         private System.Windows.Forms.NumericUpDown numContext1;
@@ -534,5 +548,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer timer2;
+        private System.Windows.Forms.ComboBox cbObjectType;
     }
 }

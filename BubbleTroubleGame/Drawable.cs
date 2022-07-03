@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BubbleTroubleGame
 {
-    internal interface Drawable
+    public interface Drawable
     {
         void Draw(Graphics graphics);
     }

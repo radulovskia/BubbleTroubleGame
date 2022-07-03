@@ -2,6 +2,7 @@
 using System;
 using System.Drawing;
 
+[Serializable]
 public class Obstacle : Drawable
 {
     public Rectangle Bounds { get; set; }
@@ -119,5 +120,10 @@ public class Obstacle : Drawable
     private double Distance2(Point a, Point b)
     {
         return Math.Pow(a.X - b.X, 2) + Math.Pow(a.Y - b.Y, 2);
+    }
+
+    public override string ToString()
+    {
+        return "Obstacle " + Bounds.Height + " " + Bounds.Width;
     }
 }
