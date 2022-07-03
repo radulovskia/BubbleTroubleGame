@@ -10,7 +10,9 @@ namespace BubbleTroubleGame
     [Serializable]
     public class Ball : Drawable
     {
-        public static int WIDTH = 600;
+        //public static int WIDTH = 600;
+        public static int WIDTH = 590;
+        //public static int HEIGHT = 480;
         public static int HEIGHT = 480;
         private static double BASER = 7;
         private static double BASET = 5;
@@ -20,13 +22,12 @@ namespace BubbleTroubleGame
             set {
                 radius = value > 5 ? value : 5;
             } }
-        //public Point Center { get; set; }
         private Point center;
         public Point Center {
             get { return center; }
             set
             {
-                if (value.X - Radius >= 0 && value.Y - Radius >= 0 && value.X + Radius <= 600 && value.Y + Radius <= 400)
+                if (value.X - Radius >= 0 && value.Y - Radius >= 0 && value.X + Radius <= WIDTH && value.Y + Radius <= HEIGHT)
                     center = value;
             } 
         }
@@ -95,35 +96,34 @@ namespace BubbleTroubleGame
         public void Move()
         {
             VelocityY = Math.Abs(VelocityY + Gravity) < VelocityYMax ? VelocityY + Gravity : VelocityYMax;
-            Point next = new Point((int)(Center.X + VelocityX), (int)(Center.Y + VelocityY));
-            next = Bounce(next);
-            Center = next;
+            Center = new Point((int)(Center.X + VelocityX), (int)(Center.Y + VelocityY));
+            Bounce();
         }
-        private Point Bounce(Point p)
+        private void Bounce()
         {
-            int x = p.X;
-            int y = p.Y;
-            if (p.X - Radius <= 0)
+            int x = Center.X;
+            int y = Center.Y;;
+            if (x - Radius <= 0)
             {
                 VelocityX *= -1;
-                x = -p.X + Radius;
+                x = Radius;
             }
-            else if (p.X + Radius >= WIDTH)
+            else if (x + Radius >= WIDTH)
             {
                 VelocityX *= -1;
-                x = -p.X - Radius;
+                x = WIDTH - Radius;
             }
-            if (p.Y - Radius <= 0)
+            if (y - Radius <= 0)
             {
                 VelocityY *= -1;
-                y = -p.Y + Radius;
+                y = Radius;
             }
-            else if (p.Y + Radius >= 350)
+            else if (y + Radius >= 350)
             {
                 VelocityY *= -1;
-                y = -p.Y - Radius;
+                y = 350 - Radius;
             }
-            return new Point(x, y);
+            Center = new Point(x, y);
         }
         public bool isHit(Harpoon harpoon)
         {

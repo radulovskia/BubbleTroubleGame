@@ -19,9 +19,11 @@ namespace BubbleTroubleGame
             InitializeComponent();
             this.twoPlayers = twoPlayers;
             scene = new Scene(twoPlayers);
-            timer1.Interval = 1;
+            //Change the interval to control gamespeed
+            timer1.Interval = 10;
             this.Height = 480;
-            this.Width = 600;
+            this.Width = 602;
+            //this.FormBorderStyle = FormBorderStyle.None;
             Scene.Height = this.Height;
             Scene.Width = this.Width;
             timer1.Start();
@@ -75,7 +77,6 @@ namespace BubbleTroubleGame
             {
                 if (!scene.PlayerOne.IsShooting)
                 {
-                    //scene.Harpoon1.startingX = scene.PlayerOne.Position + 24;
                     scene.PlayerOne.Harpoon.startingX = scene.PlayerOne.Position + 24;
                 }
                 scene.PlayerOne.IsShooting = true;
@@ -96,7 +97,6 @@ namespace BubbleTroubleGame
                 {
                     if (!scene.PlayerTwo.IsShooting)
                     {
-                        //scene.Harpoon2.startingX = scene.PlayerTwo.Position + 24;
                         scene.PlayerTwo.Harpoon.startingX = scene.PlayerTwo.Position + 24;
                     }
                     scene.PlayerTwo.IsShooting = true;

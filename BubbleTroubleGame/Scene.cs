@@ -7,19 +7,19 @@ namespace BubbleTroubleGame
     [Serializable]
     public class Scene
     {
-        public List<Ball> Balls { get; set; } = new List<Ball>();
-        public List<Obstacle> Obstacles { get; set; } = new List<Obstacle>();
         public static int Height { get; set; }
         public static int Width { get; set; }
+        private bool TwoPlayers { get; set; }
+        public List<Ball> Balls { get; set; } = new List<Ball>();
+        public List<Obstacle> Obstacles { get; set; } = new List<Obstacle>();
         public Player PlayerOne { get; set; }
         public Player PlayerTwo { get; set; }
-        private bool Second { get; set; }
         private bool Flag1 { get; set; } = false;
         private bool Flag2 { get; set; } = false;
 
         public Scene(bool second)
         {
-            this.Second = second;
+            this.TwoPlayers = second;
             initTest();
 
             if (!second)
@@ -50,7 +50,7 @@ namespace BubbleTroubleGame
             PlayerOne.DrawLives(graphics, "left");
             PlayerOne.Harpoon.Draw(graphics);
 
-            if (Second)
+            if (TwoPlayers)
             {
                 PlayerTwo.Draw(graphics);
                 PlayerTwo.DrawLives(graphics, "right");
@@ -76,7 +76,7 @@ namespace BubbleTroubleGame
                     PlayerOne.Harpoon = new Harpoon(PlayerOne.Position);
                     break;
                 }
-                if (Second && Balls.Count != 0)//bug when last ball destroyed in coop, the extra checker prevents that
+                if (TwoPlayers && Balls.Count != 0)//bug when last ball destroyed in coop, the extra checker prevents that
                 {
                     bool tsc2 = TickShootingCheck(PlayerTwo.Harpoon, Balls[i]);
                     if (tsc2 || PlayerTwo.Harpoon.currentY == 0)
@@ -91,7 +91,7 @@ namespace BubbleTroubleGame
             TickHarpoonGrow(PlayerOne, PlayerOne.Harpoon);
             Flag1 = HitCheck(PlayerOne, Balls, Flag1);
             
-            if (Second)
+            if (TwoPlayers)
             {
                 TickHarpoonGrow(PlayerTwo, PlayerTwo.Harpoon);
                 Flag2 = HitCheck(PlayerTwo, Balls, Flag2);

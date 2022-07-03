@@ -41,7 +41,7 @@ namespace BubbleTroubleGame
 
         private void FormLE_Paint(object sender, PaintEventArgs e)
         {
-            
+            this.Text = FileName;
         }
 
         private void panelGame_Paint(object sender, PaintEventArgs e)
@@ -291,6 +291,24 @@ namespace BubbleTroubleGame
         private String FileName = "";
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            SaveFile();
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            String oldFileName = FileName;
+            FileName = "";
+            if (!SaveFile())
+            {
+                FileName = oldFileName;
+            }
+            else
+            {
+                changed = true;
+            }
+        }
+        private bool SaveFile()
+        {
             if (FileName == "")
             {
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -300,13 +318,17 @@ namespace BubbleTroubleGame
                 {
                     FileName = saveFileDialog.FileName;
                 }
+                else
+                {
+                    return false;
+                }
             }
             FileStream fstream = new FileStream(FileName, FileMode.Create, FileAccess.Write, FileShare.None);
-            IFormatter formatter = new BinaryFormatter(); 
+            IFormatter formatter = new BinaryFormatter();
             formatter.Serialize(fstream, scene);
             fstream.Close();
+            return true;
         }
-
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();

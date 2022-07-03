@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormLE));
             this.panelUI = new System.Windows.Forms.Panel();
+            this.cbObjectType = new System.Windows.Forms.ComboBox();
             this.numContext2 = new System.Windows.Forms.NumericUpDown();
             this.numContext1 = new System.Windows.Forms.NumericUpDown();
             this.lblContext2 = new System.Windows.Forms.Label();
@@ -74,7 +75,6 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.timer2 = new System.Windows.Forms.Timer(this.components);
-            this.cbObjectType = new System.Windows.Forms.ComboBox();
             this.panelUI.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numContext2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numContext1)).BeginInit();
@@ -98,6 +98,18 @@
             this.panelUI.Name = "panelUI";
             this.panelUI.Size = new System.Drawing.Size(712, 80);
             this.panelUI.TabIndex = 0;
+            // 
+            // cbObjectType
+            // 
+            this.cbObjectType.FormattingEnabled = true;
+            this.cbObjectType.Items.AddRange(new object[] {
+            "Ball",
+            "Player",
+            "Obstacle"});
+            this.cbObjectType.Location = new System.Drawing.Point(598, 3);
+            this.cbObjectType.Name = "cbObjectType";
+            this.cbObjectType.Size = new System.Drawing.Size(111, 21);
+            this.cbObjectType.TabIndex = 4;
             // 
             // numContext2
             // 
@@ -209,9 +221,9 @@
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(589, 27);
+            this.listBox1.Location = new System.Drawing.Point(590, 27);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(123, 485);
+            this.listBox1.Size = new System.Drawing.Size(122, 485);
             this.listBox1.TabIndex = 3;
             this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
@@ -284,6 +296,7 @@
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
             this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveAsToolStripMenuItem.Text = "Save &As";
+            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -463,18 +476,6 @@
             // 
             this.timer2.Interval = 20;
             this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
-            // 
-            // cbObjectType
-            // 
-            this.cbObjectType.FormattingEnabled = true;
-            this.cbObjectType.Items.AddRange(new object[] {
-            "Ball",
-            "Player",
-            "Obstacle"});
-            this.cbObjectType.Location = new System.Drawing.Point(598, 3);
-            this.cbObjectType.Name = "cbObjectType";
-            this.cbObjectType.Size = new System.Drawing.Size(111, 21);
-            this.cbObjectType.TabIndex = 4;
             // 
             // FormLE
             // 
