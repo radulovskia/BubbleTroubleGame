@@ -63,7 +63,7 @@ namespace BubbleTroubleGame
                 pen.Dispose();
             }
             foreach (Obstacle obstacle in obstacles)
-                obstacle.draw(graphics);
+                obstacle.Draw(graphics);
         }
         private bool tickShootingCheck(Harpoon harpoon, Ball ball)
         {

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace BubbleTroubleGame
 {
     [Serializable]
-    public class Harpoon
+    public class Harpoon : Drawable
     {
         //player position at time of shooting
         public int startingX { get; set; }

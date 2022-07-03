@@ -9,7 +9,7 @@ using BubbleTroubleGame.Properties;
 namespace BubbleTroubleGame
 {
     [Serializable]
-    public class Player
+    public class Player : Drawable
     {
         //X value
         public int position { get; set; }

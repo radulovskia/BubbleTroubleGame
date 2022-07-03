@@ -2,7 +2,7 @@
 using System;
 using System.Drawing;
 
-public class Obstacle
+public class Obstacle : Drawable
 {
     public Rectangle Bounds { get; set; }
     public int X { get; set; }
@@ -13,7 +13,7 @@ public class Obstacle
     {
         this.Bounds = new Rectangle(position.X, position.Y, width, height);
     }
-    public void draw(Graphics graphics)
+    public void Draw(Graphics graphics)
     {
         Brush brush = new SolidBrush(color);
         graphics.FillRectangle(brush, Bounds);
