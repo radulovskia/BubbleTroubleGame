@@ -12,6 +12,8 @@ namespace BubbleTroubleGame
     {
         public static int WIDTH = 600;
         public static int HEIGHT = 480;
+        private static double BASER = 7;
+        private static double BASET = 5;
         private int radius;
         public int Radius {
             get { return radius; }
@@ -28,17 +30,14 @@ namespace BubbleTroubleGame
                     center = value;
             } 
         }
-        public Color color { get; set; }
+        public Color Color { get; set; }
         public double VelocityX { get; set; } = 1;
         public double VelocityY { get; set; } = 1;
-        private double baseR = 7;
-        private double baseT = 5;
         public Ball(int Radius, Point Center, int direction, bool isPopped = false)
         {
             this.Radius=Radius;
             this.Center=Center;
-            this.color = GetColor();
-            //this.VelocityX = direction;
+            this.Color = GetColor();
 
             //Velocity and gravity are determined by multiple formulas
             //V=at h=5*r=at^(2)/2
@@ -49,10 +48,10 @@ namespace BubbleTroubleGame
 
             //Calculation for size modifier
             //Modifier modifies height
-            double modifier = Math.Log10(Radius / baseR) / Math.Log10(2);
+            double modifier = Math.Log10(Radius / BASER) / Math.Log10(2);
             modifier = Math.Pow(1.3, modifier);
-            double t = modifier * baseR * baseT;
-            double h = modifier * baseR * baseT * 2;
+            double t = modifier * BASER * BASET;
+            double h = modifier * BASER * BASET * 2;
 
             this.Gravity = h * 2 / Math.Pow(t, 2);
             this.VelocityYMax = Gravity * t;
@@ -87,56 +86,13 @@ namespace BubbleTroubleGame
         public void Draw(Graphics g)
         {
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            Brush brush = new SolidBrush(color);
+            Brush brush = new SolidBrush(Color);
             g.FillEllipse(brush, Center.X - Radius, Center.Y - Radius, Radius * 2, Radius * 2);
             brush.Dispose();
         }
-        //add horizontal movement
-        /*
-        public void Move(int height, int width)
-        {
-            if (Radius * 15 >= height)
-            {
-                if (Center.X + Radius >= width || Center.X - Radius <= 0)
-                {
-                    VelocityX *= -1;
-                }
-                if (Center.Y + Radius >= height || Center.Y - Radius <= 0)
-                {
-                    VelocityY *= -1;
-                }
-            }
-            else
-            {
-                if (VelocityY < 0 && ((Center.Y) <= Radius * 20))
-                {
-                    if (Center.X + Radius >= width || Center.X - Radius <= 0)
-                    {
-                        VelocityX *= -1;
-                    }
-                    if (Center.Y + Radius >= height || Center.Y - Radius <= height - Radius * 15 || Center.Y - Radius <= 0)
-                    {
-                        VelocityY *= -1;
-                    }
-                }
-                else
-                {
-                    if (Center.X + Radius >= width || Center.X - Radius <= 0)
-                    {
-                        VelocityX *= -1;
-                    }
-                    if (Center.Y + Radius >= height || Center.Y - Radius <= 0)
-                    {
-                        VelocityY *= -1;
-                    }
-                }
-            }
-            Center = new Point((int)(Center.X + VelocityX),(int)(Center.Y + VelocityY));
-        }
-        */
         public double VelocityYMax { get; set; }
         public double Gravity { get; set; } = 0.1;
-        public void Move(int height, int width)
+        public void Move()
         {
             VelocityY = Math.Abs(VelocityY + Gravity) < VelocityYMax ? VelocityY + Gravity : VelocityYMax;
             Point next = new Point((int)(Center.X + VelocityX), (int)(Center.Y + VelocityY));
@@ -169,19 +125,6 @@ namespace BubbleTroubleGame
             }
             return new Point(x, y);
         }
-        /*
-        public bool isHit(Harpoon harpoon)
-        {
-            for(int i=350;i>harpoon.currentY;i--)
-            {
-                if(Math.Sqrt(Math.Pow(harpoon.startingX - (Center.X), 2) + Math.Pow(i - (Center.Y), 2)) <= Radius)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-        */
         public bool isHit(Harpoon harpoon)
         {
             int x = harpoon.startingX;

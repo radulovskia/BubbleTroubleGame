@@ -7,20 +7,18 @@ namespace BubbleTroubleGame
     [Serializable]
     public class Scene
     {
-        public List<Ball> Balls { get; set; }
+        public List<Ball> Balls { get; set; } = new List<Ball>();
+        public List<Obstacle> Obstacles { get; set; } = new List<Obstacle>();
         public static int Height { get; set; }
         public static int Width { get; set; }
         public Player PlayerOne { get; set; }
         public Player PlayerTwo { get; set; }
-        //public Harpoon Harpoon1 { get; set; }
-        //public Harpoon Harpoon2 { get; set; }
         private bool Second { get; set; }
         private bool Flag1 { get; set; } = false;
         private bool Flag2 { get; set; } = false;
 
         public Scene(bool second)
         {
-            //ball.Y cannot be less that radius
             this.Second = second;
             initTest();
 
@@ -42,31 +40,34 @@ namespace BubbleTroubleGame
         }
         public void Draw(Graphics graphics)
         {
+            foreach (Obstacle obstacle in Obstacles)
+                obstacle.Draw(graphics);
+
             foreach (Ball ball in Balls)
-            {
                 ball.Draw(graphics);
-            }
+
             PlayerOne.Draw(graphics);
             PlayerOne.DrawLives(graphics, "left");
             PlayerOne.Harpoon.Draw(graphics);
+
             if (Second)
             {
                 PlayerTwo.Draw(graphics);
                 PlayerTwo.DrawLives(graphics, "right");
                 PlayerTwo.Harpoon.Draw(graphics);
             }
+
+            DrawHighlight(graphics);
             Brush brush = new SolidBrush(Color.FromArgb(77, 0, 77));
             graphics.FillRectangle(brush, new Rectangle(0, 350, Width, Height));
-            DrawHighlight(graphics);
-            foreach (Obstacle obstacle in Obstacles)
-                obstacle.Draw(graphics);
         }
         
         public void Tick()
         {
             for (int i = 0; i < Balls.Count; i++)
             {
-                Balls[i].Move(Height - 130, Width); // where the ground is
+                //Balls[i].Move(Height - 130, Width); // where the ground is
+                Balls[i].Move();
                 Collide(Balls[i]);
                 bool tsc1 = TickShootingCheck(PlayerOne.Harpoon, Balls[i]);//avoid 2 function calls
                 if (tsc1 || PlayerOne.Harpoon.currentY == 0)
@@ -75,7 +76,7 @@ namespace BubbleTroubleGame
                     PlayerOne.Harpoon = new Harpoon(PlayerOne.Position);
                     break;
                 }
-                if (Second && Balls.Count != 0)//bug when last ball destoryed in coop, the extra checker prevents that
+                if (Second && Balls.Count != 0)//bug when last ball destroyed in coop, the extra checker prevents that
                 {
                     bool tsc2 = TickShootingCheck(PlayerTwo.Harpoon, Balls[i]);
                     if (tsc2 || PlayerTwo.Harpoon.currentY == 0)
@@ -132,6 +133,14 @@ namespace BubbleTroubleGame
             return false;
         }
 
+        //Obstacle Collision
+        private void Collide(Ball ball)
+        {
+            foreach (Obstacle obstacle in Obstacles)
+                obstacle.Collide(ball);
+        }
+
+
         //Everything below here is for the level editor
         public Rectangle Highlight { get; set; } = Rectangle.Empty;
         public String HighlightType { get; set; } = "Circle";
@@ -179,15 +188,7 @@ namespace BubbleTroubleGame
         {
             return Math.Sqrt(Math.Pow(a.X - b.X, 2) + Math.Pow(a.Y - b.Y, 2));
         }
-        //Obstacles
-        public List<Obstacle> Obstacles { get; set; } = new List<Obstacle>();
-        private void Collide(Ball ball)
-        {
-            foreach (Obstacle obstacle in Obstacles)
-                obstacle.Collide(ball);
-        }
-
-        internal void RemoveDrawable(Drawable selectedItem)
+        public void RemoveDrawable(Drawable selectedItem)
         {
             if(selectedItem is Ball)
             {
