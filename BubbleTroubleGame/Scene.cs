@@ -102,6 +102,7 @@ namespace BubbleTroubleGame
                             balls.RemoveAt(i);
                         playerOne.isShooting = false;
                         harpoon1 = new Harpoon(playerOne.position);
+                        break;
                     }
                     if (second && balls.Count!=0)//bug when last ball destoryed in coop, the extra checker prevents that
                     {
@@ -112,6 +113,7 @@ namespace BubbleTroubleGame
                                 balls.RemoveAt(i);
                             playerTwo.isShooting = false;
                             harpoon2 = new Harpoon(playerTwo.position);
+                            break;
                         }
                     }
                 }
