@@ -87,6 +87,17 @@ namespace BubbleTroubleGame
                 harpoon.Grow();
             }
         }
+
+        private bool hitCheck(Player player, List<Ball> balls, bool flag)
+        {
+            if (player.isHit(balls))
+            {
+                if (!flag)
+                    player.lives--;
+                    return true;
+            }
+            return false;
+        }
         public void tick()
         {
             if (balls.Count != 0)
@@ -119,29 +130,12 @@ namespace BubbleTroubleGame
                 }
             }
             tickHarpoonGrow(playerOne, harpoon1);
-            if (playerOne.isHit(balls))
-            {
-                if(!flag1)
-                    playerOne.lives--;
-                flag1 = true;
-            }
-            else
-            {
-                flag1 = false;
-            }
+            flag1 = hitCheck(playerOne, balls, flag1);
+            
             if (second)
             {
                 tickHarpoonGrow(playerTwo, harpoon2);
-                if (playerTwo.isHit(balls))
-                {
-                    if (!flag2)
-                        playerTwo.lives--;
-                    flag2 = true;
-                }
-                else
-                {
-                    flag2 = false;
-                }
+                flag2 = hitCheck(playerTwo, balls, flag2);
             }
         }
         public Rectangle Highlight { get; set; } = Rectangle.Empty;
