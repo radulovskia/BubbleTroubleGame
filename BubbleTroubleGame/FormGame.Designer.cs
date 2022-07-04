@@ -39,7 +39,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.btnBackToMenu = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.panelPauseMenu.SuspendLayout();
             this.panelEnd.SuspendLayout();
             this.SuspendLayout();
@@ -52,6 +52,7 @@
             // 
             // panelPauseMenu
             // 
+            this.panelPauseMenu.Controls.Add(this.toolStrip1);
             this.panelPauseMenu.Controls.Add(this.btnLvlEditor);
             this.panelPauseMenu.Controls.Add(this.btnExitToDesktop);
             this.panelPauseMenu.Controls.Add(this.btnExitToMenu);
@@ -66,7 +67,7 @@
             // btnLvlEditor
             // 
             this.btnLvlEditor.BackColor = System.Drawing.Color.Firebrick;
-            this.btnLvlEditor.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
+            this.btnLvlEditor.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLvlEditor.ForeColor = System.Drawing.Color.White;
             this.btnLvlEditor.Location = new System.Drawing.Point(36, 190);
             this.btnLvlEditor.Name = "btnLvlEditor";
@@ -79,7 +80,7 @@
             // btnExitToDesktop
             // 
             this.btnExitToDesktop.BackColor = System.Drawing.Color.Firebrick;
-            this.btnExitToDesktop.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
+            this.btnExitToDesktop.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnExitToDesktop.ForeColor = System.Drawing.Color.White;
             this.btnExitToDesktop.Location = new System.Drawing.Point(36, 137);
             this.btnExitToDesktop.Name = "btnExitToDesktop";
@@ -92,7 +93,7 @@
             // btnExitToMenu
             // 
             this.btnExitToMenu.BackColor = System.Drawing.Color.Firebrick;
-            this.btnExitToMenu.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
+            this.btnExitToMenu.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnExitToMenu.ForeColor = System.Drawing.Color.White;
             this.btnExitToMenu.Location = new System.Drawing.Point(36, 84);
             this.btnExitToMenu.Name = "btnExitToMenu";
@@ -105,7 +106,7 @@
             // btnResume
             // 
             this.btnResume.BackColor = System.Drawing.Color.Firebrick;
-            this.btnResume.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
+            this.btnResume.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnResume.ForeColor = System.Drawing.Color.White;
             this.btnResume.Location = new System.Drawing.Point(36, 31);
             this.btnResume.Name = "btnResume";
@@ -121,7 +122,7 @@
             this.panelEnd.Controls.Add(this.label1);
             this.panelEnd.Controls.Add(this.btnBackToMenu);
             this.panelEnd.Enabled = false;
-            this.panelEnd.Location = new System.Drawing.Point(89, 55);
+            this.panelEnd.Location = new System.Drawing.Point(86, 70);
             this.panelEnd.Margin = new System.Windows.Forms.Padding(2);
             this.panelEnd.Name = "panelEnd";
             this.panelEnd.Size = new System.Drawing.Size(422, 90);
@@ -132,7 +133,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(76, 26);
+            this.label2.Location = new System.Drawing.Point(75, 13);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(288, 25);
@@ -144,7 +145,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(123, 26);
+            this.label1.Location = new System.Drawing.Point(125, 13);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(194, 25);
@@ -154,23 +155,25 @@
             // 
             // btnBackToMenu
             // 
-            this.btnBackToMenu.Location = new System.Drawing.Point(127, 61);
+            this.btnBackToMenu.BackColor = System.Drawing.Color.Firebrick;
+            this.btnBackToMenu.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBackToMenu.ForeColor = System.Drawing.SystemColors.Control;
+            this.btnBackToMenu.Location = new System.Drawing.Point(113, 41);
             this.btnBackToMenu.Margin = new System.Windows.Forms.Padding(2);
             this.btnBackToMenu.Name = "btnBackToMenu";
-            this.btnBackToMenu.Size = new System.Drawing.Size(164, 19);
+            this.btnBackToMenu.Size = new System.Drawing.Size(181, 36);
             this.btnBackToMenu.TabIndex = 0;
             this.btnBackToMenu.Text = "Return to Menu";
-            this.btnBackToMenu.UseVisualStyleBackColor = true;
+            this.btnBackToMenu.UseVisualStyleBackColor = false;
             this.btnBackToMenu.Click += new System.EventHandler(this.btnBackToMenu_Click);
             // 
-            // panel1
+            // toolStrip1
             // 
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 360);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(584, 81);
-            this.panel1.TabIndex = 2;
-            this.panel1.Visible = false;
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(235, 25);
+            this.toolStrip1.TabIndex = 1;
+            this.toolStrip1.Text = "toolStrip1";
             // 
             // FormGame
             // 
@@ -178,7 +181,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::BubbleTroubleGame.Properties.Resources.bg2;
             this.ClientSize = new System.Drawing.Size(584, 441);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.panelEnd);
             this.Controls.Add(this.panelPauseMenu);
             this.DoubleBuffered = true;
@@ -190,6 +192,7 @@
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyUp);
             this.panelPauseMenu.ResumeLayout(false);
+            this.panelPauseMenu.PerformLayout();
             this.panelEnd.ResumeLayout(false);
             this.panelEnd.PerformLayout();
             this.ResumeLayout(false);
@@ -208,7 +211,7 @@
         private System.Windows.Forms.Button btnBackToMenu;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.ToolStrip toolStrip1;
     }
 }
 

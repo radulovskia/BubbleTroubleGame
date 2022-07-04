@@ -483,6 +483,7 @@
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.panelGame);
             this.Controls.Add(this.menuStrip1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
