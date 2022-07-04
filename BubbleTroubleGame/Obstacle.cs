@@ -6,8 +6,6 @@ using System.Drawing;
 public class Obstacle : Drawable
 {
     public Rectangle Bounds { get; set; }
-    public int X { get; set; }
-    public int Y { get; set; }
     public Color color = Color.Maroon;
 
     public Obstacle(Point position, int width, int height)
@@ -125,5 +123,12 @@ public class Obstacle : Drawable
     public override string ToString()
     {
         return "Obstacle " + Bounds.Height + " " + Bounds.Width;
+    }
+
+    public Obstacle(Obstacle obstacle)
+    {
+        int x = obstacle.Bounds.X;
+        int y = obstacle.Bounds.Y;
+        this.Bounds = new Rectangle(x, y, obstacle.Bounds.Width, obstacle.Bounds.Height);
     }
 }

@@ -17,21 +17,42 @@ namespace BubbleTroubleGame
         private static double BASER = 7;
         private static double BASET = 5;
         private int radius;
-        private bool changed;
         public int Radius {
             get { return radius; }
             set {
-                radius = value > 5 ? value : 5;
+                radius = value > BASER ? value : (int)BASER;
+
+                center = validityCheck(Center, value);
             } }
         private Point center;
         public Point Center {
             get { return center; }
             set
             {
-                if (value.X - Radius >= 0 && value.Y - Radius >= 0 && value.X + Radius <= WIDTH && value.Y + Radius <= HEIGHT)
-                   center = value;
-                
+                center = validityCheck(value, Radius);
             } 
+        }
+        private Point validityCheck(Point p, int r)
+        {
+            int x = p.X;
+            int y = p.Y; ;
+            if (x - r <= 0)
+            {
+                x = r;
+            }
+            else if (x + r >= WIDTH)
+            {
+                x = WIDTH - r;
+            }
+            if (y - r <= 0)
+            {
+                y = r;
+            }
+            else if (y + r >= HEIGHT)
+            {
+                y = HEIGHT - r;
+            }
+            return new Point(x, y);
         }
         public Color Color { get; set; }
         public double VelocityX { get; set; } = 1;
@@ -60,7 +81,8 @@ namespace BubbleTroubleGame
             this.VelocityYMax = Gravity * t;
 
             //if the Ball is popped then it's children shoot upwards
-            this.VelocityY = isPopped ? -VelocityYMax : 0;
+            this.VelocityY = 0;
+            this.VelocityY = isPopped ? -VelocityYMax : VelocityY;
         }
         static Color[] colors = { Color.LightSeaGreen, Color.DarkOrange, Color.Magenta, Color.BlueViolet, Color.PaleGoldenrod }; // add more colors
         public Color GetColor()
@@ -118,12 +140,12 @@ namespace BubbleTroubleGame
             else if (y - Radius <= 0)
             {
                 VelocityY *= -1;
-                y = Radius;
+                y = Radius + 1;
             }
-            else if (y + Radius >= HEIGHT)
+            else if (y + Radius > HEIGHT)
             {
-                VelocityY = VelocityYMax;
-                VelocityY *= -1;
+                VelocityY = -VelocityYMax;
+                //VelocityY *= -1;
                 y = HEIGHT - Radius;
             }
             Center = new Point(x, y);
@@ -148,6 +170,17 @@ namespace BubbleTroubleGame
         public override string ToString()
         {
             return "Ball " + Radius;
+        }
+
+        public Ball(Ball ball)
+        {
+            Radius = ball.Radius;
+            Center = ball.Center;
+            Color = ball.Color;
+            VelocityX = ball.VelocityX;
+            VelocityY = ball.VelocityY;
+            VelocityYMax = ball.VelocityYMax;
+            Gravity = ball.Gravity;
         }
     }
 }

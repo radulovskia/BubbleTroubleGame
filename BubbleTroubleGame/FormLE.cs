@@ -75,7 +75,18 @@ namespace BubbleTroubleGame
         //Context Setup
         private void setContext()
         {
-            if (Type == "Ball")
+            if (testing)
+            {
+                lblContext1.Enabled = false;
+                lblContext1.Visible = false;
+                numContext1.Enabled = false;
+                numContext1.Visible = false;
+                lblContext2.Enabled = false;
+                lblContext2.Visible = false;
+                numContext2.Enabled = false;
+                numContext2.Visible = false;
+            }
+            else if (Type == "Ball")
             {
                 lblContext1.Text = "Radius: ";
                 lblContext1.Enabled = true;
@@ -154,7 +165,7 @@ namespace BubbleTroubleGame
                 ((Obstacle)listBox1.SelectedItem).Bounds = new Rectangle(bounds.X, bounds.Y, bounds.Width, (int)numContext1.Value);
             }
             setHighlight();
-            //initScene();
+            initScene();
             changed = true;
         }
 
@@ -172,7 +183,13 @@ namespace BubbleTroubleGame
 
         //Highlight
         private void setHighlight()
-        {
+        {   
+            if (testing)
+            {
+                listBox1.SelectedIndex = -1; 
+                scene.Highlight = Rectangle.Empty;
+                return;
+            }
             if (listBox1.SelectedItem is Ball)
             {
                 Ball ball = ((Ball)listBox1.SelectedItem);
@@ -213,7 +230,7 @@ namespace BubbleTroubleGame
         }
         private void FormLE_MouseClick(object sender, MouseEventArgs e)
         {
-            if (!inBounds(e.Location))
+            if (!inBounds(e.Location) || testing)
                 return;
             Point p = new Point(e.Location.X, e.Location.Y - 27);
             if (e.Button == MouseButtons.Left)
@@ -434,11 +451,11 @@ namespace BubbleTroubleGame
             }
             if (e.KeyCode == Keys.Escape)
             {
-                timer2.Stop();
-                timer2.Enabled = false;
-                testing = false; 
-                timer1.Enabled = true;
-                timer1.Start();
+                //scene = oldScene;
+                //listBox1.Enabled = true;
+                //cbObjectType.Enabled = true;
+                //testing = false;
+                timer2.Enabled = !timer2.Enabled;
             }
             Invalidate();
         }
@@ -498,14 +515,34 @@ namespace BubbleTroubleGame
             form2.Closed += (s, args) => this.Close();
             form2.Show();
         }
-
+        private Scene oldScene = null;
         private void btnPlayTest_Click(object sender, EventArgs e)
         {
-            timer2.Enabled = true;
-            timer2.Start();
-            timer1.Stop();
-            timer1.Enabled = false;
-            testing = true;
+            testing = !testing;
+            if (testing)
+            {
+                oldScene = new Scene(scene);
+                listBox1.Enabled = false;
+                cbObjectType.Enabled = false;
+                setHighlight();
+                timer2.Enabled = true;
+                timer2.Start();
+                timer1.Stop();
+                timer1.Enabled = false;
+                btnPlayTest.Text = "STOP";
+            }else
+            {
+                scene = oldScene;
+                listBox1.Enabled = true;
+                cbObjectType.Enabled = true;
+                setHighlight();
+                timer2.Enabled = false;
+                timer2.Stop();
+                timer1.Start();
+                timer1.Enabled = true;
+                btnPlayTest.Text = "PLAYTEST";
+                changed = true;
+            }
         }
     }
 }

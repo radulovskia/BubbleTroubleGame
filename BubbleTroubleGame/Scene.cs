@@ -206,5 +206,22 @@ namespace BubbleTroubleGame
                 Obstacles.Remove(obstacle);
             }
         }
+
+        public Scene(Scene scene)
+        { 
+            foreach (Ball ball in scene.Balls)
+            {
+                Balls.Add(new Ball(ball));
+            }
+            Obstacles = scene.Obstacles;
+            PlayerOne = new Player(scene.PlayerOne);
+            if (scene.TwoPlayers)
+                PlayerTwo = new Player(scene.PlayerTwo);
+            TwoPlayers = scene.TwoPlayers;
+            Flag1 = scene.Flag1;
+            Flag2 = scene.Flag2;
+            Highlight = Rectangle.Empty;
+            HighlightType = scene.HighlightType;
+        }
     }
 }

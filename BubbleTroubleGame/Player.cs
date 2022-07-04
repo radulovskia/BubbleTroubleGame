@@ -21,9 +21,8 @@ namespace BubbleTroubleGame
         public Harpoon Harpoon { get; set; }
 
         public int Lives { get; set; } = 5;
-        public Image Heart { get; set; } = Resources.heart_final_copy;
-        public Image Heart2 { get; set; } = Resources.heart_final_copy2;
-
+        private static Image Heart { get; set; } = Resources.heart_final_copy;
+        private static Image Heart2 { get; set; } = Resources.heart_final_copy2;
         public Image PlayerImg { get; set; }
 
         //first or second player
@@ -125,5 +124,16 @@ namespace BubbleTroubleGame
             return false;
         }
 
+        public Player(Player player)
+        {
+            Position = player.Position;
+            Harpoon = new Harpoon(player.Harpoon);
+            Lives = player.Lives;
+            PlayerImg = player.PlayerImg;
+            PlayerId = player.PlayerId;
+            IsDead = player.IsDead;
+            IsMoving = player.IsMoving;
+            IsShooting = player.IsShooting;
+        }
     }
 }

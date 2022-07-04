@@ -15,11 +15,11 @@ namespace BubbleTroubleGame
         //current progress of the bullet
         public int currentY { get; set; }
         //increment per tick
-        public readonly int projectileSpeed = 5;
+        public static readonly int projectileSpeed = 5;
         public Harpoon(int startingX)
         {
             this.startingX = startingX;
-            this.currentY = 358;
+            this.currentY = 360;
         }
         //called on each timer tick
         public void Grow()
@@ -31,6 +31,12 @@ namespace BubbleTroubleGame
             Pen pen = new Pen(Color.Black, 2);
             g.DrawLine(pen, startingX, 358, startingX, currentY);
             pen.Dispose();
+        }
+
+        public Harpoon(Harpoon harpoon)
+        {
+            this.startingX = harpoon.startingX;
+            this.currentY = 360;
         }
     }
 }
