@@ -16,7 +16,6 @@ namespace BubbleTroubleGame
     public partial class FormLE : Form
     {
         public Scene scene;
-        public bool twoPlayers = false;
         public FormLE()
         {
             InitializeComponent();
@@ -38,7 +37,7 @@ namespace BubbleTroubleGame
             foreach (Obstacle obstacle in scene.Obstacles)
                 listBox1.Items.Add(obstacle);
             listBox1.Items.Add(scene.PlayerOne);
-            if(twoPlayers)
+            if(scene.TwoPlayers)
                 listBox1.Items.Add(scene.PlayerTwo);
             listBox1.SelectedItem = selected;
         }
@@ -238,6 +237,11 @@ namespace BubbleTroubleGame
                 else if (type == "Obstacle")
                 {
                     scene.Obstacles.Add(new Obstacle(p, 100, 100));
+                }
+                else if (type == "Player" && !scene.TwoPlayers)
+                {
+                    scene.TwoPlayers = true;
+                    scene.PlayerTwo = new Player(p.X, 2);
                 }
                 initScene();
             }

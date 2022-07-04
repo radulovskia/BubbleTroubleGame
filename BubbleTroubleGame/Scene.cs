@@ -9,7 +9,7 @@ namespace BubbleTroubleGame
     {
         public static int Height { get; set; }
         public static int Width { get; set; }
-        private bool TwoPlayers { get; set; }
+        public bool TwoPlayers { get; set; }
         public List<Ball> Balls { get; set; } = new List<Ball>();
         public List<Obstacle> Obstacles { get; set; } = new List<Obstacle>();
         public Player PlayerOne { get; set; }
@@ -211,7 +211,7 @@ namespace BubbleTroubleGame
                 if (player.PlayerId == 2)
                 {
                     TwoPlayers = false;
-                    player = null;
+                    PlayerTwo = null;
                 }
             }
             if(selectedItem is Obstacle obstacle)
