@@ -15,11 +15,23 @@ namespace BubbleTroubleGame
 {
     public partial class FormLE : Form
     {
-        public Scene scene;
+        private Scene scene;
+        public Scene Scene
+        {
+            get
+            {
+                return scene;
+            }
+            set
+            {
+                scene = value;
+                lblP2.Visible = scene.TwoPlayers;
+            }
+        }
         public FormLE()
         {
             InitializeComponent();
-            scene = new Scene();
+            Scene = new Scene();
             Scene.Height = this.Height;
             Scene.Width = this.Width;
             this.DoubleBuffered = true;
@@ -32,23 +44,22 @@ namespace BubbleTroubleGame
         {
             var selected = listBox1.SelectedItem;
             listBox1.Items.Clear();
-            foreach (Ball ball in scene.Balls)
+            foreach (Ball ball in Scene.Balls)
                 listBox1.Items.Add(ball);
-            foreach (Obstacle obstacle in scene.Obstacles)
+            foreach (Obstacle obstacle in Scene.Obstacles)
                 listBox1.Items.Add(obstacle);
-            listBox1.Items.Add(scene.PlayerOne);
-            if(scene.TwoPlayers)
-                listBox1.Items.Add(scene.PlayerTwo);
+            listBox1.Items.Add(Scene.PlayerOne);
+            if(Scene.TwoPlayers)
+                listBox1.Items.Add(Scene.PlayerTwo);
             listBox1.SelectedItem = selected;
         }
 
         private void FormLE_Paint(object sender, PaintEventArgs e)
         {
             this.Text = FileName; Bitmap bmp = new Bitmap(panelGame.Width, panelGame.Height);
-            scene.Draw(Graphics.FromImage(bmp));
+            Scene.Draw(Graphics.FromImage(bmp));
             e.Graphics.DrawImage(Image.FromFile("../../Resources/bg2.jpg"), 0, 27, panelGame.Width, panelGame.Height);
             e.Graphics.DrawImageUnscaled(bmp, 0, 27);
-            panelGame.Visible = false;
         }
 
         private void panelGame_Paint(object sender, PaintEventArgs e)
@@ -178,7 +189,7 @@ namespace BubbleTroubleGame
             if (testing)
             {
                 listBox1.SelectedIndex = -1; 
-                scene.Highlight = Rectangle.Empty;
+                Scene.Highlight = Rectangle.Empty;
                 Type = "";
                 setContext();
                 return;
@@ -188,7 +199,7 @@ namespace BubbleTroubleGame
                 Ball ball = ((Ball)listBox1.SelectedItem);
                 Rectangle rect = new Rectangle(ball.Center.X - ball.Radius, ball.Center.Y - ball.Radius, ball.Radius * 2, ball.Radius * 2);
                 rect.Inflate(3, 3);
-                scene.Highlight = rect;
+                Scene.Highlight = rect;
                 Type = "Ball";
             }
             else if (listBox1.SelectedItem is Player)
@@ -196,8 +207,8 @@ namespace BubbleTroubleGame
                 Player player = (Player)listBox1.SelectedItem;
                 Rectangle rect = new Rectangle(player.Position, 308, 50, 50);
                 rect.Inflate(3, 3);
-                scene.Highlight = rect;
-                scene.HighlightType = "Circle";
+                Scene.Highlight = rect;
+                Scene.HighlightType = "Circle";
                 Type = "Player";
             }
             else if (listBox1.SelectedItem is Obstacle)
@@ -205,12 +216,12 @@ namespace BubbleTroubleGame
                 Obstacle obstacle = (Obstacle)listBox1.SelectedItem;
                 Rectangle rect = obstacle.Bounds;
                 rect.Inflate(3, 3);
-                scene.Highlight = rect;
-                scene.HighlightType = "Rectangle";
+                Scene.Highlight = rect;
+                Scene.HighlightType = "Rectangle";
                 Type = "Obstacle";
             }else if (listBox1.SelectedItem is null)
             {
-                scene.Highlight = Rectangle.Empty;
+                Scene.Highlight = Rectangle.Empty;
                 Type = "";
             }
             setContext();
@@ -232,22 +243,23 @@ namespace BubbleTroubleGame
                 String type = cbObjectType.SelectedItem.ToString();
                 if (type == "Ball")
                 {
-                    scene.Balls.Add(new Ball(7, p, 1));
+                    Scene.Balls.Add(new Ball(7, p, 1));
                 }
                 else if (type == "Obstacle")
                 {
-                    scene.Obstacles.Add(new Obstacle(p, 100, 100));
+                    Scene.Obstacles.Add(new Obstacle(p, 100, 100));
                 }
-                else if (type == "Player" && !scene.TwoPlayers)
+                else if (type == "Player" && !Scene.TwoPlayers)
                 {
-                    scene.TwoPlayers = true;
-                    scene.PlayerTwo = new Player(p.X, 2);
+                    Scene.TwoPlayers = true;
+                    Scene.PlayerTwo = new Player(p.X, 2);
+                    Scene = Scene;
                 }
                 initScene();
             }
             else if (e.Button == MouseButtons.Right)
             {
-                listBox1.SelectedItem = scene.Select(p);
+                listBox1.SelectedItem = Scene.Select(p);
             }
             changed = true;
         }
@@ -320,27 +332,27 @@ namespace BubbleTroubleGame
             if (changed)
             {
                 changed = false;
-                Invalidate(true);
+                Invalidate();
             }
         }
 
         private void timer2_Tick(object sender, EventArgs e)
         {
-            if(scene.Balls.Count == 0)
+            if(Scene.Balls.Count == 0)
             {
                 timer2.Stop();
                 return;
             }
-            scene.Tick();
+            Scene.Tick();
 
             if (moveLeft1)
-                scene.PlayerOne.Move(Scene.Width, "left");
+                Scene.PlayerOne.Move(Scene.Width, "left");
             if (moveRight1)
-                scene.PlayerOne.Move(Scene.Width, "right");
+                Scene.PlayerOne.Move(Scene.Width, "right");
             if (moveLeft2)
-                scene.PlayerTwo.Move(Scene.Width, "left");
+                Scene.PlayerTwo.Move(Scene.Width, "left");
             if (moveRight2)
-                scene.PlayerTwo.Move(Scene.Width, "right");
+                Scene.PlayerTwo.Move(Scene.Width, "right");
             Invalidate();
         }
 
@@ -382,7 +394,7 @@ namespace BubbleTroubleGame
             }
             FileStream fstream = new FileStream(FileName, FileMode.Create, FileAccess.Write, FileShare.None);
             IFormatter formatter = new BinaryFormatter();
-            formatter.Serialize(fstream, scene);
+            formatter.Serialize(fstream, Scene);
             fstream.Close();
             return true;
         }
@@ -397,7 +409,7 @@ namespace BubbleTroubleGame
             }
             FileStream fstream = new FileStream(FileName, FileMode.Open, FileAccess.Read, FileShare.None);
             IFormatter formatter = new BinaryFormatter();
-            this.scene = (Scene) formatter.Deserialize(fstream);
+            this.Scene = (Scene) formatter.Deserialize(fstream);
             fstream.Close();
             initScene();
             changed = true;
@@ -415,11 +427,12 @@ namespace BubbleTroubleGame
             {
                 if (e.KeyCode == Keys.Delete)
                 {
-                    scene.RemoveDrawable((Drawable)listBox1.SelectedItem);
+                    Scene.RemoveDrawable((Drawable)listBox1.SelectedItem);
                     listBox1.SelectedIndex = -1;
                     setContext();
                     initScene();
                     setHighlight();
+                    Scene = Scene;
                     changed = true;
                 }
             }
@@ -434,41 +447,41 @@ namespace BubbleTroubleGame
         {
             if (e.KeyCode == Keys.A)
             {
-                scene.PlayerOne.IsMoving = true;
+                Scene.PlayerOne.IsMoving = true;
                 moveLeft1 = true;
             }
             if (e.KeyCode == Keys.D)
             {
-                scene.PlayerOne.IsMoving = true;
+                Scene.PlayerOne.IsMoving = true;
                 moveRight1 = true;
             }
-            if (e.KeyCode == Keys.W && !scene.PlayerOne.IsDead)
+            if (e.KeyCode == Keys.W && !Scene.PlayerOne.IsDead)
             {
-                if (!scene.PlayerOne.IsShooting)
+                if (!Scene.PlayerOne.IsShooting)
                 {
-                    scene.PlayerOne.Harpoon.startingX = scene.PlayerOne.Position + 24;
+                    Scene.PlayerOne.Harpoon.startingX = Scene.PlayerOne.Position + 24;
                 }
-                scene.PlayerOne.IsShooting = true;
+                Scene.PlayerOne.IsShooting = true;
             }
             if (second)
             {
                 if (e.KeyCode == Keys.Left)
                 {
-                    scene.PlayerTwo.IsMoving = true;
+                    Scene.PlayerTwo.IsMoving = true;
                     moveLeft2 = true;
                 }
                 if (e.KeyCode == Keys.Right)
                 {
-                    scene.PlayerTwo.IsMoving = true;
+                    Scene.PlayerTwo.IsMoving = true;
                     moveRight2 = true;
                 }
-                if (e.KeyCode == Keys.Up && !scene.PlayerTwo.IsDead)
+                if (e.KeyCode == Keys.Up && !Scene.PlayerTwo.IsDead)
                 {
-                    if (!scene.PlayerTwo.IsShooting)
+                    if (!Scene.PlayerTwo.IsShooting)
                     {
-                        scene.PlayerOne.Harpoon.startingX = scene.PlayerTwo.Position + 24;
+                        Scene.PlayerOne.Harpoon.startingX = Scene.PlayerTwo.Position + 24;
                     }
-                    scene.PlayerTwo.IsShooting = true;
+                    Scene.PlayerTwo.IsShooting = true;
                 }
             }
             if (e.KeyCode == Keys.Escape)
@@ -488,24 +501,24 @@ namespace BubbleTroubleGame
             if (e.KeyCode == Keys.A)
             {
                 moveLeft1 = false;
-                scene.PlayerOne.IsMoving = false;
+                Scene.PlayerOne.IsMoving = false;
             }
             if (e.KeyCode == Keys.D)
             {
                 moveRight1 = false;
-                scene.PlayerOne.IsMoving = false;
+                Scene.PlayerOne.IsMoving = false;
             }
             if (second)
             {
                 if (e.KeyCode == Keys.Left)
                 {
                     moveLeft2 = false;
-                    scene.PlayerTwo.IsMoving = false;
+                    Scene.PlayerTwo.IsMoving = false;
                 }
                 if (e.KeyCode == Keys.Right)
                 {
                     moveRight2 = false;
-                    scene.PlayerTwo.IsMoving = false;
+                    Scene.PlayerTwo.IsMoving = false;
                 }
             }
             Invalidate();
@@ -525,7 +538,7 @@ namespace BubbleTroubleGame
             testing = !testing;
             if (testing)
             {
-                oldScene = new Scene(scene);
+                oldScene = new Scene(Scene);
                 listBox1.Enabled = false;
                 cbObjectType.Enabled = false;
                 setHighlight();
@@ -536,7 +549,7 @@ namespace BubbleTroubleGame
                 btnPlayTest.Text = "STOP";
             }else
             {
-                scene = oldScene;
+                Scene = oldScene;
                 initScene();
                 listBox1.Enabled = true;
                 cbObjectType.Enabled = true;
@@ -548,6 +561,11 @@ namespace BubbleTroubleGame
                 btnPlayTest.Text = "PLAYTEST";
                 changed = true;
             }
+        }
+
+        private void lblP2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

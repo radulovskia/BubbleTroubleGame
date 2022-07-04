@@ -85,14 +85,14 @@ namespace BubbleTroubleGame
         }
         public void DrawLives(Graphics g, string direction)
         {
-            int spaceLeft = 0;
-            int spaceRight = 560;
+            int spaceLeft = 0 + 5;
+            int spaceRight = 560 + 5;
             if (direction == "left")
             {
                 for (int i = 0; i < Lives; i++)
                 {
                     //g.DrawImage(Heart,spaceLeft, 20, 15, 15);
-                    g.DrawImage(Heart, spaceLeft, 358 + 10, 15, 15);
+                    g.DrawImage(Heart, spaceLeft, 358 + 10 + 20, 15, 15);
                     spaceLeft += 30;
                 }
             }
@@ -101,7 +101,7 @@ namespace BubbleTroubleGame
                 for (int i = 0; i < Lives; i++)
                 {
                     //g.DrawImage(Heart2, spaceRight, 20, 15, 15);
-                    g.DrawImage(Heart2, spaceRight, 358 + 10, 15, 15);
+                    g.DrawImage(Heart2, spaceRight, 358 + 10 + 20, 15, 15);
                     spaceRight -= 30;
                 }
             }

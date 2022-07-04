@@ -40,6 +40,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btnBackToMenu = new System.Windows.Forms.Button();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.lblP1 = new System.Windows.Forms.Label();
+            this.lblP2 = new System.Windows.Forms.Label();
             this.panelPauseMenu.SuspendLayout();
             this.panelEnd.SuspendLayout();
             this.SuspendLayout();
@@ -175,12 +177,40 @@
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
+            // lblP1
+            // 
+            this.lblP1.AutoSize = true;
+            this.lblP1.BackColor = System.Drawing.Color.White;
+            this.lblP1.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblP1.ForeColor = System.Drawing.Color.Firebrick;
+            this.lblP1.Location = new System.Drawing.Point(0, 360);
+            this.lblP1.Name = "lblP1";
+            this.lblP1.Size = new System.Drawing.Size(62, 20);
+            this.lblP1.TabIndex = 2;
+            this.lblP1.Text = "PLAYER 1";
+            this.lblP1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblP2
+            // 
+            this.lblP2.AutoSize = true;
+            this.lblP2.BackColor = System.Drawing.Color.White;
+            this.lblP2.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblP2.ForeColor = System.Drawing.Color.DodgerBlue;
+            this.lblP2.Location = new System.Drawing.Point(524, 360);
+            this.lblP2.Name = "lblP2";
+            this.lblP2.Size = new System.Drawing.Size(62, 20);
+            this.lblP2.TabIndex = 2;
+            this.lblP2.Text = "PLAYER 1";
+            this.lblP2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // FormGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::BubbleTroubleGame.Properties.Resources.bg2;
             this.ClientSize = new System.Drawing.Size(584, 441);
+            this.Controls.Add(this.lblP2);
+            this.Controls.Add(this.lblP1);
             this.Controls.Add(this.panelEnd);
             this.Controls.Add(this.panelPauseMenu);
             this.DoubleBuffered = true;
@@ -196,6 +226,7 @@
             this.panelEnd.ResumeLayout(false);
             this.panelEnd.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -212,6 +243,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.Label lblP1;
+        private System.Windows.Forms.Label lblP2;
     }
 }
 
