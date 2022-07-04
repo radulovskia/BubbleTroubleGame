@@ -87,14 +87,17 @@ namespace BubbleTroubleGame
                     }
                 }
             }
-        
-            TickHarpoonGrow(PlayerOne, PlayerOne.Harpoon);
-            Flag1 = HitCheck(PlayerOne, Balls, Flag1);
-            
-            if (TwoPlayers)
+
+            if (Balls.Count > 0)
             {
-                TickHarpoonGrow(PlayerTwo, PlayerTwo.Harpoon);
-                Flag2 = HitCheck(PlayerTwo, Balls, Flag2);
+                TickHarpoonGrow(PlayerOne, PlayerOne.Harpoon);
+                Flag1 = HitCheck(PlayerOne, Balls, Flag1);
+
+                if (TwoPlayers)
+                {
+                    TickHarpoonGrow(PlayerTwo, PlayerTwo.Harpoon);
+                    Flag2 = HitCheck(PlayerTwo, Balls, Flag2);
+                }
             }
         }
         //Harpoon Logic

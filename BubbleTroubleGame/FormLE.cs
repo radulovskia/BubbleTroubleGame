@@ -69,24 +69,12 @@ namespace BubbleTroubleGame
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             setHighlight();
-            setContext();
             changed = true;
         }
         //Context Setup
         private void setContext()
         {
-            if (testing)
-            {
-                lblContext1.Enabled = false;
-                lblContext1.Visible = false;
-                numContext1.Enabled = false;
-                numContext1.Visible = false;
-                lblContext2.Enabled = false;
-                lblContext2.Visible = false;
-                numContext2.Enabled = false;
-                numContext2.Visible = false;
-            }
-            else if (Type == "Ball")
+            if (Type == "Ball")
             {
                 lblContext1.Text = "Radius: ";
                 lblContext1.Enabled = true;
@@ -177,7 +165,7 @@ namespace BubbleTroubleGame
                 ((Obstacle)listBox1.SelectedItem).Bounds = new Rectangle(bounds.X, bounds.Y, (int)numContext2.Value, bounds.Height);
             }
             setHighlight();
-            //initScene();
+            initScene();
             changed = true;
         }
 
@@ -188,6 +176,8 @@ namespace BubbleTroubleGame
             {
                 listBox1.SelectedIndex = -1; 
                 scene.Highlight = Rectangle.Empty;
+                Type = "";
+                setContext();
                 return;
             }
             if (listBox1.SelectedItem is Ball)
@@ -220,6 +210,7 @@ namespace BubbleTroubleGame
                 scene.Highlight = Rectangle.Empty;
                 Type = "";
             }
+            setContext();
         }
         //Mouse Controls
         //Add object and select
@@ -325,6 +316,26 @@ namespace BubbleTroubleGame
             }
         }
 
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            if(scene.Balls.Count == 0)
+            {
+                timer2.Stop();
+                return;
+            }
+            scene.Tick();
+
+            if (moveLeft1)
+                scene.PlayerOne.Move(Scene.Width, "left");
+            if (moveRight1)
+                scene.PlayerOne.Move(Scene.Width, "right");
+            if (moveLeft2)
+                scene.PlayerTwo.Move(Scene.Width, "left");
+            if (moveRight2)
+                scene.PlayerTwo.Move(Scene.Width, "right");
+            Invalidate();
+        }
+
         //Serialization
         private String FileName = "";
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -387,19 +398,22 @@ namespace BubbleTroubleGame
         //Keyboard Controls
         private bool testing = false;
         private void FormLE_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Delete)
-            {
-                scene.RemoveDrawable((Drawable)listBox1.SelectedItem);
-                listBox1.SelectedIndex = -1;
-                setContext();
-                initScene();
-                setHighlight();
-                changed = true;
-            }
+        {            
             if (testing)
             {
                 PlayerControl(e);
+            }
+            else
+            {
+                if (e.KeyCode == Keys.Delete)
+                {
+                    scene.RemoveDrawable((Drawable)listBox1.SelectedItem);
+                    listBox1.SelectedIndex = -1;
+                    setContext();
+                    initScene();
+                    setHighlight();
+                    changed = true;
+                }
             }
         }
 
@@ -451,10 +465,6 @@ namespace BubbleTroubleGame
             }
             if (e.KeyCode == Keys.Escape)
             {
-                //scene = oldScene;
-                //listBox1.Enabled = true;
-                //cbObjectType.Enabled = true;
-                //testing = false;
                 timer2.Enabled = !timer2.Enabled;
             }
             Invalidate();
@@ -493,21 +503,6 @@ namespace BubbleTroubleGame
             Invalidate();
         }
 
-        private void timer2_Tick(object sender, EventArgs e)
-        {
-            scene.Tick();
-
-            if (moveLeft1)
-                scene.PlayerOne.Move(Scene.Width, "left");
-            if (moveRight1)
-                scene.PlayerOne.Move(Scene.Width, "right");
-            if (moveLeft2)
-                scene.PlayerTwo.Move(Scene.Width, "left");
-            if (moveRight2)
-                scene.PlayerTwo.Move(Scene.Width, "right");
-            Invalidate();
-        }
-
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -515,6 +510,7 @@ namespace BubbleTroubleGame
             form2.Closed += (s, args) => this.Close();
             form2.Show();
         }
+        //Playtesting
         private Scene oldScene = null;
         private void btnPlayTest_Click(object sender, EventArgs e)
         {
@@ -533,6 +529,7 @@ namespace BubbleTroubleGame
             }else
             {
                 scene = oldScene;
+                initScene();
                 listBox1.Enabled = true;
                 cbObjectType.Enabled = true;
                 setHighlight();
