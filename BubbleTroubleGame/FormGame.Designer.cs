@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panelPauseMenu = new System.Windows.Forms.Panel();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnLvlEditor = new System.Windows.Forms.Button();
             this.btnExitToDesktop = new System.Windows.Forms.Button();
             this.btnExitToMenu = new System.Windows.Forms.Button();
@@ -39,9 +40,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.btnBackToMenu = new System.Windows.Forms.Button();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.lblP1 = new System.Windows.Forms.Label();
             this.lblP2 = new System.Windows.Forms.Label();
+            this.lblTimer = new System.Windows.Forms.Label();
             this.panelPauseMenu.SuspendLayout();
             this.panelEnd.SuspendLayout();
             this.SuspendLayout();
@@ -60,11 +61,19 @@
             this.panelPauseMenu.Controls.Add(this.btnExitToMenu);
             this.panelPauseMenu.Controls.Add(this.btnResume);
             this.panelPauseMenu.Enabled = false;
-            this.panelPauseMenu.Location = new System.Drawing.Point(180, 68);
+            this.panelPauseMenu.Location = new System.Drawing.Point(179, 58);
             this.panelPauseMenu.Name = "panelPauseMenu";
             this.panelPauseMenu.Size = new System.Drawing.Size(235, 286);
             this.panelPauseMenu.TabIndex = 0;
             this.panelPauseMenu.Visible = false;
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(235, 25);
+            this.toolStrip1.TabIndex = 1;
+            this.toolStrip1.Text = "toolStrip1";
             // 
             // btnLvlEditor
             // 
@@ -124,7 +133,7 @@
             this.panelEnd.Controls.Add(this.label1);
             this.panelEnd.Controls.Add(this.btnBackToMenu);
             this.panelEnd.Enabled = false;
-            this.panelEnd.Location = new System.Drawing.Point(86, 70);
+            this.panelEnd.Location = new System.Drawing.Point(84, 90);
             this.panelEnd.Margin = new System.Windows.Forms.Padding(2);
             this.panelEnd.Name = "panelEnd";
             this.panelEnd.Size = new System.Drawing.Size(422, 90);
@@ -169,14 +178,6 @@
             this.btnBackToMenu.UseVisualStyleBackColor = false;
             this.btnBackToMenu.Click += new System.EventHandler(this.btnBackToMenu_Click);
             // 
-            // toolStrip1
-            // 
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(235, 25);
-            this.toolStrip1.TabIndex = 1;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
             // lblP1
             // 
             this.lblP1.AutoSize = true;
@@ -203,6 +204,19 @@
             this.lblP2.Text = "PLAYER 1";
             this.lblP2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // lblTimer
+            // 
+            this.lblTimer.AutoSize = true;
+            this.lblTimer.BackColor = System.Drawing.Color.White;
+            this.lblTimer.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTimer.ForeColor = System.Drawing.Color.Black;
+            this.lblTimer.Location = new System.Drawing.Point(269, 360);
+            this.lblTimer.Name = "lblTimer";
+            this.lblTimer.Size = new System.Drawing.Size(48, 20);
+            this.lblTimer.TabIndex = 2;
+            this.lblTimer.Text = "00:00";
+            this.lblTimer.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // FormGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -210,6 +224,7 @@
             this.BackgroundImage = global::BubbleTroubleGame.Properties.Resources.bg2;
             this.ClientSize = new System.Drawing.Size(584, 441);
             this.Controls.Add(this.lblP2);
+            this.Controls.Add(this.lblTimer);
             this.Controls.Add(this.lblP1);
             this.Controls.Add(this.panelEnd);
             this.Controls.Add(this.panelPauseMenu);
@@ -245,6 +260,7 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.Label lblP1;
         private System.Windows.Forms.Label lblP2;
+        private System.Windows.Forms.Label lblTimer;
     }
 }
 

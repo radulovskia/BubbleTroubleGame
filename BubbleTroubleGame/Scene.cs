@@ -9,6 +9,7 @@ namespace BubbleTroubleGame
     {
         public static int Height { get; set; }
         public static int Width { get; set; }
+        public int Timer { get; set; } = 120;
         public bool TwoPlayers { get; set; }
         public List<Ball> Balls { get; set; } = new List<Ball>();
         public List<Obstacle> Obstacles { get; set; } = new List<Obstacle>();
@@ -235,6 +236,7 @@ namespace BubbleTroubleGame
             Flag2 = scene.Flag2;
             Highlight = Rectangle.Empty;
             HighlightType = scene.HighlightType;
+            Timer = scene.Timer;
         }
     }
 }

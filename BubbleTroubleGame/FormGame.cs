@@ -45,10 +45,21 @@ namespace BubbleTroubleGame
         {
             Scene.Draw(e.Graphics);
         }
+        private long time = 0;
+        private long seconds = 0;
+        private String timeText = "00:00";
         private void timer1_Tick(object sender, EventArgs e)
         {
+            time += 1;
+            seconds = Scene.Timer - time / 100;
+            //timeText = seconds / 60 + "{00}:{00}" + seconds % 60;
+            timeText = (seconds / 60).ToString("D2") + ":" + (seconds % 60).ToString("D2");
+            lblTimer.Text = timeText;
             Scene.Tick();
-            if (Scene.Balls.Count == 0 || (!twoPlayers && Scene.PlayerOne.IsDead) || (twoPlayers && Scene.PlayerOne.IsDead && Scene.PlayerTwo.IsDead))
+            if (
+                Scene.Balls.Count == 0 || 
+                (!twoPlayers && Scene.PlayerOne.IsDead) || (twoPlayers && Scene.PlayerOne.IsDead && Scene.PlayerTwo.IsDead) ||
+                seconds == 0)
             {
                 timer1.Stop();
                 panelEnd.Visible = Visible;

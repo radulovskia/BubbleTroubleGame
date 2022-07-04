@@ -77,6 +77,7 @@
             this.panelGame = new System.Windows.Forms.Panel();
             this.lblP1 = new System.Windows.Forms.Label();
             this.lblP2 = new System.Windows.Forms.Label();
+            this.lblTimer = new System.Windows.Forms.Label();
             this.panelUI.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numContext2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numContext1)).BeginInit();
@@ -500,13 +501,25 @@
             this.lblP2.Size = new System.Drawing.Size(61, 20);
             this.lblP2.TabIndex = 0;
             this.lblP2.Text = "Player 2";
-            this.lblP2.Click += new System.EventHandler(this.lblP2_Click);
+            // 
+            // lblTimer
+            // 
+            this.lblTimer.AutoSize = true;
+            this.lblTimer.BackColor = System.Drawing.Color.White;
+            this.lblTimer.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTimer.ForeColor = System.Drawing.Color.Black;
+            this.lblTimer.Location = new System.Drawing.Point(269, 387);
+            this.lblTimer.Name = "lblTimer";
+            this.lblTimer.Size = new System.Drawing.Size(48, 20);
+            this.lblTimer.TabIndex = 0;
+            this.lblTimer.Text = "00:00";
             // 
             // FormLE
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(712, 587);
+            this.Controls.Add(this.lblTimer);
             this.Controls.Add(this.lblP2);
             this.Controls.Add(this.panelUI);
             this.Controls.Add(this.listBox1);
@@ -586,5 +599,6 @@
         private System.Windows.Forms.ComboBox cbObjectType;
         private System.Windows.Forms.Label lblP2;
         private System.Windows.Forms.Label lblP1;
+        private System.Windows.Forms.Label lblTimer;
     }
 }

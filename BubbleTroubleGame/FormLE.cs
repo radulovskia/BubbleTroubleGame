@@ -35,10 +35,19 @@ namespace BubbleTroubleGame
             Scene.Height = this.Height;
             Scene.Width = this.Width;
             this.DoubleBuffered = true;
+            time = 0;
+            seconds = Scene.Timer;
+            refreshTimer();
             Invalidate();
             initScene();
             cbObjectType.SelectedIndex = 0;
             timer1.Start();
+        }
+        private void refreshTimer()
+        {
+
+            timeText = (seconds / 60).ToString("D2") + ":" + (seconds % 60).ToString("D2");
+            lblTimer.Text = timeText;
         }
         private void initScene()
         {
@@ -335,26 +344,36 @@ namespace BubbleTroubleGame
                 Invalidate();
             }
         }
-
+        private long time = 0;
+        private long seconds = 0;
+        private String timeText = "00:00";
         private void timer2_Tick(object sender, EventArgs e)
         {
-            if(Scene.Balls.Count == 0)
+            time += 1;
+            seconds = Scene.Timer - time / 100;
+            refreshTimer();
+            Scene.Tick();
+            if (
+                Scene.Balls.Count == 0 ||
+                (!Scene.TwoPlayers && Scene.PlayerOne.IsDead) || (Scene.TwoPlayers && Scene.PlayerOne.IsDead && Scene.PlayerTwo.IsDead) ||
+                seconds == 0
+                )
             {
-                timer2.Stop();
                 return;
             }
-            Scene.Tick();
 
-            if (moveLeft1)
-                Scene.PlayerOne.Move(Scene.Width, "left");
-            if (moveRight1)
-                Scene.PlayerOne.Move(Scene.Width, "right");
-            if (moveLeft2)
-                Scene.PlayerTwo.Move(Scene.Width, "left");
-            if (moveRight2)
-                Scene.PlayerTwo.Move(Scene.Width, "right");
-            Invalidate();
-        }
+                if (moveLeft1)
+                    Scene.PlayerOne.Move(Scene.Width, "left");
+                if (moveRight1)
+                    Scene.PlayerOne.Move(Scene.Width, "right");
+                if (moveLeft2)
+                    Scene.PlayerTwo.Move(Scene.Width, "left");
+                if (moveRight2)
+                    Scene.PlayerTwo.Move(Scene.Width, "right");
+                
+                Invalidate();
+            }
+          
 
         //Serialization
         private String FileName = "";
@@ -536,6 +555,9 @@ namespace BubbleTroubleGame
         private void btnPlayTest_Click(object sender, EventArgs e)
         {
             testing = !testing;
+            time = 0;
+            seconds = Scene.Timer;
+            refreshTimer();
             if (testing)
             {
                 oldScene = new Scene(Scene);
@@ -561,11 +583,6 @@ namespace BubbleTroubleGame
                 btnPlayTest.Text = "PLAYTEST";
                 changed = true;
             }
-        }
-
-        private void lblP2_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
