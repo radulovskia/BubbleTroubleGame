@@ -91,8 +91,8 @@ namespace BubbleTroubleGame
             {
                 for (int i = 0; i < Lives; i++)
                 {
-                    g.DrawImage(Heart,spaceLeft, 20,15,15);
-                    //g.DrawImage(Heart, spaceLeft, 358 + 10, 15, 15);
+                    //g.DrawImage(Heart,spaceLeft, 20, 15, 15);
+                    g.DrawImage(Heart, spaceLeft, 358 + 10, 15, 15);
                     spaceLeft += 30;
                 }
             }
@@ -100,8 +100,8 @@ namespace BubbleTroubleGame
             {
                 for (int i = 0; i < Lives; i++)
                 {
-                    g.DrawImage(Heart2, spaceRight, 20,15,15);
-                    //g.DrawImage(Heart, spaceRight, 358 + 10,15,15);
+                    //g.DrawImage(Heart2, spaceRight, 20, 15, 15);
+                    g.DrawImage(Heart2, spaceRight, 358 + 10, 15, 15);
                     spaceRight -= 30;
                 }
             }
@@ -122,6 +122,11 @@ namespace BubbleTroubleGame
                 }
             }
             return false;
+        }
+
+        public override string ToString()
+        {
+            return "Player " + PlayerId;
         }
 
         public Player(Player player)

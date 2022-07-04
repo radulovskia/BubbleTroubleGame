@@ -46,6 +46,14 @@ namespace BubbleTroubleGame
             foreach (Ball ball in Balls)
                 ball.Draw(graphics);
 
+
+            Brush brush = new SolidBrush(Color.White);
+            Pen pen = new Pen(Color.White);
+            graphics.FillRectangle(brush, new Rectangle(0, 360, Width, Height));
+            graphics.DrawRectangle(pen, new Rectangle(0, 360, Width, Height));
+            brush.Dispose();
+            pen.Dispose();
+
             PlayerOne.Draw(graphics);
             PlayerOne.DrawLives(graphics, "left");
             PlayerOne.Harpoon.Draw(graphics);
@@ -58,8 +66,6 @@ namespace BubbleTroubleGame
             }
 
             DrawHighlight(graphics);
-            //Brush brush = new SolidBrush(Color.FromArgb(77, 0, 77));
-            //graphics.FillRectangle(brush, new Rectangle(0, 358, Width, Height));
         }
         
         public void Tick()
@@ -202,7 +208,11 @@ namespace BubbleTroubleGame
             }
             else if(selectedItem is Player player)
             { 
-
+                if (player.PlayerId == 2)
+                {
+                    TwoPlayers = false;
+                    player = null;
+                }
             }
             if(selectedItem is Obstacle obstacle)
             {

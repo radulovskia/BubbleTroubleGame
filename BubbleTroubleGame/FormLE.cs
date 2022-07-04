@@ -21,6 +21,8 @@ namespace BubbleTroubleGame
         {
             InitializeComponent();
             scene = new Scene();
+            Scene.Height = this.Height;
+            Scene.Width = this.Width;
             this.DoubleBuffered = true;
             Invalidate();
             initScene();
@@ -81,9 +83,10 @@ namespace BubbleTroubleGame
                 lblContext1.Visible = true; 
                 numContext1.Enabled = true;
                 numContext1.Visible = true;
+                int tmp = ((Ball)listBox1.SelectedItem).Radius;
                 numContext1.Maximum = 100;
-                numContext1.Value = ((Ball)listBox1.SelectedItem).Radius;
-                numContext1.Increment = 5;
+                numContext1.Value = tmp;
+                numContext1.Increment = 7;
                 numContext2.Enabled = false;
                 numContext2.Visible = false; 
                 lblContext2.Enabled = false;
@@ -96,8 +99,9 @@ namespace BubbleTroubleGame
                 lblContext1.Visible = true;
                 numContext1.Enabled = true;
                 numContext1.Visible = true;
+                int tmp = ((Player)listBox1.SelectedItem).Lives;
                 numContext1.Maximum = 10;
-                numContext1.Value = ((Player)listBox1.SelectedItem).Lives;
+                numContext1.Value = tmp;
                 numContext1.Increment = 1;
                 numContext2.Enabled = false;
                 numContext2.Visible = false;
